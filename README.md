@@ -1,4 +1,6 @@
-# cyrpto-markeplace-client
-Front end for crypto-market-api. A pseudo marketplace for cryptocurrency related products.
+# Sample payroll management application
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-uon54r)
+## Exploring functional programming practices in typescript and c
+
+- angular 9,
+- net core 3.x
