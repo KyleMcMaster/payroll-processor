@@ -8,10 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Payroll.Processor.Data.Domain\Payroll.Processor.Data.Domain.fsproj" />
     <ProjectReference Include="..\Payroll.Processor.Data.Persistence\Payroll.Processor.Data.Persistence.csproj" />
   </ItemGroup>
 
