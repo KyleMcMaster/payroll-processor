@@ -1,0 +1,11 @@
+<p>risk-list works!</p>
+
+<section class="flex">
+  <div class="card" *ngFor="let risk of risks$ | async">
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ risk.tag }}
+      </h5>
+    </div>
+  </div>
+</section>

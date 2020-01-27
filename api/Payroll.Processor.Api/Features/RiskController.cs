@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using static Payroll.Processor.Data.Domain.Risks;
+using static Payroll.Processor.Data.Domain.Features.Risks;
 
 namespace Payroll.Processor.Api.Features
 {
