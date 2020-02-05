@@ -35,3 +35,4 @@ export class RiskListComponent implements OnInit {
   getRisks() {
       this.risksService.getRisks();
   }
+}

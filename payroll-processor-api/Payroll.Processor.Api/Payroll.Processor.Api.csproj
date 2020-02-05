@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Payroll.Processor.Data.Domain\Payroll.Processor.Data.Domain.fsproj" />
+    <ProjectReference Include="..\Payroll.Processor.Data.Domain\Payroll.Processor.Data.Domain.csproj" />
     <ProjectReference Include="..\Payroll.Processor.Data.Persistence\Payroll.Processor.Data.Persistence.csproj" />
   </ItemGroup>
 
