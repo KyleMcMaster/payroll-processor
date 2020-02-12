@@ -1,4 +1,4 @@
-﻿using Payroll.Processor.Data.Persistence.Features;
+﻿using Payroll.Processor.Data.Persistence.Features.Risks;
 using System.Linq;
 
 namespace Payroll.Processor.Data.Persistence.Context
@@ -9,7 +9,9 @@ namespace Payroll.Processor.Data.Persistence.Context
 
         public DbContext()
         {
-            Risks = ContextDataSeed.SeedRisks().AsQueryable();
+            var seedData = new DbContextDataSeed();
+
+            Risks = seedData.Risks;
         }
     }
 }

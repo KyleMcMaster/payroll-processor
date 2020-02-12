@@ -1,4 +1,4 @@
-﻿using Payroll.Processor.Data.Persistence.Features;
+﻿using Payroll.Processor.Data.Persistence.Features.Risks;
 using System.Linq;
 
 namespace Payroll.Processor.Data.Persistence.Context

@@ -1,13 +1,22 @@
 ﻿using Payroll.Processor.Data.Persistence.Features;
+using Payroll.Processor.Data.Persistence.Features.Risks;
 using System;
+using System.Linq;
 
 namespace Payroll.Processor.Data.Persistence.Context
 {
-    public static class ContextDataSeed
+    public class DbContextDataSeed
     {
-        public static RiskRecord[] SeedRisks()
+        public IQueryable<RiskRecord> Risks { get; }
+
+        public DbContextDataSeed()
         {
-            return new RiskRecord[]
+            Risks = GenerateRisks();
+        }
+
+        private IQueryable<RiskRecord> GenerateRisks()
+        {
+            var risks = new RiskRecord[]
             {
                 new RiskRecord
                 {
@@ -26,8 +35,10 @@ namespace Payroll.Processor.Data.Persistence.Context
                     Id = Guid.NewGuid(),
                     CodeName = "HIGH",
                     DisplayName = "High"
-                },
+                }
             };
+
+            return risks.AsQueryable();
         }
     }
 }

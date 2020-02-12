@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Payroll.Processor.Data.Persistence.Features
+namespace Payroll.Processor.Data.Persistence.Features.Risks
 {
     public class RiskRecord
     {

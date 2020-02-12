@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Payroll.Processor.Data.Domain.Features;
 using Payroll.Processor.Data.Persistence.Context;
@@ -13,11 +14,13 @@ namespace Payroll.Processor.Api.Features
     {
         private readonly IDbContext dbContext;
         private readonly ILogger<RiskController> logger;
+        private readonly IMapper mapper;
 
-        public RiskController(IDbContext dbContext, ILogger<RiskController> logger)
+        public RiskController(IDbContext dbContext, ILogger<RiskController> logger, IMapper mapper)
         {
             this.dbContext = dbContext;
             this.logger = logger;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -25,7 +28,7 @@ namespace Payroll.Processor.Api.Features
         {
             var risks = dbContext.Risks.AsEnumerable();
 
-            return risks;
+            return mapper.Map<IEnumerable<Risk>>(risks);
         }
     }
 }
