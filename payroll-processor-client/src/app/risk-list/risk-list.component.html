@@ -1,11 +1,22 @@
-<p>risk-list works!</p>
-
-<section class="flex">
-  <div class="card" *ngFor="let risk of risks$ | async">
-    <div class="card-body">
-      <h5 class="card-title">
-        {{ risk.tag }}
-      </h5>
+<!-- <p>risk-list works!</p> -->
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button
+        class="btn btn-outline-primary"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+        >{{ selectedRisk }}</button
+      >
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button
+          ngbDropdownItem
+          *ngFor="let risk of risks$ | async"
+          (click)="changeSelected(risk)"
+        >
+          {{ risk.dispayName }}
+        </button>
+      </div>
     </div>
   </div>
-</section>
+</div>

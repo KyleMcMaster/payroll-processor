@@ -1,24 +1,31 @@
 export interface Risk {
-  tag: string;
-  isLow: boolean;
-  isMedium: boolean;
-  isHigh: boolean;
+  id: string;
+  codeName: string;
+  dispayName: string;
 }
 
 export function createInitialState(): Risk {
   return {
-    tag: "",
-    isLow: false,
-    isHigh: false,
-    isMedium: false
+    id: '',
+    codeName: '',
+    dispayName: '',
   };
 }
 
 export const risks = [
   {
-    tag: "0",
-    isLow: true,
-    isHigh: false,
-    isMedium: false
-  }
+    id: '0',
+    codeName: 'LOW',
+    dispayName: 'Low',
+  },
+  {
+    id: '1',
+    codeName: 'MEDIUM',
+    dispayName: 'Medium',
+  },
+  {
+    id: '2',
+    codeName: 'HIGH',
+    dispayName: 'High',
+  },
 ];
