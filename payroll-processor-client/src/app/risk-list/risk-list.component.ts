@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { switchMap, startWith } from 'rxjs/operators';
@@ -16,6 +16,7 @@ export class RiskListComponent implements OnInit {
   selectLoading$: Observable<boolean>;
   sortControl = new FormControl('tag');
   selectedRisk = 'Select Risk';
+  @Input() risk: string;
 
   constructor(
     private risksQuery: RiskQuery,
@@ -31,6 +32,7 @@ export class RiskListComponent implements OnInit {
     );
     this.selectLoading$ = this.risksQuery.selectLoading();
     this.getRisks();
+    this.selectedRisk = this.risk;
   }
 
   getRisks() {
@@ -38,6 +40,6 @@ export class RiskListComponent implements OnInit {
   }
 
   changeSelected(risk: Risk) {
-    this.selectedRisk = risk.dispayName;
+    this.selectedRisk = risk.displayName;
   }
 }

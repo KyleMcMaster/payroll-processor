@@ -1,31 +1,31 @@
 export interface Risk {
   id: string;
   codeName: string;
-  dispayName: string;
+  displayName: string;
 }
 
 export function createInitialState(): Risk {
   return {
     id: '',
     codeName: '',
-    dispayName: '',
+    displayName: '',
   };
 }
 
-export const risks = [
+export const risks: Risk[] = [
   {
     id: '0',
     codeName: 'LOW',
-    dispayName: 'Low',
+    displayName: 'Low',
   },
   {
     id: '1',
     codeName: 'MEDIUM',
-    dispayName: 'Medium',
+    displayName: 'Medium',
   },
   {
     id: '2',
     codeName: 'HIGH',
-    dispayName: 'High',
+    displayName: 'High',
   },
 ];
