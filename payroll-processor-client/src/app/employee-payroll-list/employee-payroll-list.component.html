@@ -5,7 +5,9 @@
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Payroll Period</th>
+      <th scope="col">Gross Payroll</th>
       <th scope="col">Risk</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -15,11 +17,12 @@
         {{ employeePayroll.firstName + ' ' + employeePayroll.lastName }}
       </td>
       <td>{{ employeePayroll.payrollPeriod | number }}</td>
-      <td
-        ><app-risk-list
-          risk="{{ employeePayroll.risk.displayName }}"
-        ></app-risk-list
-      ></td>
+      <td>{{ employeePayroll.grossPayroll | number }}</td>
+      <td>
+        <app-risk-list risk="{{ employeePayroll.risk.displayName }}">
+        </app-risk-list>
+      </td>
+      <!-- <fa-icon [icon]="faCoffee"></fa-icon> -->
     </tr>
   </tbody>
 </table>

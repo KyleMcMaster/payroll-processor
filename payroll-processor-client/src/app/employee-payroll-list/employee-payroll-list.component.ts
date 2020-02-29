@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   employeePayrolls,
   EmployeePayroll,
@@ -9,7 +9,7 @@ import {
   templateUrl: './employee-payroll-list.component.html',
   styleUrls: ['./employee-payroll-list.component.scss'],
 })
-export class EmployeePayrollListComponent implements OnInit {
+export class EmployeePayrollListComponent implements OnInit, OnDestroy {
   employeePayrolls: EmployeePayroll[];
 
   constructor() {
@@ -17,4 +17,6 @@ export class EmployeePayrollListComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  ngOnDestroy() {}
 }

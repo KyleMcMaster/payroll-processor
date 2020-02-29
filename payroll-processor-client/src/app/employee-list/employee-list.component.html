@@ -1,1 +1,19 @@
-<p>employee-list works!</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Payroll Period</th>
+      <th scope="col">Gross Payroll</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees | async">
+      <th scope="row">{{ employee.id }}</th>
+      <td> {{ employee.firstName + ' ' + employee.lastName }} </td>
+      <td>{{ employee.employmentStartedOn | date }}</td>
+      <td>{{ employee.phone | number }}</td>
+      <!-- <fa-icon [icon]="faCoffee"></fa-icon> -->
+    </tr>
+  </tbody>
+</table>

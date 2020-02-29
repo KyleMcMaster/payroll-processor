@@ -9,13 +9,20 @@ import { RiskListComponent } from './risk-list/risk-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeePayrollListComponent } from './employee-payroll-list/employee-payroll-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, RiskListComponent, EmployeeListComponent, EmployeePayrollListComponent],
+  declarations: [
+    AppComponent,
+    RiskListComponent,
+    EmployeeListComponent,
+    EmployeePayrollListComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     NgbModule,
   ],
   providers: [],
