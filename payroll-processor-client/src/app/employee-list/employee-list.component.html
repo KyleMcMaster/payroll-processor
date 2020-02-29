@@ -1,19 +1,20 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">Id</th>
       <th scope="col">Name</th>
-      <th scope="col">Payroll Period</th>
-      <th scope="col">Gross Payroll</th>
+      <th scope="col">Title</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Employement Started On</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let employee of employees | async">
       <th scope="row">{{ employee.id }}</th>
       <td> {{ employee.firstName + ' ' + employee.lastName }} </td>
-      <td>{{ employee.employmentStartedOn | date }}</td>
+      <td>{{ employee.title }}</td>
       <td>{{ employee.phone | number }}</td>
-      <!-- <fa-icon [icon]="faCoffee"></fa-icon> -->
+      <td>{{ employee.employmentStartedOn | date }}</td>
     </tr>
   </tbody>
 </table>
