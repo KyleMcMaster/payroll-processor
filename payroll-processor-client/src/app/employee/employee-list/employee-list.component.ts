@@ -30,5 +30,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       }),
     );
   }
+
   ngOnDestroy() {}
+
+  remove(id: string) {}
 }

@@ -6,6 +6,7 @@
       <th scope="col">Title</th>
       <th scope="col">Phone</th>
       <th scope="col">Employement Started On</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +16,20 @@
       <td>{{ employee.title }}</td>
       <td>{{ employee.phone | number }}</td>
       <td>{{ employee.employmentStartedOn | date }}</td>
+      <td
+        ><button class="btn btn-outline-primary" (onclick)="remove(employee.id)"
+          >Remove</button
+        ></td
+      >
     </tr>
   </tbody>
+  <tfoot>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th><button>add</button></th>
+    </tr>
+  </tfoot>
 </table>

@@ -7,9 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RiskListComponent } from './risk-list/risk-list.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
-import { EmployeePayrollListComponent } from './employee-payroll-list/employee-payroll-list.component';
+import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
+import { EmployeePayrollListComponent } from './payroll/employee-payroll-list/employee-payroll-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EmployeeComponent } from './employee/employee.component';
+import { PayrollComponent } from './payroll/payroll.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     RiskListComponent,
     EmployeeListComponent,
     EmployeePayrollListComponent,
+    EmployeeComponent,
+    PayrollComponent,
   ],
   imports: [
     BrowserModule,
