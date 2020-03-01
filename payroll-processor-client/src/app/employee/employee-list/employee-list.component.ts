@@ -15,7 +15,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    const url = '';
+    const url =
+      'https://nitro-km-payroll-processor.azurewebsites.net/api/EmployeesGetTrigger';
     this.employees = this.http.get<Employee[]>(url).pipe(
       catchError(err => {
         console.log('Could not fetch employees');

@@ -8,7 +8,7 @@ using PayrollProcessor.Functions.Features.Employee;
 using System.Collections.Generic;
 using Xunit;
 
-namespace PayrollProcessor.Functions.Tests.Features.Employees
+namespace PayrollProcessor.Functions.Tests.Features.Employee
 {
     public class EmployeesGetTriggerTests
     {
@@ -32,7 +32,8 @@ namespace PayrollProcessor.Functions.Tests.Features.Employees
 
             string resultValue = result.Value.ToString();
 
-            var employeesResult = JsonConvert.DeserializeObject<IEnumerable<Employee>>(resultValue);
+            var employeesResult = JsonConvert
+                .DeserializeObject<IEnumerable<Functions.Features.Employee.Employee>>(resultValue);
 
             employeesResult.Should().HaveCount(EmployeeData.EmployeeCount);
         }
