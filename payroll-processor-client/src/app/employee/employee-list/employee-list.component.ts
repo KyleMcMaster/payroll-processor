@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Employee } from './state/employee-model';
 import { of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -16,14 +16,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const url = '';
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      }),
-    };
-    this.employees = this.http.get<Employee[]>(url, httpOptions).pipe(
-      tap(t => console.log(t)),
+    this.employees = this.http.get<Employee[]>(url).pipe(
       catchError(err => {
         console.log('Could not fetch employees');
         return throwError(err);
