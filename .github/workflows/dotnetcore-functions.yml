@@ -1,6 +1,13 @@
+# build and test payroll-processor-functions
 name: dotnet core - build
 
-on: [push]
+on: 
+  push:
+      branches:
+        - master
+      # file paths to consider in the event. Optional; defaults to all.
+      paths:
+        - '/payroll-processor-functions/*'
 
 jobs:
   build:
