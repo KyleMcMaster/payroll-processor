@@ -1,13 +1,13 @@
 # build and test payroll-processor-functions
-name: dotnet core - build
+name: dotnet core payroll-processor-functions - build
 
-on: 
+on:
   push:
-      branches:
-        - master
-      # file paths to consider in the event. Optional; defaults to all.
-      paths:
-        - '/payroll-processor-functions/*'
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
 
 jobs:
   build:
@@ -17,8 +17,8 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.0
+        dotnet-version: 3.1.101
     - name: Build with dotnet
-      run: dotnet build --configuration Release
+      run: dotnet build /payroll-processor-functions/ --configuration Release
     - name: Unit Tests
       run: dotnet test
