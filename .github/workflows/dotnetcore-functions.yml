@@ -21,4 +21,4 @@ jobs:
     - name: Build with dotnet
       run: dotnet build payroll-processor-functions/payroll-processor-functions.sln --configuration Release
     - name: Unit Tests
-      run: dotnet test
+      run: dotnet test payroll-processor-functions/
