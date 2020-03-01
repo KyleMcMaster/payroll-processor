@@ -1,6 +1,6 @@
 # Payroll Processor
 
-![dotnet core - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20-%20build/badge.svg?branch=master)
+![dotnet core payroll-processor-functions - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20payroll-processor-functions%20-%20build/badge.svg?branch=master)
 
 ## Motivation
 This project was created to explore a variety of technologies and patterns I use daily in one place to get a better understanding of those technologies.
