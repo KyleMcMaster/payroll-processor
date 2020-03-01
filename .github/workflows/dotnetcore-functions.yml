@@ -19,6 +19,6 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Build with dotnet
-      run: dotnet build /payroll-processor-functions/ --configuration Release
+      run: dotnet build /payroll-processor-functions/payroll-processor-functions.sln --configuration Release
     - name: Unit Tests
       run: dotnet test
