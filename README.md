@@ -1,8 +1,12 @@
 # Payroll Processor
 
+Sample application similar to Workday or other HRIS systems where a list of employees and their payroll information would be available. 
+
 ## Build status
 
 ### Api
+
+![dotnet core payroll-processor-api - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20payroll-processor-api%20-%20build/badge.svg)
 
 ### Client
 
