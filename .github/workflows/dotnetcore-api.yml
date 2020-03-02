@@ -1,0 +1,24 @@
+# build and test payroll-processor-api
+name: dotnet core payroll-processor-api - build
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Build with dotnet
+      run: dotnet build payroll-processor-api/Payroll.Processor.Api/Payroll.Processor.Api.sln --configuration Release
+    - name: Unit Tests
+      run: dotnet test payroll-processor-api/Payroll.Processor.Api/Payroll.Processor.Api.sln
