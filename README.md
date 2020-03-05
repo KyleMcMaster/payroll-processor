@@ -1,6 +1,6 @@
 # Payroll Processor
 
-Sample application similar to Workday or other HRIS systems where a list of employees and their payroll information would be available. 
+Sample application similar to Workday or other HRIS systems where a list of employees and their payroll information would be available.
 
 ## Build status
 
@@ -10,7 +10,7 @@ Sample application similar to Workday or other HRIS systems where a list of empl
 
 ### Client
 
-![.github/workflows/npm.yml](https://github.com/KyleMcMaster/payroll-processor/workflows/.github/workflows/npm.yml/badge.svg)
+![.github/workflows/npm.yml](https://github.com/KyleMcMaster/payroll-processor/workflows/.github/workflows/npm.yml/badge.svg) [![Styled with Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
 
 ### Functions
 
