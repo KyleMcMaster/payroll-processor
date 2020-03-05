@@ -14,7 +14,7 @@
       <th scope="row">{{ employee.id }}</th>
       <td> {{ employee.firstName + ' ' + employee.lastName }} </td>
       <td>{{ employee.title }}</td>
-      <td>{{ employee.phone | number }}</td>
+      <td>{{ employee.phone }}</td>
       <td>{{ employee.employmentStartedOn | date }}</td>
       <td
         ><button class="btn btn-outline-primary" (click)="remove(employee.id)"
