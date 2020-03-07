@@ -1,19 +1,24 @@
-<h1>{{ title }}</h1>
-<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-  <li [ngbNavItem]="'employees'">
-    <a ngbNavLink>Employees</a>
-    <ng-template ngbNavContent>
-      <app-employee></app-employee>
-    </ng-template>
-  </li>
-  <li [ngbNavItem]="2">
-    <a ngbNavLink>Payroll</a>
-    <ng-template ngbNavContent>
-      <app-payroll></app-payroll>
-    </ng-template>
-  </li>
-</ul>
-
-<div [ngbNavOutlet]="nav" class="mt-2"></div>
-<!-- <app-employee-payroll-list></app-employee-payroll-list> -->
-<router-outlet></router-outlet>
+<section>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">{{ title }}</a>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="navbar-nav mr-auto">
+        <li [ngbNavItem]="'employees'" class="nav-item">
+          <a ngbNavLink>Employees</a>
+          <ng-template ngbNavContent>
+            <app-employee></app-employee>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>Payroll</a>
+          <ng-template ngbNavContent>
+            <app-payroll></app-payroll>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  <!-- <app-employee-payroll-list></app-employee-payroll-list> -->
+  <router-outlet></router-outlet>
+</section>

@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table table-hover">
   <thead>
     <tr>
       <th scope="col">Id</th>
@@ -6,18 +6,20 @@
       <th scope="col">Title</th>
       <th scope="col">Phone</th>
       <th scope="col">Employement Started On</th>
-      <th scope="col"></th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let employee of employeeList">
-      <th scope="row">{{ employee.id }}</th>
+      <td>{{ employee.id }}</td>
       <td> {{ employee.firstName + ' ' + employee.lastName }} </td>
       <td>{{ employee.title }}</td>
       <td>{{ employee.phone }}</td>
       <td>{{ employee.employmentStartedOn | date }}</td>
       <td
-        ><button class="btn btn-outline-primary" (click)="remove(employee.id)"
+        ><button
+          class="btn btn-outline-warning btn-sm"
+          (click)="remove(employee.id)"
           >Remove</button
         ></td
       >
@@ -29,7 +31,8 @@
       <th></th>
       <th></th>
       <th></th>
-      <th><button class="btn btn-outline-primary">Add</button></th>
+      <th></th>
+      <th><button class="btn btn-outline-info">Add</button></th>
     </tr>
   </tfoot>
 </table>
