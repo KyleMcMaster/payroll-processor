@@ -6,7 +6,7 @@ using Payroll.Processor.Data.Persistence.Context;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Payroll.Processor.Api.Features
+namespace Payroll.Processor.Api.Features.Risks
 {
     [ApiController]
     [Route("risk")]

@@ -10,11 +10,9 @@ namespace Payroll.Processor.Data.Persistence.Tests.Features.Risks
 
         public RiskTests()
         {
-            var dataSeed = new DbContextDataSeed();
-
             DbContext = Substitute.For<IDbContext>();
 
-            DbContext.Risks.Returns(dataSeed.Risks);
+            DbContext.Risks.Returns(DataSeed.Risks());
         }
 
         [Fact]

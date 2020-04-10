@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,8 @@ namespace Payroll.Processor.Api
             services.AddControllers();
 
             services.AddScoped<IDbContext, DbContext>();
+
+            services.AddAutoMapper(typeof(DbContext).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
