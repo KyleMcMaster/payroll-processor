@@ -12,6 +12,7 @@ import { EmployeePayrollListComponent } from './payroll/employee-payroll-list/em
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeComponent } from './employee/employee.component';
 import { PayrollComponent } from './payroll/payroll.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -23,9 +24,10 @@ import { PayrollComponent } from './payroll/payroll.component';
     PayrollComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    BrowserModule,
+    FontAwesomeModule,
     HttpClientModule,
     NgbModule,
   ],

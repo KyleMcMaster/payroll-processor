@@ -19,6 +19,7 @@ namespace PayrollProcessor.Functions.Features.Employee
                     FirstName = "Nathan",
                     LastName = "Harper",
                     Phone = "1234567890",
+                    Status = "ACTIVE",
                     Title = "CIO"
                 },
                 new Employee
@@ -29,6 +30,7 @@ namespace PayrollProcessor.Functions.Features.Employee
                     FirstName = "Kyle",
                     LastName = "McMaster",
                     Phone = "0123456789",
+                    Status = "ACTIVE",
                     Title = "Director of Research"
                 },
                 new Employee
@@ -39,6 +41,7 @@ namespace PayrollProcessor.Functions.Features.Employee
                     FirstName = "Justin",
                     LastName = "Conklin",
                     Phone = "2345678901",
+                    Status = "ACTIVE",
                     Title = "Director of User Experience - Dog Division"
                 },
                 new Employee
@@ -49,6 +52,7 @@ namespace PayrollProcessor.Functions.Features.Employee
                     FirstName = "Jonathan",
                     LastName = "Keppler",
                     Phone = "3456789012",
+                    Status = "ACTIVE",
                     Title = "Digital Storage Analyst"
                 }
             };

@@ -1,28 +1,43 @@
-<table class="table table table-hover">
+<table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Id</th>
       <th scope="col">Name</th>
       <th scope="col">Title</th>
       <th scope="col">Phone</th>
       <th scope="col">Employement Started On</th>
+      <th scope="col">Status</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let employee of employeeList">
-      <td>{{ employee.id }}</td>
-      <td> {{ employee.firstName + ' ' + employee.lastName }} </td>
+    <tr
+      [ngClass]="{
+        'table-secondary': employee.status === 'DISABLED'
+      }"
+      *ngFor="let employee of getEmployees()"
+    >
+      <th scope="row"> {{ employee.firstName + ' ' + employee.lastName }} </th>
       <td>{{ employee.title }}</td>
       <td>{{ employee.phone }}</td>
       <td>{{ employee.employmentStartedOn | date }}</td>
-      <td
-        ><button
-          class="btn btn-outline-warning btn-sm"
+      <td>
+        <fa-icon
+          *ngIf="employee.status === 'ACTIVE'"
+          [icon]="faSmileBeam"
+        ></fa-icon>
+        <fa-icon
+          *ngIf="employee.status === 'DISABLED'"
+          [icon]="faSkull"
+        ></fa-icon>
+      </td>
+      <td>
+        <button
+          [ngClass]="'btn btn-outline-warning btn-sm'"
           (click)="remove(employee.id)"
+          [disabled]="employee.status === 'DISABLED'"
           >Remove</button
-        ></td
-      >
+        >
+      </td>
     </tr>
   </tbody>
   <tfoot>

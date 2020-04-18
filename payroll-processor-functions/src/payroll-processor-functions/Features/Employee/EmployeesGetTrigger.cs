@@ -15,7 +15,7 @@ namespace PayrollProcessor.Functions.Features.Employee
                 [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
                 ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation($"C# HTTP trigger function processed a request: [{req}]");
 
             string responseMessage = JsonConvert.SerializeObject(
                 value: EmployeeData.Employees(),

@@ -4,5 +4,8 @@ export interface Employee {
   firstName: string;
   lastName: string;
   phone: string;
+  status: Status;
   title: string;
 }
+
+export type Status = 'ACTIVE' | 'DISABLED';
