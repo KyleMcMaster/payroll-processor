@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <h6>Employee Payroll Distribution</h6>
+      <ngx-charts-pie-chart
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="employeeDistributionData"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [legendPosition]="legendPosition"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+      >
+      </ngx-charts-pie-chart>
+    </div>
+    <div class="col-6">
+      <h6>Department Payroll Distribution</h6>
+      <ngx-charts-pie-chart
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="departmentDistributionData"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [legendPosition]="legendPosition"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+      >
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+</div>

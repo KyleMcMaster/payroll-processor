@@ -54,6 +54,17 @@ namespace PayrollProcessor.Functions.Features.Employee
                     Phone = "3456789012",
                     Status = "ACTIVE",
                     Title = "Digital Storage Analyst"
+                },
+                new Employee
+                {
+                    Id = new Guid("d24ac3b8-edb2-47c7-9599-641530800c2b"),
+                    Department = "Finance",
+                    EmploymentStartedOn = DateTimeOffset.Parse("2016-02-01"),
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Phone = "4567891230",
+                    Status = "ACTIVE",
+                    Title = "Senior Accountant"
                 }
             };
     }

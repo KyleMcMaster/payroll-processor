@@ -14,6 +14,8 @@ import { PayrollComponent } from './payroll/payroll.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AboutComponent } from './about/about.component';
 import { PayrollListComponent } from './payroll/payroll-list/payroll-list.component';
+import { PayrollChartsComponent } from './payroll/payroll-charts/payroll-charts.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { PayrollListComponent } from './payroll/payroll-list/payroll-list.compon
     PayrollComponent,
     AboutComponent,
     PayrollListComponent,
+    PayrollChartsComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -32,6 +35,7 @@ import { PayrollListComponent } from './payroll/payroll-list/payroll-list.compon
     FontAwesomeModule,
     HttpClientModule,
     NgbModule,
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
