@@ -1,0 +1,33 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Payroll Period</th>
+      <th scope="col">Check Date</th>
+      <th scope="col">Amount</th>
+      <!-- <th scope="col">Risk</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      [ngClass]="{
+        'table-secondary': payroll.employeeStatus === 'DISABLED'
+      }"
+      *ngFor="let payroll of getPayroll()"
+    >
+      <th scope="row"> {{ payroll.employeeName }} </th>
+      <td>{{ payroll.payrollPeriod }}</td>
+      <td>{{ payroll.checkDate | date }}</td>
+      <td>{{ payroll.grossPayroll | currency }}</td>
+      <!-- <td>{{ payroll.risk }}</td> -->
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </tfoot>
+</table>

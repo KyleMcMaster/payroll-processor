@@ -8,5 +8,6 @@ namespace PayrollProcessor.Functions.Features.Payroll
         public DateTimeOffset CheckDate { get; set; }
         public Guid EmployeeId { get; set; }
         public double GrossPayroll { get; set; }
+        public string PayrollPeriod { get; set; }
     }
 }

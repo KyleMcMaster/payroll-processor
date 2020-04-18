@@ -1,12 +1,7 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Employee } from '../../data/state/models';
-import { throwError, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { catchError, tap, map } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Employee } from '../../data/state/employee-model';
 import { DataService } from 'src/app/data/data-service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { faSmileBeam, faSkull } from '@fortawesome/free-solid-svg-icons';
-import { R3FactoryDefMetadataFacade } from '@angular/compiler/src/compiler_facade_interface';
 
 @Component({
   selector: 'app-employee-list',

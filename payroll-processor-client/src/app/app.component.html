@@ -9,7 +9,7 @@
           [(activeId)]="active"
           class="navbar-nav mr-auto"
         >
-          <li [ngbNavItem]="'employees'" class="nav-item">
+          <li [ngbNavItem]="'employees'">
             <a ngbNavLink>Employees</a>
             <ng-template ngbNavContent>
               <app-employee></app-employee>
@@ -21,11 +21,16 @@
               <app-payroll></app-payroll>
             </ng-template>
           </li>
+          <li [ngbNavItem]="'about'">
+            <a ngbNavLink>About</a>
+            <ng-template ngbNavContent>
+              <app-about></app-about>
+            </ng-template>
+          </li>
         </ul>
       </div>
     </nav>
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
-    <!-- <app-employee-payroll-list></app-employee-payroll-list> -->
     <router-outlet></router-outlet>
   </section>
   <!-- <footer id="footer">

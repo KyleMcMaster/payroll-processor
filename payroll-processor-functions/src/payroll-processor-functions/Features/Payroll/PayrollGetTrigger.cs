@@ -14,12 +14,10 @@ namespace PayrollProcessor.Functions.Features.Payroll
     {
         [FunctionName("PayrollGetTrigger")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-            string department = req.Query["department"];
+            log.LogInformation($"C# HTTP trigger function processed a request [{req}]");
 
             var payrollDetails = EmployeeData.Employees()
                 .Join(PayrollData.Payrolls()
@@ -32,15 +30,12 @@ namespace PayrollProcessor.Functions.Features.Payroll
                     EmployeeDepartment = e.Department,
                     EmployeeId = p.EmployeeId,
                     EmployeeName = $"{e.FirstName} {e.LastName}",
-                    GrossPayroll = p.GrossPayroll
+                    EmployeeStatus = e.Status,
+                    GrossPayroll = p.GrossPayroll,
+                    PayrollPeriod = p.PayrollPeriod
                 });
 
-            if (!string.IsNullOrWhiteSpace(department))
-            {
-                payrollDetails = payrollDetails.Where(pd => pd.EmployeeDepartment == department);
-            }
-
-            payrollDetails = payrollDetails.OrderByDescending(ep => ep.CheckDate);
+            payrollDetails = payrollDetails.OrderBy(ep => ep.PayrollPeriod);
 
             string responseMessage = JsonConvert.SerializeObject(
                 value: payrollDetails,

@@ -8,20 +8,22 @@ import { RiskListComponent } from './risk-list/risk-list.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
-import { EmployeePayrollListComponent } from './payroll/employee-payroll-list/employee-payroll-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeComponent } from './employee/employee.component';
 import { PayrollComponent } from './payroll/payroll.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AboutComponent } from './about/about.component';
+import { PayrollListComponent } from './payroll/payroll-list/payroll-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RiskListComponent,
     EmployeeListComponent,
-    EmployeePayrollListComponent,
     EmployeeComponent,
     PayrollComponent,
+    AboutComponent,
+    PayrollListComponent,
   ],
   imports: [
     AppRoutingModule,

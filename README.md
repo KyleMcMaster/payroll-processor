@@ -1,6 +1,6 @@
 # Payroll Processor
 
-Sample application similar to Workday or other HRIS systems where a list of employees and their payroll information would be available.
+Sample HRIS application where a list of employees and their payroll information would be available in report format.
 
 ## Build status
 
@@ -28,6 +28,21 @@ Things I would like to explore:
 - Synergy that exists between Azure Functions and .Net Core Web Apis
   - Implementations of comparable endpoints in both projects to evaluate the tooling and ecosystems
 - Having fun!
+
+## Roadmap
+
+- MVP
+
+  - Initial Employee CRUD functionality
+  - Initial Payroll CRUD functionality
+  - Basic charting and analytics of payroll data
+
+- TODOs
+
+  - Move seed data to CosmosDB document instead of boilerplate c# code
+  - Refactor client to use Akita state management
+  - Toggle between Api and Azure Function backends
+  - Advanced analytics like payroll totals by department, risk, and time
 
 ## Feedback and Contributing
 
