@@ -55,9 +55,10 @@ export class PayrollChartsComponent implements OnInit {
       });
     });
 
-    map.forEach((n, v) => {
-      this.employeeDistributionData.push(new NameValue(v, n));
-    });
+    this.employeeDistributionData = Array.from(
+      map,
+      ([key, value]) => new NameValue(key, value),
+    );
   }
 
   prepDepartmentDistributionData() {
@@ -65,31 +66,21 @@ export class PayrollChartsComponent implements OnInit {
     const employees = this.dataService.getEmployees();
     const map: Map<string, number> = new Map();
 
-    const departments: string[] = [];
-
-    employees.forEach(e => {
-      if (!departments.find(d => d === e.department)) {
-        departments.push(e.department);
+    payroll.forEach(pr => {
+      if (pr.employeeStatus !== 'ACTIVE') {
+        return;
       }
+      return map.has(pr.employeeDepartment)
+        ? map.set(
+            pr.employeeDepartment,
+            map.get(pr.employeeDepartment) + pr.grossPayroll,
+          )
+        : map.set(pr.employeeDepartment, pr.grossPayroll);
     });
 
-    payroll.forEach(p => {
-      departments.forEach(department => {
-        if (p.employeeStatus === 'ACTIVE') {
-          if (p.employeeDepartment === department) {
-            if (!map.has(department)) {
-              map.set(department, p.grossPayroll);
-            } else {
-              const sum = map.get(department) + p.grossPayroll;
-              map.set(department, sum);
-            }
-          }
-        }
-      });
-    });
-
-    map.forEach((n, v) => {
-      this.departmentDistributionData.push(new NameValue(v, n));
-    });
+    this.departmentDistributionData = Array.from(
+      map,
+      ([key, value]) => new NameValue(key, value),
+    );
   }
 }
