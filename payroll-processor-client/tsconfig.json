@@ -7,6 +7,11 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    // TODO - we'll want to enable these incrementally, currently they'll cause compilation errors
+    // "strict": true,
+    // "noImplicitReturns": true,
+    // "noImplicitThis": true,
+    // "noImplicitAny": true,
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
@@ -20,7 +25,7 @@
     ]
   },
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
+    "strictTemplates": true,
     "strictInjectionParameters": true
   }
 }
