@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "payroll-processor-api": true,
+        "payroll-processor-client": true,
+        "payroll-processor-functions": true
+    }
+}

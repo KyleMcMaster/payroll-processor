@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "payroll-processor-api",
+			"name": "api"
+		},
+		{
+			"path": "payroll-processor-client",
+			"name": "client"
+		},
+		{
+			"path": "payroll-processor-functions",
+			"name": "funtions"
+		},
+		{
+			"path": ".",
+			"name": "root"
+		}
+	],
+	"settings": {
+
+	}
+}
