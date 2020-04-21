@@ -4,6 +4,7 @@ import { Employee } from './state/employee-model';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Payroll } from './state/payroll-model';
+import { EnvService } from '../shared/env.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,16 +13,17 @@ export class DataService {
   private employees: Employee[] = [];
   private payroll: Payroll[] = [];
 
-  constructor(private http: HttpClient) {
+  private readonly apiUrl: string;
+
+  constructor(private http: HttpClient, envService: EnvService) {
+    this.apiUrl = envService.apiRootUrl;
+
     this.loadData();
   }
 
   private loadData() {
-    const employeeUrl =
-      'https://nitro-km-payroll-processor.azurewebsites.net/api/EmployeesGetTrigger';
-
     this.http
-      .get<Employee[]>(employeeUrl)
+      .get<Employee[]>(`${this.apiUrl}/EmployeesGetTrigger`)
       .pipe(
         catchError(err => {
           console.log('Could not fetch employees');
@@ -30,11 +32,8 @@ export class DataService {
       )
       .subscribe(result => (this.employees = result));
 
-    const payrollUrl =
-      'https://nitro-km-payroll-processor.azurewebsites.net/api/PayrollGetTrigger';
-
     this.http
-      .get<Payroll[]>(payrollUrl)
+      .get<Payroll[]>(`${this.apiUrl}/PayrollGetTrigger`)
       .pipe(
         catchError(err => {
           console.log('Could not fetch payroll');
@@ -53,11 +52,17 @@ export class DataService {
   }
 
   removeEmployee(id: string) {
-    this.employees.find(e => e.id === id).status = 'DISABLED';
+    const employee = this.employees.find(e => e.id === id);
+
+    if (!employee) {
+      return;
+    }
+
+    employee.status = 'DISABLED';
+
     this.payroll
       .filter(p => p.employeeId === id)
-      .forEach(payroll => {
-        this.payroll.find(p => p.id === payroll.id).employeeStatus = 'DISABLED';
-      });
+      .filter(payroll => !!this.payroll.find(p => p.id === payroll.id))
+      .forEach(payroll => payroll.employeeStatus = 'DISABLED');
   }
 }
