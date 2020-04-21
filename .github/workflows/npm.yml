@@ -6,24 +6,27 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 
 env:
-  NODE_VERSION: '10.x'                # set this to the node version to use
+  NODE_VERSION: "10.x" # set this to the node version to use
 
 jobs:
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ env.NODE_VERSION }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-    - name: npm install, build, and test
-      run: |
-        # Build and test the project
-        cd payroll-processor-client
-        npm install
-        npm run build --if-present
-      # npm run test --if-present
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: npm install, build, and test
+        run: |
+          # Build and test the project
+          cd payroll-processor-client
+          npm install
+          npm run build --if-present
+        # npm run test --if-present
