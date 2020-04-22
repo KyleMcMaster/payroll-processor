@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "seangwright",
+      "name": "Sean G. Wright",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1382768?v=4",
+      "profile": "https://www.seangwright.me",
+      "contributions": [
+        "design",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "payroll-processor",
+  "projectOwner": "KyleMcMaster",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
