@@ -89,7 +89,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 - [Update Powershell security policy](https://github.com/Azure/azure-functions-core-tools/issues/1821#issuecomment-586925919)
 
-- F5 or run from the VS Code Debug drop down "Attach to .NET Functions (functions)"
+- F5 or run from the VS Code Debug drop down "Function - Run & Attach (Debug)"
 
 - Optional: Run any of the following tasks
 
