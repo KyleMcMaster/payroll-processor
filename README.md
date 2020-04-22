@@ -44,12 +44,6 @@ Things I would like to explore:
   - Toggle between Api and Azure Function backends
   - Advanced analytics like payroll totals by department, risk, and time
 
-## Feedback and Contributing
-
-Feel free to open PRs with additional examples, tests, or refactorings.
-
-## References
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -58,6 +52,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
+  <tr>
+    <td align="center"><a href="https://github.com/KyleMcMaster"><img src="https://avatars1.githubusercontent.com/u/11415127?v=4" width="100px;" alt=""/><br /><sub><b>Kyle McMaster</b></sub></a><br /><a href="#design-KyleMcMaster" title="Design">🎨</a> <a href="https://github.com/KyleMcMaster/payroll-processor/commits?author=KyleMcMaster" title="Code">💻</a> <a href="https://github.com/KyleMcMaster/payroll-processor/commits?author=KyleMcMaster" title="Tests">⚠️</a></td>
+  </tr>
   <tr>
     <td align="center"><a href="https://www.seangwright.me"><img src="https://avatars3.githubusercontent.com/u/1382768?v=4" width="100px;" alt=""/><br /><sub><b>Sean G. Wright</b></sub></a><br /><a href="#design-seangwright" title="Design">🎨</a> <a href="https://github.com/KyleMcMaster/payroll-processor/commits?author=seangwright" title="Code">💻</a> <a href="https://github.com/KyleMcMaster/payroll-processor/pulls?q=is%3Apr+reviewed-by%3Aseangwright" title="Reviewed Pull Requests">👀</a></td>
   </tr>
@@ -68,3 +65,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## References
+
+[Akita-Demo](https://github.com/seangwright/akita-demo)

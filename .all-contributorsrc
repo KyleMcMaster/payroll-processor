@@ -6,6 +6,17 @@
   "commit": false,
   "contributors": [
     {
+      "login": "KyleMcMaster",
+      "name": "Kyle McMaster",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/11415127?v=4",
+      "profile": "https://github.com/KyleMcMaster",
+      "contributions": [
+        "design",
+        "code",
+        "test"
+      ]
+    },
+    {
       "login": "seangwright",
       "name": "Sean G. Wright",
       "avatar_url": "https://avatars3.githubusercontent.com/u/1382768?v=4",
@@ -14,7 +25,7 @@
         "design",
         "code",
         "review"
-      ]
+       ]
     }
   ],
   "contributorsPerLine": 7,
