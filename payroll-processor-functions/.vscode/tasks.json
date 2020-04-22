@@ -1,0 +1,91 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Function - Clean (Debug)",
+      "detail": "Cleans the Payroll Processor functions solution Debug builds via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "payroll-processor-functions.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Function - Build (Debug)",
+      "detail": "Builds the Payroll Processor functions solution in Debug mode via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "payroll-processor-functions.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "Function - Clean (Debug)",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Function - Clean (Release)",
+      "detail": "Cleans the Payroll Processor functions solution Release builds via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "payroll-processor-functions.sln",
+        "--configuration",
+        "Release",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Function - Test",
+      "detail": "Runs tests against the Payroll Processor functions solution",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "payroll-processor-functions.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Function - Publish",
+      "command": "dotnet",
+      "args": [
+        "publish",
+        "payroll-processor-functions.sln",
+        "--configuration",
+        "Release",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "Function - Clean (Release)",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "type": "func",
+      "label": "Function - Run (Debug)",
+      "detail": "Runs the Payroll Processor function via Azure Function Core Tools on http://localhost:7071",
+      "dependsOn": "Function - Build (Debug)",
+      "options": {
+        "cwd": "${workspaceFolder}/src/payroll-processor-functions/bin/Debug/netcoreapp3.1/bin"
+      },
+      "command": "host start",
+      "isBackground": true,
+      "problemMatcher": "$func-watch"
+    }
+  ]
+}

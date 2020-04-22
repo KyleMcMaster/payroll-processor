@@ -60,6 +60,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
@@ -67,3 +68,31 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 ## References
 
 [Akita-Demo](https://github.com/seangwright/akita-demo)
+
+## Build / Run
+
+### Client
+
+- Run the "Client - Install" VS Code task
+- Run the "Client - Serve" VS Code task
+
+- Optional: Run any of the following tasks
+
+  - Client - Build
+
+### Functions
+
+- Ensure the [Azure Functions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
+  VS Code extension is installed.
+
+- Run "Azure Functions: Install or Update Azure Functions Core Tools" from the command palette.
+
+- [Update Powershell security policy](https://github.com/Azure/azure-functions-core-tools/issues/1821#issuecomment-586925919)
+
+- F5 or run from the VS Code Debug drop down "Attach to .NET Functions (functions)"
+
+- Optional: Run any of the following tasks
+
+  - Function - Run (Debug)
+  - Function - Test
+  - Function - Build (Debug)

@@ -29,14 +29,21 @@
 
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
 
     "[csharp]": {
       "editor.defaultFormatter": "ms-dotnettools.csharp"
-    }
+    },
+
+    "debug.internalConsoleOptions": "neverOpen"
   },
   "extensions": {
     "recommendations": [
       "ms-azuretools.vscode-azurefunctions",
+      "ms-dotnettools.csharp",
       "esbenp.prettier-vscode",
       "DavidAnson.vscode-markdownlint",
       "EditorConfig.EditorConfig",
@@ -44,9 +51,5 @@
       "dozerg.tsimportsorter",
       "stylelint.vscode-stylelint"
     ]
-  },
-  "launch": {
-    "configurations": [],
-    "compounds": []
   }
 }

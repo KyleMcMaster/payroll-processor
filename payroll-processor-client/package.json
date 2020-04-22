@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run ng serve -- --aot --port 4201",
-    "build": "ng build",
+    "build": "ng build -c production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
