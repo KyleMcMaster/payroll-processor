@@ -25,7 +25,17 @@
         "design",
         "code",
         "review"
-       ]
+      ]
+    },
+    {
+      "login": "eyev",
+      "name": "Justin Conklin",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2951907?v=4",
+      "profile": "https://conklin.dev",
+      "contributions": [
+        "review",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
