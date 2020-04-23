@@ -1,23 +1,55 @@
 {
-	"folders": [
-		{
-			"path": "payroll-processor-api",
-			"name": "api"
-		},
-		{
-			"path": "payroll-processor-client",
-			"name": "client"
-		},
-		{
-			"path": "payroll-processor-functions",
-			"name": "funtions"
-		},
-		{
-			"path": ".",
-			"name": "root"
-		}
-	],
-	"settings": {
+  "folders": [
+    {
+      "path": "payroll-processor-api",
+      "name": "api"
+    },
+    {
+      "path": "payroll-processor-client",
+      "name": "client"
+    },
+    {
+      "path": "payroll-processor-functions",
+      "name": "funtions"
+    },
+    {
+      "path": ".",
+      "name": "root"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "node_modules": true
+    },
 
-	}
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
+
+    "[csharp]": {
+      "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
+
+    "debug.internalConsoleOptions": "neverOpen"
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-azuretools.vscode-azurefunctions",
+      "ms-dotnettools.csharp",
+      "esbenp.prettier-vscode",
+      "DavidAnson.vscode-markdownlint",
+      "EditorConfig.EditorConfig",
+      "ms-vscode.vscode-typescript-tslint-plugin",
+      "dozerg.tsimportsorter",
+      "stylelint.vscode-stylelint"
+    ]
+  }
 }
