@@ -55,6 +55,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/KyleMcMaster"><img src="https://avatars1.githubusercontent.com/u/11415127?v=4" width="100px;" alt=""/><br /><sub><b>Kyle McMaster</b></sub></a><br /><a href="#design-KyleMcMaster" title="Design">🎨</a> <a href="https://github.com/KyleMcMaster/payroll-processor/commits?author=KyleMcMaster" title="Code">💻</a> <a href="https://github.com/KyleMcMaster/payroll-processor/commits?author=KyleMcMaster" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://www.seangwright.me"><img src="https://avatars3.githubusercontent.com/u/1382768?v=4" width="100px;" alt=""/><br /><sub><b>Sean G. Wright</b></sub></a><br /><a href="#design-seangwright" title="Design">🎨</a> <a href="https://github.com/KyleMcMaster/payroll-processor/commits?author=seangwright" title="Code">💻</a> <a href="https://github.com/KyleMcMaster/payroll-processor/pulls?q=is%3Apr+reviewed-by%3Aseangwright" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://conklin.dev"><img src="https://avatars2.githubusercontent.com/u/2951907?v=4" width="100px;" alt=""/><br /><sub><b>Justin Conklin</b></sub></a><br /><a href="https://github.com/KyleMcMaster/payroll-processor/pulls?q=is%3Apr+reviewed-by%3Aeyev" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/KyleMcMaster/payroll-processor/commits?author=eyev" title="Code">💻</a></td>
   </tr>
 </table>
 
