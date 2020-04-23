@@ -4,21 +4,21 @@ name: dotnet core payroll-processor-functions - build
 on:
   push:
     branches:
-    - master
+      - master
   pull_request:
     branches:
-    - master
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
-    - name: Build with dotnet
-      run: dotnet build payroll-processor-functions/payroll-processor-functions.sln --configuration Release
-    - name: Unit Tests
-      run: dotnet test payroll-processor-functions/
+      - uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.101
+      - name: Build with dotnet
+        run: dotnet build payroll-processor-functions/Payroll.Processor.Functions.sln --configuration Release
+      - name: Unit Tests
+        run: dotnet test payroll-processor-functions/Payroll.Processor.Functions.sln
