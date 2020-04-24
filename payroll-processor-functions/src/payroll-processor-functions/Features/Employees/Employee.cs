@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
@@ -12,10 +13,20 @@ namespace PayrollProcessor.Functions.Features.Employees
         public string Phone { get; set; } = "";
         public string Status { get; set; } = "";
         public string Title { get; set; } = "";
+        public IEnumerable<EmployeePayroll> Payrolls { get; set; } = new EmployeePayroll[] { };
+        public string Version { get; set; } = "";
 
         public Employee(Guid id)
         {
             Id = id;
         }
+    }
+
+    public class EmployeePayroll
+    {
+        public Guid Id { get; set; }
+        public DateTimeOffset CheckDate { get; set; }
+        public double GrossPayroll { get; set; }
+        public string PayrollPeriod { get; set; } = "";
     }
 }

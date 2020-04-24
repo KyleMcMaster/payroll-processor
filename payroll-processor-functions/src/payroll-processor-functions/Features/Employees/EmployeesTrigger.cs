@@ -6,17 +6,16 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using PayrollProcessor.Functions.Infrastructure;
 using Microsoft.WindowsAzure.Storage.Table;
+using System;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
     public class EmployeesTrigger
     {
-        public const string CONNECTION = "AzureTableStorage";
-
         [FunctionName("Employees_Get")]
         public async Task<IActionResult> GetEmployees(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "employees")] HttpRequest req,
-            [Table("employees", Connection = CONNECTION)] CloudTable employeeTable,
+            [Table("employees")] CloudTable employeeTable,
              ILogger log)
         {
             log.LogInformation($"Retrieving all employees: [{req}]");
@@ -29,7 +28,7 @@ namespace PayrollProcessor.Functions.Features.Employees
         }
 
         [FunctionName("Employee_Create")]
-        [return: Table("employees", Connection = CONNECTION)]
+        [return: Table("employees")]
         public async Task<EmployeeEntity> CreateEmployee(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] HttpRequest req,
                 ILogger log)
@@ -38,21 +37,9 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             var employee = await Request.Parse<Employee>(req);
 
+            employee.Id = Guid.NewGuid();
+
             return EmployeeEntity.Map.From(employee);
-        }
-
-        [FunctionName("EmployeesTable_Create")]
-        public async Task<IActionResult> CreateEmployeesTable(
-                [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees/table")] HttpRequest req,
-                ILogger log)
-        {
-            log.LogInformation($"Creating employees table: [{req}]");
-
-            var tableManager = new TableManager();
-
-            await tableManager.CreateTable("employees");
-
-            return new OkResult();
         }
     }
 }

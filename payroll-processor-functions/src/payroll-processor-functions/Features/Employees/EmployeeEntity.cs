@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.WindowsAzure.Storage.Table;
+using Newtonsoft.Json;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
@@ -15,11 +17,14 @@ namespace PayrollProcessor.Functions.Features.Employees
         public string Phone { get; set; } = "";
         public string Status { get; set; } = "";
         public string Title { get; set; } = "";
+        public string Payrolls { get; set; } = "";
 
         public static class Map
         {
             public static Employee To(EmployeeEntity entity)
             {
+                var payrolls = JsonConvert.DeserializeObject<IEnumerable<EmployeePayroll>>(entity.Payrolls);
+
                 return new Employee(Guid.Parse(entity.RowKey))
                 {
                     Department = entity.Department,
@@ -28,15 +33,19 @@ namespace PayrollProcessor.Functions.Features.Employees
                     LastName = entity.LastName,
                     Phone = entity.Phone,
                     Status = entity.Status,
-                    Title = entity.Status
+                    Title = entity.Status,
+                    Payrolls = payrolls,
+                    Version = entity.ETag
                 };
             }
 
             public static EmployeeEntity From(Employee employee)
             {
+                string payrolls = JsonConvert.SerializeObject(employee.Payrolls, DefaultJsonSerializerSettings.JsonSerializerSettings);
+
                 return new EmployeeEntity
                 {
-                    PartitionKey = "Employee",
+                    PartitionKey = employee.Department.ToLowerInvariant(),
                     RowKey = employee.Id.ToString("n"),
                     Department = employee.Department,
                     EmploymentStartedOn = employee.EmploymentStartedOn,
@@ -44,7 +53,9 @@ namespace PayrollProcessor.Functions.Features.Employees
                     LastName = employee.LastName,
                     Phone = employee.Phone,
                     Status = employee.Status,
-                    Title = employee.Title
+                    Title = employee.Title,
+                    Payrolls = payrolls,
+                    ETag = employee.Version
                 };
             }
         }

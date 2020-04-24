@@ -1,14 +1,17 @@
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
+using PayrollProcessor.Functions.Infrastructure;
 
-namespace PayrollProcessor.Functions.Infrastructure
+namespace PayrollProcessor.Functions.Features.Resources
 {
-    public class TableManager
+    public class ResourceManager
     {
         private readonly CloudTableClient tableClient;
+        private readonly CloudQueueClient queueClient;
 
-        public TableManager()
+        public ResourceManager()
         {
             string connectionString = EnvironmentSettings
                 .Get("AzureWebJobsAzureTableStorage")
@@ -17,15 +20,17 @@ namespace PayrollProcessor.Functions.Infrastructure
             var storageAccount = CloudStorageAccount.Parse(connectionString);
 
             tableClient = storageAccount.CreateCloudTableClient();
+            queueClient = storageAccount.CreateCloudQueueClient();
         }
 
         public async Task CreateTable(string tableName)
         {
-            // Retrieve a reference to the table.
-            var table = tableClient.GetTableReference(tableName);
+            await tableClient.GetTableReference(tableName).CreateIfNotExistsAsync();
+        }
 
-            // Create the table if it doesn't exist.
-            await table.CreateIfNotExistsAsync();
+        public async Task CreateQueue(string queueName)
+        {
+            await queueClient.GetQueueReference(queueName).CreateIfNotExistsAsync();
         }
     }
 }

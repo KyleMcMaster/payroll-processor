@@ -9,6 +9,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
         public Guid EmployeeId { get; set; }
         public double GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
+        public string EmployeeDepartment { get; set; } = "";
 
         public static class Map
         {
@@ -20,6 +21,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeId = entity.EmployeeId,
                     GrossPayroll = entity.GrossPayroll,
                     PayrollPeriod = entity.PayrollPeriod,
+                    EmployeeDepartment = entity.EmployeeDepartment
                 };
             }
 
@@ -27,12 +29,51 @@ namespace PayrollProcessor.Functions.Features.Payrolls
             {
                 return new PayrollEntity
                 {
-                    PartitionKey = "Payroll",
+                    PartitionKey = payroll.CheckDate.ToString("yyyyMMdd"),
                     RowKey = payroll.Id.ToString("n"),
                     CheckDate = payroll.CheckDate,
                     EmployeeId = payroll.EmployeeId,
                     GrossPayroll = payroll.GrossPayroll,
-                    PayrollPeriod = payroll.PayrollPeriod
+                    PayrollPeriod = payroll.PayrollPeriod,
+                    EmployeeDepartment = payroll.EmployeeDepartment
+                };
+            }
+        }
+    }
+
+    public class EmployeePayrollEntity : TableEntity
+    {
+        public DateTimeOffset CheckDate { get; set; }
+        public Guid EmployeeId { get; set; }
+        public double GrossPayroll { get; set; }
+        public string PayrollPeriod { get; set; } = "";
+        public string EmployeeDepartment { get; set; } = "";
+
+        public static class Map
+        {
+            public static Payroll To(EmployeePayrollEntity entity)
+            {
+                return new Payroll(Guid.Parse(entity.RowKey))
+                {
+                    CheckDate = entity.CheckDate,
+                    EmployeeId = entity.EmployeeId,
+                    GrossPayroll = entity.GrossPayroll,
+                    PayrollPeriod = entity.PayrollPeriod,
+                    EmployeeDepartment = entity.EmployeeDepartment
+                };
+            }
+
+            public static EmployeePayrollEntity From(Payroll payroll)
+            {
+                return new EmployeePayrollEntity
+                {
+                    PartitionKey = payroll.EmployeeId.ToString("n"),
+                    RowKey = payroll.Id.ToString("n"),
+                    CheckDate = payroll.CheckDate,
+                    EmployeeId = payroll.EmployeeId,
+                    GrossPayroll = payroll.GrossPayroll,
+                    PayrollPeriod = payroll.PayrollPeriod,
+                    EmployeeDepartment = payroll.EmployeeDepartment
                 };
             }
         }
