@@ -82,6 +82,74 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Create Payroll for Employee",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"employeeId\": \"ed00b46a-963f-4795-bc75-3f646373e984\",\n\t\"checkDate\": \"2020-04-19T07:22Z\",\n\t\"grossPayroll\": 100,\n\t\"payrollPeriod\": \"2\",\n\t\"employeeDepartment\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/payrolls/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"payrolls",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Resources",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7071/api/resources/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"resources",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
