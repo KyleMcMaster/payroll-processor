@@ -28,7 +28,7 @@
       "payroll-processor-api": true,
       "payroll-processor-client": true,
       "payroll-processor-functions": true,
-      //"**/bin": true,
+      "**/bin": true,
       "**/obj": true,
       "**/dist": true
     },
