@@ -17,8 +17,10 @@ namespace PayrollProcessor.Functions.Features.Employee
         {
             log.LogInformation($"C# HTTP trigger function processed a request: [{req}]");
 
+            var value = await Task.FromResult(EmployeeData.Employees());
+
             string responseMessage = JsonConvert.SerializeObject(
-                value: EmployeeData.Employees(),
+                value: value,
                 settings: DefaultJsonSerializerSettings.JsonSerializerSettings);
 
             return new OkObjectResult(responseMessage);

@@ -72,14 +72,26 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Build / Run
 
+This project uses VS Code [Multi-root Workspaces](https://code.visualstudio.com/docs/editor/multi-root-workspaces).
+For the best developer experience, open the workspace directly with VS Code (`code payroll-processor.code-workspace`)
+or open the root of the repository in VS Code (`code .`) and when prompted, open the workspace.
+
+### .NET
+
+The Azure Functions solution (`Payroll.Processor.Functions.sln`) is set up as the default solution
+for [Omnisharp](https://github.com/OmniSharp/omnisharp-vscode), and is loaded as soon as the
+VS Code workspace is opened.
+
+If you want to switch to work on the API solution, use the "Omnisharp: Select Project" command from the command palette
+and select `Payroll.Processor.Api.sln`.
+
 ### Client
 
-- Run the "Client - Install" VS Code task
-- Run the "Client - Serve" VS Code task
+- Run the "Client: Serve" VS Code task (this will install packages and start serving the app)
 
 - Optional: Run any of the following tasks
 
-  - Client - Build
+  - Client: Build
 
 ### Functions
 
@@ -90,10 +102,10 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 - [Update Powershell security policy](https://github.com/Azure/azure-functions-core-tools/issues/1821#issuecomment-586925919)
 
-- F5 or run from the VS Code Debug drop down "Function - Run & Attach (Debug)"
+- F5 or run from the VS Code Debug drop down "Function: Run & Attach (Debug)"
 
 - Optional: Run any of the following tasks
 
-  - Function - Run (Debug)
-  - Function - Test
-  - Function - Build (Debug)
+  - Function: Run (Debug)
+  - Function: Test
+  - Function: Build (Debug)

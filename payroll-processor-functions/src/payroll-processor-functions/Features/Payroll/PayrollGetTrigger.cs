@@ -35,7 +35,7 @@ namespace PayrollProcessor.Functions.Features.Payroll
                     PayrollPeriod = p.PayrollPeriod
                 });
 
-            payrollDetails = payrollDetails.OrderBy(ep => ep.PayrollPeriod);
+            payrollDetails = await Task.FromResult(payrollDetails.OrderBy(ep => ep.PayrollPeriod));
 
             string responseMessage = JsonConvert.SerializeObject(
                 value: payrollDetails,

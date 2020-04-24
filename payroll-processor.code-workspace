@@ -38,7 +38,10 @@
       "editor.defaultFormatter": "ms-dotnettools.csharp"
     },
 
-    "debug.internalConsoleOptions": "neverOpen"
+    "omnisharp.defaultLaunchSolution": "Payroll.Processor.Functions.sln",
+    "omnisharp.autoStart": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableRoslynAnalyzers": true
   },
   "extensions": {
     "recommendations": [
