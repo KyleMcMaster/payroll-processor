@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+
 import { DataService } from 'src/app/data/data-service';
 import { NameValue } from 'src/app/data/state/data-model';
 
@@ -8,11 +12,11 @@ import { NameValue } from 'src/app/data/state/data-model';
   styleUrls: ['./payroll-charts.component.scss'],
 })
 export class PayrollChartsComponent implements OnInit {
-  departmentDistributionData: any[] = [];
-  employeeDistributionData: any[] = [];
-  view: any[] = [700, 400];
+  departmentDistributionData: NameValue[] = [];
+  employeeDistributionData: NameValue[] = [];
+  view: [number, number] = [700, 400];
 
-  // options
+  // options+
   gradient = false;
   showLegend = true;
   showLabels = false;
@@ -39,20 +43,13 @@ export class PayrollChartsComponent implements OnInit {
     const employees = this.dataService.getEmployees();
     const map: Map<string, number> = new Map();
 
-    payroll.forEach(p => {
-      employees.forEach(e => {
-        if (e.status === 'ACTIVE') {
-          const employeeName = e.firstName + ' ' + e.lastName;
-          if (p.employeeId === e.id) {
-            if (!map.has(employeeName)) {
-              map.set(employeeName, p.grossPayroll);
-            } else {
-              const sum = map.get(employeeName) + p.grossPayroll;
-              map.set(employeeName, sum);
-            }
-          }
-        }
-      });
+    payroll.forEach((p) => {
+      if (p.employeeStatus !== 'ACTIVE') {
+        return;
+      }
+      return map.has(p.employeeName)
+        ? map.set(p.employeeName, map.get(p.employeeName) + p.grossPayroll)
+        : map.set(p.employeeName, p.grossPayroll);
     });
 
     this.employeeDistributionData = Array.from(
@@ -66,7 +63,7 @@ export class PayrollChartsComponent implements OnInit {
     const employees = this.dataService.getEmployees();
     const map: Map<string, number> = new Map();
 
-    payroll.forEach(pr => {
+    payroll.forEach((pr) => {
       if (pr.employeeStatus !== 'ACTIVE') {
         return;
       }

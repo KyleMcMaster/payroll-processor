@@ -10,9 +10,9 @@ namespace PayrollProcessor.Functions.Features.Employee
 {
     public class EmployeesGetTrigger
     {
-        [FunctionName("EmployeesGetTrigger")]
+        [FunctionName(nameof(EmployeesGetTrigger))]
         public async Task<IActionResult> Run(
-                [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+                [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
                 ILogger log)
         {
             log.LogInformation($"C# HTTP trigger function processed a request: [{req}]");

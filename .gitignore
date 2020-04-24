@@ -402,3 +402,6 @@ yarn-error.log
 
 .notes.md
 baseline.json
+
+# local environment settings
+payroll-processor-client/src/environments/environment.local.ts

@@ -12,7 +12,7 @@ namespace PayrollProcessor.Functions.Features.Payroll
 {
     public static class PayrollGetTrigger
     {
-        [FunctionName("PayrollGetTrigger")]
+        [FunctionName(nameof(PayrollGetTrigger))]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
