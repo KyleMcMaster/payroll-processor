@@ -102,6 +102,16 @@ and select `Payroll.Processor.Api.sln`.
 
 - [Update Powershell security policy](https://github.com/Azure/azure-functions-core-tools/issues/1821#issuecomment-586925919)
 
+- Start the Azure Storage Emulator (see: Data Storage below)
+
+- Copy
+
+  `functions/src/payroll-processor-functions/local.settings.json.sample`
+
+  to
+
+  `functions/src/payroll-processor-functions/local.settings.json`
+
 - F5 or run from the VS Code Debug drop down "Function: Run & Attach (Debug)"
 
 - Optional: Run any of the following tasks
@@ -109,3 +119,9 @@ and select `Payroll.Processor.Api.sln`.
   - Function: Run (Debug)
   - Function: Test
   - Function: Build (Debug)
+
+### Data Storage
+
+The project currently stores data in Azure Table Storage, which can be simulated locally using the [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator).
+
+The locally stored data can be viewed using the [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/).

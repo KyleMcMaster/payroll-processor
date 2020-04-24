@@ -4,7 +4,15 @@
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
     <RootNamespace>Payroll.Processor.Functions</RootNamespace>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
+  </PropertyGroup>
+
   <ItemGroup>
+    <PackageReference Include="LanguageExt.Core" Version="3.4.13" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.11" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.6" />
     <PackageReference Include="NewtonSoft.Json" Version="12.0.3" />
   </ItemGroup>

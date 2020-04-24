@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PayrollProcessor.Functions.Features.Payroll
+namespace PayrollProcessor.Functions.Features.Payrolls
 {
     public class PayrollData
     {

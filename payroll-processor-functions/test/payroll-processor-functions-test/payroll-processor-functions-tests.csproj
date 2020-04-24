@@ -27,8 +27,4 @@
     <ProjectReference Include="..\..\src\payroll-processor-functions\payroll-processor-functions.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Payroll\" />
-  </ItemGroup>
-
 </Project>

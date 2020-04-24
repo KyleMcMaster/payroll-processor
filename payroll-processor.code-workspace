@@ -24,7 +24,13 @@
       "**/.hg": true,
       "**/CVS": true,
       "**/.DS_Store": true,
-      "node_modules": true
+      "node_modules": true,
+      "payroll-processor-api": true,
+      "payroll-processor-client": true,
+      "payroll-processor-functions": true,
+      //"**/bin": true,
+      "**/obj": true,
+      "**/dist": true
     },
 
     "editor.formatOnSave": true,
@@ -52,7 +58,9 @@
       "EditorConfig.EditorConfig",
       "ms-vscode.vscode-typescript-tslint-plugin",
       "dozerg.tsimportsorter",
-      "stylelint.vscode-stylelint"
+      "stylelint.vscode-stylelint",
+      "k--kato.docomment",
+      "jchannon.csharpextensions"
     ]
   }
 }
