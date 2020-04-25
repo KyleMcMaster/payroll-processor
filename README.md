@@ -87,6 +87,14 @@ and select `Payroll.Processor.Api.sln`.
 
 ### Client
 
+- Copy
+
+  `client/src/environments/environment.local.sample.ts`
+
+  to
+
+  `client/src/environments/environment.local.ts`
+
 - Run the "Client: Serve" VS Code task (this will install packages and start serving the app)
 
 - Optional: Run any of the following tasks
