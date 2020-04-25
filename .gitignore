@@ -402,3 +402,6 @@ yarn-error.log
 
 .notes.md
 baseline.json
+
+# local environment
+environment.local.ts

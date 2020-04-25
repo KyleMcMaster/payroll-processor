@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Environment } from '../../environments/environment-types';
+
 import { environment } from '../../environments/environment';
+import { Environment } from '../../environments/environment-types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EnvService {
   get env(): Environment {
@@ -11,6 +12,6 @@ export class EnvService {
   }
 
   get apiRootUrl(): string {
-    return `${this.env}/api`;
+    return `${this.env.domain}/api`;
   }
 }

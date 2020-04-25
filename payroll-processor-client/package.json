@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run ng serve -- --aot --port 4201",
+    "start": "npm run ng serve -- --aot --port 4201 --configuration local",
     "build": "ng build -c production",
     "test": "ng test",
     "lint": "ng lint",
