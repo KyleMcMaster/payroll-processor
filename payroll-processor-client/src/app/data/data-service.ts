@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { EnvService } from '../shared/env.service';
+
 import { Employee } from './state/employee-model';
 import { Payroll } from './state/payroll-model';
 
