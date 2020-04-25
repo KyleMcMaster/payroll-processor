@@ -24,7 +24,6 @@ export class DataService {
   }
 
   private loadData() {
-    console.log(`${this.apiUrl}/EmployeesGetTrigger`);
     this.http
       .get<Employee[]>(`${this.apiUrl}/EmployeesGetTrigger`)
       .pipe(
