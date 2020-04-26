@@ -33,6 +33,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   add() {}
 
   disable(id: string) {
-    // this.dataService.removeEmployee(id);
+    // this.service.remove(id);
   }
 }
