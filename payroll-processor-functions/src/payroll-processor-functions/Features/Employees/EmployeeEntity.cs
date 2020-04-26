@@ -33,7 +33,7 @@ namespace PayrollProcessor.Functions.Features.Employees
                     LastName = entity.LastName,
                     Phone = entity.Phone,
                     Status = entity.Status,
-                    Title = entity.Status,
+                    Title = entity.Title,
                     Payrolls = payrolls,
                     Version = entity.ETag
                 };
