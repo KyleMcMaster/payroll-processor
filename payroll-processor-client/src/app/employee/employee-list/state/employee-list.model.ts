@@ -12,3 +12,16 @@ export interface Employee {
 export type Status = 'ACTIVE' | 'DISABLED';
 
 export type Department = 'HR' | 'IT' | 'Sales' | 'Finance';
+
+export function createInitialState(): Employee {
+  return {
+    id: '',
+    department: 'IT',
+    employmentStartedOn: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
+    status: 'ACTIVE',
+    title: '',
+  };
+}

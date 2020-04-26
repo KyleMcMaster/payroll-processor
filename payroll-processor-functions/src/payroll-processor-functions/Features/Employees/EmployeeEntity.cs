@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
@@ -33,7 +33,7 @@ namespace PayrollProcessor.Functions.Features.Employees
                     LastName = entity.LastName,
                     Phone = entity.Phone,
                     Status = entity.Status,
-                    Title = entity.Status,
+                    Title = entity.Title,
                     Payrolls = payrolls,
                     Version = entity.ETag
                 };

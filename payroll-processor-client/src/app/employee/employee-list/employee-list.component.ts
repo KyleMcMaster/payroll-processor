@@ -1,7 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
+
 import { Employee } from '../../data/state/employee-model';
-import { DataService } from 'src/app/data/data-service';
-import { faSmileBeam, faSkull } from '@fortawesome/free-solid-svg-icons';
+
+import { EmployeeListService } from './state/employee-list.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -12,19 +15,19 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   faSkull = faSkull;
   faSmileBeam = faSmileBeam;
 
-  constructor(private dataService: DataService) {}
+  constructor(private employeeListService: EmployeeListService) {}
 
   ngOnInit() {}
 
   ngOnDestroy() {}
 
   getEmployees(): Employee[] {
-    return this.dataService.getEmployees();
+    return this.employeeListService.getEmployees();
   }
 
   add() {}
 
   remove(id: string) {
-    this.dataService.removeEmployee(id);
+    // this.dataService.removeEmployee(id);
   }
 }

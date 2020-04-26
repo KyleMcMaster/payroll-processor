@@ -25,7 +25,7 @@ export class DataService {
 
   private loadData() {
     this.http
-      .get<Employee[]>(`${this.apiUrl}/EmployeesGetTrigger`)
+      .get<Employee[]>(`${this.apiUrl}/Employees`)
       .pipe(
         catchError((err) => {
           console.log('Could not fetch employees');
@@ -35,10 +35,10 @@ export class DataService {
       .subscribe((result) => (this.employees = result));
 
     this.http
-      .get<Payroll[]>(`${this.apiUrl}/PayrollGetTrigger`)
+      .get<Payroll[]>(`${this.apiUrl}/Payrolls`)
       .pipe(
         catchError((err) => {
-          console.log('Could not fetch payroll');
+          console.log('Could not fetch payrolls');
           return throwError(err);
         }),
       )
