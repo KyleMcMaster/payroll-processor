@@ -30,7 +30,7 @@ export class EmployeeCreateService {
           this.employeeListStore.upsert(detail.rowKey, {
             id: detail.rowKey,
             department: detail.department,
-            email: employee.email,
+            email: detail.email,
             employmentStartedOn: detail.employmentStartedOn,
             firstName: detail.firstName,
             lastName: detail.lastName,

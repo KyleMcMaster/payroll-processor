@@ -11,12 +11,11 @@ import { EnvService } from 'src/app/shared/env.service';
 @Injectable({ providedIn: 'root' })
 export class EmployeeListService {
   private readonly apiUrl: string;
-  private employees: Employee[];
 
   constructor(
     private http: HttpClient,
     envService: EnvService,
-    private employeeListStore: EmployeeListStore,
+    private store: EmployeeListStore,
   ) {
     this.apiUrl = envService.apiRootUrl;
   }
@@ -24,8 +23,8 @@ export class EmployeeListService {
   getEmployees(): Observable<void | Employee[]> {
     return this.http.get<Employee[]>(`${this.apiUrl}/Employees`).pipe(
       map((employees) => {
-        this.employeeListStore.set(employees);
-        this.employeeListStore.setLoading(false);
+        this.store.set(employees);
+        this.store.setLoading(false);
       }),
       catchError((err) => {
         console.log('Could not fetch employees');

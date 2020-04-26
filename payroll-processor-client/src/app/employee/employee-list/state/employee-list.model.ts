@@ -1,9 +1,9 @@
 export interface Employee {
   id: string;
   department: Department;
-  email: string;
-  employmentStartedOn: string;
-  firstName: string;
+  readonly email: string;
+  readonly employmentStartedOn: string;
+  readonly firstName: string;
   lastName: string;
   phone: string;
   status: Status;
@@ -34,9 +34,9 @@ export function createInitialState(): Employee {
 
 export interface EmployeeCreate {
   department: Department;
-  email: string;
-  employmentStartedOn: string;
-  firstName: string;
+  readonly email: string;
+  readonly employmentStartedOn: string;
+  readonly firstName: string;
   lastName: string;
   phone: string;
   status: Status;

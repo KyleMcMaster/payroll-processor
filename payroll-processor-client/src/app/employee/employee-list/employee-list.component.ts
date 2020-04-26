@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,18 +13,19 @@ import { EmployeeListService } from './state/employee-list.service';
   styleUrls: ['./employee-list.component.scss'],
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
-  faSkull = faSkull;
-  faSmileBeam = faSmileBeam;
-  employees = of<Employee[]>();
+  readonly faSkull = faSkull;
+  readonly faSmileBeam = faSmileBeam;
+  readonly employees: Observable<Employee[]>;
 
   constructor(
-    private employeeListService: EmployeeListService,
-    private employeeListQuery: EmployeeListQuery,
-  ) {}
+    private service: EmployeeListService,
+    private query: EmployeeListQuery,
+  ) {
+    this.employees = this.query.selectAll();
+  }
 
   ngOnInit() {
-    this.employeeListService.getEmployees().subscribe();
-    this.employees = this.employeeListQuery.selectAll();
+    this.service.getEmployees().subscribe();
   }
 
   ngOnDestroy() {}
