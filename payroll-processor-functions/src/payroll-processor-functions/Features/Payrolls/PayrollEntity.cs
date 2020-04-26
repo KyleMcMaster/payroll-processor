@@ -21,7 +21,8 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeId = entity.EmployeeId,
                     GrossPayroll = entity.GrossPayroll,
                     PayrollPeriod = entity.PayrollPeriod,
-                    EmployeeDepartment = entity.EmployeeDepartment
+                    EmployeeDepartment = entity.EmployeeDepartment,
+                    Version = entity.ETag
                 };
             }
 
@@ -35,7 +36,8 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeId = payroll.EmployeeId,
                     GrossPayroll = payroll.GrossPayroll,
                     PayrollPeriod = payroll.PayrollPeriod,
-                    EmployeeDepartment = payroll.EmployeeDepartment
+                    EmployeeDepartment = payroll.EmployeeDepartment,
+                    ETag = payroll.Version
                 };
             }
         }
@@ -59,7 +61,8 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeId = entity.EmployeeId,
                     GrossPayroll = entity.GrossPayroll,
                     PayrollPeriod = entity.PayrollPeriod,
-                    EmployeeDepartment = entity.EmployeeDepartment
+                    EmployeeDepartment = entity.EmployeeDepartment,
+                    Version = entity.ETag
                 };
             }
 
@@ -73,7 +76,8 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeId = payroll.EmployeeId,
                     GrossPayroll = payroll.GrossPayroll,
                     PayrollPeriod = payroll.PayrollPeriod,
-                    EmployeeDepartment = payroll.EmployeeDepartment
+                    EmployeeDepartment = payroll.EmployeeDepartment,
+                    ETag = payroll.Version
                 };
             }
         }

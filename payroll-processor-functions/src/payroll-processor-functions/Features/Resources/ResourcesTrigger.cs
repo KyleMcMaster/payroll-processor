@@ -10,8 +10,8 @@ namespace PayrollProcessor.Functions.Features.Resources
 {
     public class ResourcesTrigger
     {
-        [FunctionName("Resources_Create")]
-        public async Task<IActionResult> CreateEmployeesTable(
+        [FunctionName(nameof(CreateResources))]
+        public async Task<IActionResult> CreateResources(
                         [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "resources")] HttpRequest req,
                         ILogger log)
         {
@@ -19,10 +19,10 @@ namespace PayrollProcessor.Functions.Features.Resources
 
             var manager = new ResourceManager();
 
-            await manager.CreateTable("employees");
-            await manager.CreateTable("payrolls");
-            await manager.CreateTable("employeePayrolls");
-            await manager.CreateQueue("payroll-updates");
+            await manager.CreateTable(Resource.Table.Employees);
+            await manager.CreateTable(Resource.Table.Payrolls);
+            await manager.CreateTable(Resource.Table.EmployeePayrolls);
+            await manager.CreateQueue(Resource.Queue.PayrollUpdates);
 
             return new OkResult();
         }

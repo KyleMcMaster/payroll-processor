@@ -10,6 +10,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
         public double GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
         public string EmployeeDepartment { get; set; } = "";
+        public string Version { get; set; } = "";
 
         public Payroll(Guid id)
         {
