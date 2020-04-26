@@ -22,17 +22,10 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private query: EmployeeListQuery,
   ) {
     this.employees = this.query.selectAll();
-  }
-
-  ngOnInit() {
     this.service.getEmployees();
   }
 
+  ngOnInit() {}
+
   ngOnDestroy() {}
-
-  add() {}
-
-  disable(id: string) {
-    // this.service.remove(id);
-  }
 }
