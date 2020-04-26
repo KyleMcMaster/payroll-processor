@@ -5,6 +5,7 @@
       "type": "shell",
       "command": "npm",
       "args": ["install"],
+      "problemMatcher": [],
       "label": "Client: Install",
       "detail": "Instal npm project packages for Angular client"
     },
