@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using PayrollProcessor.Functions.Infrastructure;
 using Microsoft.WindowsAzure.Storage.Table;
 using PayrollProcessor.Functions.Features.Resources;
+using System;
+using System.Linq;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
     public class EmployeesTrigger
     {
         [FunctionName(nameof(GetEmployees))]
-        public async Task<IActionResult> GetEmployees(
+        public async Task<ActionResult<Employee[]>> GetEmployees(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "employees")] HttpRequest req,
             [Table(Resource.Table.Employees)] CloudTable employeeTable,
              ILogger log)
@@ -24,20 +26,27 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             var employees = await data.GetAllData<Employee, EmployeeEntity>(e => EmployeeEntity.Map.To(e));
 
-            return new OkObjectResult(Response.Generate(employees));
+            return employees.ToArray();
         }
 
         [FunctionName(nameof(CreateEmployee))]
-        [return: Table(Resource.Table.Employees)]
-        public async Task<EmployeeEntity> CreateEmployee(
+        public async Task<ActionResult<Employee>> CreateEmployee(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] HttpRequest req,
+                [Table(Resource.Table.Employees)] CloudTable employeeTable,
                 ILogger log)
         {
             log.LogInformation($"Creating a new employee: [{req}]");
 
-            var employee = await Request.Parse<EmployeeNew>(req);
+            var newEmployee = await Request.Parse<EmployeeNew>(req);
 
-            return EmployeeEntity.Map.From(employee);
+            var tableResult = await employeeTable.ExecuteAsync(TableOperation.Insert(EmployeeEntity.Map.From(newEmployee)));
+
+            if (!(tableResult.Result is EmployeeEntity employeeEntity))
+            {
+                throw new Exception($"Could not save payroll");
+            }
+
+            return EmployeeEntity.Map.To(employeeEntity);
         }
     }
 }
