@@ -19,8 +19,9 @@ Create employee
 sequenceDiagram
     autonumber
     Client->>Employees_Create: XHR Request (employee)
-    Employees_Create-->>employees Table: Function output (entity)
-    Employees_Create-->>Client: XHR Response (200)
+    Employees_Create->>employees Table: insertion (entity)
+    employees Table-->>Employees_Create: entity
+    Employees_Create-->>Client: XHR Response (employee)
 ```
 
 Create payroll
