@@ -8,6 +8,7 @@ export interface Employee {
   phone: string;
   status: Status;
   title: string;
+  version: string;
 }
 
 export interface EmployeeCreateResponse extends Employee {
@@ -29,14 +30,15 @@ export function createInitialState(): Employee {
     phone: '',
     status: 'ACTIVE',
     title: '',
+    version: '',
   };
 }
 
 export interface EmployeeCreate {
   department: Department;
-  readonly email: string;
-  readonly employmentStartedOn: string;
-  readonly firstName: string;
+  email: string;
+  employmentStartedOn: string;
+  firstName: string;
   lastName: string;
   phone: string;
   status: Status;
