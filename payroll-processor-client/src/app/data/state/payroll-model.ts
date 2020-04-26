@@ -1,5 +1,5 @@
+import { Status } from 'src/app/employee/employee-list/state/employee-list.model';
 import { Risk, risks } from 'src/app/risk-list/state/risk-model';
-import { Status } from './employee-model';
 
 export interface Payroll {
   id: string;

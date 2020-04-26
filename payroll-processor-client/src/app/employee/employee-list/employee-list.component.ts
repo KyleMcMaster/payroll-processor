@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { of } from 'rxjs';
 
 import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
 
-import { Employee } from '../../data/state/employee-model';
-
+import { Employee } from './state/employee-list.model';
+import { EmployeeListQuery } from './state/employee-list.query';
 import { EmployeeListService } from './state/employee-list.service';
 
 @Component({
@@ -14,16 +15,19 @@ import { EmployeeListService } from './state/employee-list.service';
 export class EmployeeListComponent implements OnInit, OnDestroy {
   faSkull = faSkull;
   faSmileBeam = faSmileBeam;
+  employees = of<Employee[]>();
 
-  constructor(private employeeListService: EmployeeListService) {}
+  constructor(
+    private employeeListService: EmployeeListService,
+    private employeeListQuery: EmployeeListQuery,
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.employeeListService.getEmployees().subscribe();
+    this.employees = this.employeeListQuery.selectAll();
+  }
 
   ngOnDestroy() {}
-
-  getEmployees(): Employee[] {
-    return this.employeeListService.getEmployees();
-  }
 
   add() {}
 
