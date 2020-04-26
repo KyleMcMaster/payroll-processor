@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using PayrollProcessor.Functions.Infrastructure;
 using Microsoft.WindowsAzure.Storage.Table;
-using System;
 using PayrollProcessor.Functions.Features.Resources;
 
 namespace PayrollProcessor.Functions.Features.Employees
@@ -36,9 +35,7 @@ namespace PayrollProcessor.Functions.Features.Employees
         {
             log.LogInformation($"Creating a new employee: [{req}]");
 
-            var employee = await Request.Parse<Employee>(req);
-
-            employee.Id = Guid.NewGuid();
+            var employee = await Request.Parse<EmployeeNew>(req);
 
             return EmployeeEntity.Map.From(employee);
         }

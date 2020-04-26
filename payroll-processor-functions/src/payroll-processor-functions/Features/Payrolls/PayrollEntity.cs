@@ -40,6 +40,20 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     ETag = payroll.Version
                 };
             }
+
+            public static PayrollEntity From(PayrollNew payroll)
+            {
+                return new PayrollEntity
+                {
+                    PartitionKey = payroll.CheckDate.ToString("yyyyMMdd"),
+                    RowKey = Guid.NewGuid().ToString("n"),
+                    CheckDate = payroll.CheckDate,
+                    EmployeeId = payroll.EmployeeId,
+                    GrossPayroll = payroll.GrossPayroll,
+                    PayrollPeriod = payroll.PayrollPeriod,
+                    EmployeeDepartment = payroll.EmployeeDepartment,
+                };
+            }
         }
     }
 

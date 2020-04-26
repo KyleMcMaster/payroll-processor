@@ -29,4 +29,15 @@ namespace PayrollProcessor.Functions.Features.Employees
         public double GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
     }
+
+    public class EmployeeNew
+    {
+        public string Department { get; set; } = "";
+        public DateTimeOffset EmploymentStartedOn { get; set; }
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string Title { get; set; } = "";
+    }
 }

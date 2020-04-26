@@ -59,20 +59,18 @@ namespace PayrollProcessor.Functions.Features.Payrolls
         {
             log.LogInformation($"Creating a new payroll: [{req}]");
 
-            var payroll = await Request.Parse<Payroll>(req);
-
-            payroll.Id = Guid.NewGuid();
+            var payrollNew = await Request.Parse<PayrollNew>(req);
 
             var querier = new TableQuerier(employeeTable);
 
             var option = await querier.GetEntity<EmployeeEntity, Employee>(
-                payroll.EmployeeDepartment.ToLowerInvariant(),
-                payroll.EmployeeId.ToString("n"),
+                payrollNew.EmployeeDepartment.ToLowerInvariant(),
+                payrollNew.EmployeeId.ToString("n"),
                 EmployeeEntity.Map.To);
 
-            var employee = option.IfNone(() => throw new Exception($"Could not find employee [{payroll.EmployeeDepartment}] [{payroll.EmployeeId}]"));
+            var employee = option.IfNone(() => throw new Exception($"Could not find employee [{payrollNew.EmployeeDepartment}] [{payrollNew.EmployeeId}]"));
 
-            var tableResult = await payrollsTable.ExecuteAsync(TableOperation.Insert(PayrollEntity.Map.From(payroll)));
+            var tableResult = await payrollsTable.ExecuteAsync(TableOperation.Insert(PayrollEntity.Map.From(payrollNew)));
 
             if (!(tableResult.Result is PayrollEntity payrollEntity))
             {
@@ -81,7 +79,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 
             await payrollUpdatesQueue.AddMessageAsync(EntityQueueMessageProcessor.ToQueueMessage(payrollEntity));
 
-            payroll = PayrollEntity.Map.To(payrollEntity);
+            var payroll = PayrollEntity.Map.To(payrollEntity);
 
             return new OkObjectResult(payroll);
         }

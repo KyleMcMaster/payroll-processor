@@ -58,6 +58,23 @@ namespace PayrollProcessor.Functions.Features.Employees
                     ETag = employee.Version
                 };
             }
+
+            public static EmployeeEntity From(EmployeeNew employee)
+            {
+                return new EmployeeEntity
+                {
+                    PartitionKey = employee.Department.ToLowerInvariant(),
+                    RowKey = Guid.NewGuid().ToString("n"),
+                    Department = employee.Department,
+                    EmploymentStartedOn = employee.EmploymentStartedOn,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Phone = employee.Phone,
+                    Status = employee.Status,
+                    Title = employee.Title,
+                    Payrolls = "",
+                };
+            }
         }
     }
 }
