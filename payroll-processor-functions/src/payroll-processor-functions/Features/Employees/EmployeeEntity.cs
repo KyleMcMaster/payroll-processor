@@ -1,7 +1,8 @@
-using Microsoft.WindowsAzure.Storage.Table;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Microsoft.WindowsAzure.Storage.Table;
+using Newtonsoft.Json;
+using PayrollProcessor.Functions.Infrastructure;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {

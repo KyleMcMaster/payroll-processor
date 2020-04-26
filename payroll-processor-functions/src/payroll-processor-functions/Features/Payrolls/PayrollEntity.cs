@@ -3,6 +3,9 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {
+    /// <summary>
+    /// The Table storage representation of a Payroll
+    /// </summary>
     public class PayrollEntity : TableEntity
     {
         public DateTimeOffset CheckDate { get; set; }

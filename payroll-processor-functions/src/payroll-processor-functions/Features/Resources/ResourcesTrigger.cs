@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +10,7 @@ namespace PayrollProcessor.Functions.Features.Resources
     public class ResourcesTrigger
     {
         [FunctionName(nameof(CreateResources))]
-        public async Task<IActionResult> CreateResources(
+        public async Task<ActionResult> CreateResources(
                         [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "resources")] HttpRequest req,
                         ILogger log)
         {

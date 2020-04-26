@@ -10,13 +10,14 @@ using PayrollProcessor.Functions.Features.Resources;
 using PayrollProcessor.Functions.Infrastructure;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {
     public class PayrollTrigger
     {
         [FunctionName(nameof(GetPayrolls))]
-        public async Task<IActionResult> GetPayrolls(
+        public async Task<ActionResult<Payroll[]>> GetPayrolls(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "payrolls")] HttpRequest req,
             [Table(Resource.Table.Payrolls)] CloudTable payrollesTable,
             ILogger log)
@@ -27,11 +28,11 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 
             var payrolls = await payrollQuerier.GetAllData<Payroll, PayrollEntity>(e => PayrollEntity.Map.To(e));
 
-            return new OkObjectResult(Response.Generate(payrolls));
+            return payrolls.ToArray();
         }
 
         [FunctionName(nameof(GetAllPayrollsForEmployee))]
-        public async Task<IActionResult> GetAllPayrollsForEmployee(
+        public async Task<ActionResult<Payroll[]>> GetAllPayrollsForEmployee(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "employees/{employeeId}/payrolls")] HttpRequest req,
             [Table(Resource.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
             Guid employeeId,
@@ -46,11 +47,11 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     e => EmployeePayrollEntity.Map.To(e),
                     employeeId.ToString("n"));
 
-            return new OkObjectResult(Response.Generate(payrolls));
+            return payrolls.ToArray();
         }
 
         [FunctionName(nameof(CreatePayroll))]
-        public async Task<IActionResult> CreatePayroll(
+        public async Task<ActionResult<Payroll>> CreatePayroll(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "payrolls")] HttpRequest req,
                 [Table(Resource.Table.Employees)] CloudTable employeeTable,
                 [Table(Resource.Table.Payrolls)] CloudTable payrollsTable,
@@ -79,13 +80,11 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 
             await payrollUpdatesQueue.AddMessageAsync(EntityQueueMessageProcessor.ToQueueMessage(payrollEntity));
 
-            var payroll = PayrollEntity.Map.To(payrollEntity);
-
-            return new OkObjectResult(payroll);
+            return PayrollEntity.Map.To(payrollEntity);
         }
 
         [FunctionName(nameof(UpdatePayroll))]
-        public async Task<IActionResult> UpdatePayroll(
+        public async Task<ActionResult<Payroll>> UpdatePayroll(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "PUT", Route = "payrolls")] HttpRequest req,
                 [Table(Resource.Table.Payrolls)] CloudTable payrollsTable,
                 [Queue(Resource.Queue.PayrollUpdates)] CloudQueue payrollUpdatesQueue,
@@ -103,7 +102,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 
             await payrollUpdatesQueue.AddMessageAsync(EntityQueueMessageProcessor.ToQueueMessage(payrollEntity));
 
-            return new OkObjectResult(payroll);
+            return payroll;
         }
 
         [FunctionName(nameof(UpdatePayrollFromQueue))]

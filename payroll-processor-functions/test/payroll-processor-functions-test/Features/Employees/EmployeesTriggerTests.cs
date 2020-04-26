@@ -1,9 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Table;
-using Newtonsoft.Json;
 using NSubstitute;
 using PayrollProcessor.Functions.Features.Employees;
 using System;
@@ -45,11 +43,7 @@ namespace PayrollProcessor.Functions.Tests.Features.Employees
 
             var result = await Trigger.GetEmployees(DefaultHttpRequest, Table, Logger);
 
-            var response = result as OkObjectResult;
-
-            string resultValue = response.Value.ToString();
-
-            var employeesResult = JsonConvert.DeserializeObject<IEnumerable<Employee>>(resultValue);
+            var employeesResult = result.Value;
 
             employeesResult.Should().HaveCount(1);
             employeesResult.First().Id.Should().Be(Guid.Parse(entity.RowKey));
