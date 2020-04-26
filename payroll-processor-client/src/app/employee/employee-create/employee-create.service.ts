@@ -14,7 +14,7 @@ export class EmployeeCreateService {
 
   constructor(
     private http: HttpClient,
-    private employeeListStore: EmployeeListStore,
+    private store: EmployeeListStore,
     // private router: Router,
     envService: EnvService,
   ) {
@@ -22,12 +22,12 @@ export class EmployeeCreateService {
   }
 
   createEmployee(employee: EmployeeCreate) {
-    // console.log(employee);
+    this.store.setLoading(true);
     return this.http
       .post<Employee>(`${this.apiUrl}/employees`, employee)
       .pipe(
         tap((detail) => {
-          this.employeeListStore.upsert(detail.id, detail);
+          this.store.upsert(detail.id, detail);
         }),
         // map((detail) => this.router.navigate(['/employees'])), // TODO: route to list?
         catchError((err) => {

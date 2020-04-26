@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { Employee } from './employee-list.model';
 import { EmployeeListStore } from './employee-list.store';
@@ -20,16 +20,21 @@ export class EmployeeListService {
     this.apiUrl = envService.apiRootUrl;
   }
 
-  getEmployees(): Observable<void | Employee[]> {
-    return this.http.get<Employee[]>(`${this.apiUrl}/Employees`).pipe(
-      map((employees) => {
-        this.store.set(employees);
-        this.store.setLoading(false);
-      }),
-      catchError((err) => {
-        console.log('Could not fetch employees');
-        return throwError(err);
-      }),
-    );
+  getEmployees() {
+    this.store.setLoading(true);
+    return this.http
+      .get<Employee[]>(`${this.apiUrl}/Employees`)
+      .pipe(
+        catchError((err) => {
+          this.store.setError({
+            message: 'Could not load employees',
+          });
+          return of([]);
+        }),
+      )
+      .subscribe({
+        next: (employees) => this.store.set(employees),
+        complete: () => this.store.setLoading(false),
+      });
   }
 }
