@@ -10,6 +10,10 @@ export interface Employee {
   title: string;
 }
 
+export interface EmployeeCreateResponse extends Employee {
+  rowKey: string;
+}
+
 export type Status = 'ACTIVE' | 'DISABLED';
 
 export type Department = 'HR' | 'IT' | 'Sales' | 'Finance' | 'UNKNOWN';

@@ -28,7 +28,7 @@ namespace PayrollProcessor.Functions.Features.Employees
         }
 
         [FunctionName(nameof(CreateEmployee))]
-        [return: Table(Resource.Table.Employees)]
+        //[return: Table(Resource.Table.Employees)]
         public async Task<EmployeeEntity> CreateEmployee(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] HttpRequest req,
                 ILogger log)
