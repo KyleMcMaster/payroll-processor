@@ -1,0 +1,30 @@
+{
+  "groupRules": [
+    {
+      "regex": "^@angular|rxjs",
+      "level": 2
+    },
+    {
+      "regex": "^@datorama|@fortawesome|@ng-bootstrap",
+      "level": 5
+    },
+    {
+      "regex": "^[@]",
+      "level": 10
+    },
+    {
+      "regex": "^../",
+      "level": 18
+    },
+    {
+      "regex": "^./",
+      "level": 19
+    }
+  ],
+  "maximumLineLength": 120,
+  "maximumBindingNamesPerLine": 8,
+  "maximumDefaultAndBindingNamesPerLine": 8,
+  "maximumNamesPerWrappedLine": 4,
+  "formatOnSave": true,
+  "exclude": ["node_modules"]
+}

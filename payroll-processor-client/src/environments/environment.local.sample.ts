@@ -1,6 +1,6 @@
 import { Environment } from './environment-types';
 
 export const environment: Environment = {
-  production: true,
-  domain: '<your hosting url>',
+  production: false,
+  domain: 'http://localhost:7071',
 };

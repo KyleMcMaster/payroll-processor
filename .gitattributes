@@ -1,0 +1,4 @@
+# These are set for devs that don't have global .gitconfig settings for line endings
+# https://stackoverflow.com/questions/10418975/how-to-change-line-ending-settings/40821931#40821931
+# https://help.github.com/en/github/using-git/configuring-git-to-handle-line-endings
+* text=auto

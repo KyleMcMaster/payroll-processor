@@ -10,7 +10,8 @@ Sample HRIS application where a list of employees and their payroll information 
 
 ### Client
 
-![.github/workflows/npm.yml](https://github.com/KyleMcMaster/payroll-processor/workflows/.github/workflows/npm.yml/badge.svg) [![Styled with Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
+![.github/workflows/npm.yml](https://github.com/KyleMcMaster/payroll-processor/workflows/.github/workflows/npm.yml/badge.svg)
+[![Styled with Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
 
 ### Functions
 
@@ -86,6 +87,14 @@ If you want to switch to work on the API solution, use the "Omnisharp: Select Pr
 and select `Payroll.Processor.Api.sln`.
 
 ### Client
+
+- Copy
+
+  `client/src/environments/environment.local.sample.ts`
+
+  to
+
+  `client/src/environments/environment.local.ts`
 
 - Run the "Client: Serve" VS Code task (this will install packages and start serving the app)
 
