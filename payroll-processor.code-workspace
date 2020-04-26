@@ -1,6 +1,10 @@
 {
   "folders": [
     {
+      "path": "docs",
+      "name": "docs"
+    },
+    {
       "path": "payroll-processor-api",
       "name": "api"
     },
@@ -28,6 +32,7 @@
       "payroll-processor-api": true,
       "payroll-processor-client": true,
       "payroll-processor-functions": true,
+      "docs": true,
       "**/bin": true,
       "**/obj": true,
       "**/dist": true
@@ -60,7 +65,8 @@
       "dozerg.tsimportsorter",
       "stylelint.vscode-stylelint",
       "k--kato.docomment",
-      "jchannon.csharpextensions"
+      "jchannon.csharpextensions",
+      "vstirbu.vscode-mermaid-preview"
     ]
   }
 }
