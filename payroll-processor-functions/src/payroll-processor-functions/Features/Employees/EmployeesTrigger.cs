@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 using PayrollProcessor.Functions.Infrastructure;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
+using PayrollProcessor.Functions.Features.Resources;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
     public class EmployeesTrigger
     {
-        [FunctionName("Employees_Get")]
+        [FunctionName(nameof(GetEmployees))]
         public async Task<IActionResult> GetEmployees(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "employees")] HttpRequest req,
-            [Table("employees")] CloudTable employeeTable,
+            [Table(Resource.Table.Employees)] CloudTable employeeTable,
              ILogger log)
         {
             log.LogInformation($"Retrieving all employees: [{req}]");
@@ -27,8 +28,8 @@ namespace PayrollProcessor.Functions.Features.Employees
             return new OkObjectResult(Response.Generate(employees));
         }
 
-        [FunctionName("Employee_Create")]
-        [return: Table("employees")]
+        [FunctionName(nameof(CreateEmployee))]
+        [return: Table(Resource.Table.Employees)]
         public async Task<EmployeeEntity> CreateEmployee(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] HttpRequest req,
                 ILogger log)

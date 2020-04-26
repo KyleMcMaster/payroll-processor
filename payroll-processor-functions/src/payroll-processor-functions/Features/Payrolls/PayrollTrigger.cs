@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
 using PayrollProcessor.Functions.Features.Employees;
+using PayrollProcessor.Functions.Features.Resources;
 using PayrollProcessor.Functions.Infrastructure;
 using System;
 using System.Threading.Tasks;
@@ -14,10 +15,10 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 {
     public class PayrollTrigger
     {
-        [FunctionName("Payroll_GetAll")]
+        [FunctionName(nameof(GetPayrolls))]
         public async Task<IActionResult> GetPayrolls(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "payrolls")] HttpRequest req,
-            [Table("payrolls")] CloudTable payrollesTable,
+            [Table(Resource.Table.Payrolls)] CloudTable payrollesTable,
             ILogger log)
         {
             log.LogInformation($"Retrieving all payrolls: [{req}]");
@@ -29,10 +30,10 @@ namespace PayrollProcessor.Functions.Features.Payrolls
             return new OkObjectResult(Response.Generate(payrolls));
         }
 
-        [FunctionName("EmployeePayrolls_GetAll")]
+        [FunctionName(nameof(GetAllPayrollsForEmployee))]
         public async Task<IActionResult> GetAllPayrollsForEmployee(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "employees/{employeeId}/payrolls")] HttpRequest req,
-            [Table("employeePayrolls")] CloudTable employeePayrollsTable,
+            [Table(Resource.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
             Guid employeeId,
             ILogger log)
         {
@@ -48,12 +49,12 @@ namespace PayrollProcessor.Functions.Features.Payrolls
             return new OkObjectResult(Response.Generate(payrolls));
         }
 
-        [FunctionName("Payroll_Create")]
+        [FunctionName(nameof(CreatePayroll))]
         public async Task<IActionResult> CreatePayroll(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "payrolls")] HttpRequest req,
-                [Table("employees")] CloudTable employeeTable,
-                [Table("payrolls")] CloudTable payrollsTable,
-                [Queue("payroll-updates")] CloudQueue payrollUpdatesQueue,
+                [Table(Resource.Table.Employees)] CloudTable employeeTable,
+                [Table(Resource.Table.Payrolls)] CloudTable payrollsTable,
+                [Queue(Resource.Queue.PayrollUpdates)] CloudQueue payrollUpdatesQueue,
                 ILogger log)
         {
             log.LogInformation($"Creating a new payroll: [{req}]");
@@ -85,11 +86,11 @@ namespace PayrollProcessor.Functions.Features.Payrolls
             return new OkObjectResult(payroll);
         }
 
-        [FunctionName("Payroll_Update")]
+        [FunctionName(nameof(UpdatePayroll))]
         public async Task<IActionResult> UpdatePayroll(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "PUT", Route = "payrolls")] HttpRequest req,
-                [Table("payrolls")] CloudTable payrollsTable,
-                [Queue("payroll-updates")] CloudQueue payrollUpdatesQueue,
+                [Table(Resource.Table.Payrolls)] CloudTable payrollsTable,
+                [Queue(Resource.Queue.PayrollUpdates)] CloudQueue payrollUpdatesQueue,
                 ILogger log)
         {
             log.LogInformation($"Creating a new payroll: [{req}]");
@@ -107,11 +108,11 @@ namespace PayrollProcessor.Functions.Features.Payrolls
             return new OkObjectResult(payroll);
         }
 
-        [FunctionName("PayrollQueue_Update")]
+        [FunctionName(nameof(UpdatePayrollFromQueue))]
         public async Task UpdatePayrollFromQueue(
-                [QueueTrigger("payroll-updates")] CloudQueueMessage message,
-                [Table("employees")] CloudTable employeeTable,
-                [Table("employeePayrolls")] CloudTable employeePayrollsTable,
+                [QueueTrigger(Resource.Queue.PayrollUpdates)] CloudQueueMessage message,
+                [Table(Resource.Table.Employees)] CloudTable employeeTable,
+                [Table(Resource.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
                 ILogger log)
         {
             log.LogInformation($"Processing payrollUpdates queue: [{message}]");
