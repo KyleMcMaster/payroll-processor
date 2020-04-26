@@ -22,7 +22,7 @@ namespace PayrollProcessor.Functions.Features.Employees
 
         public static class Map
         {
-            public static Employee To(EmployeeEntity entity)
+            public static Employee ToEmployee(EmployeeEntity entity)
             {
                 var payrolls = JsonConvert.DeserializeObject<IEnumerable<EmployeePayroll>>(entity.Payrolls);
 

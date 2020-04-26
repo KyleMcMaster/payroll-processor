@@ -24,7 +24,7 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             var data = new TableQuerier(employeeTable);
 
-            var employees = await data.GetAllData<Employee, EmployeeEntity>(e => EmployeeEntity.Map.To(e));
+            var employees = await data.GetAllData<Employee, EmployeeEntity>(e => EmployeeEntity.Map.ToEmployee(e));
 
             return employees.ToArray();
         }
@@ -46,7 +46,7 @@ namespace PayrollProcessor.Functions.Features.Employees
                 throw new Exception($"Could not save payroll");
             }
 
-            return EmployeeEntity.Map.To(employeeEntity);
+            return EmployeeEntity.Map.ToEmployee(employeeEntity);
         }
     }
 }

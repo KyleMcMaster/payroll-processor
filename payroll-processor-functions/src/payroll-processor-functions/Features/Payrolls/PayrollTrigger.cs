@@ -67,7 +67,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
             var option = await querier.GetEntity<EmployeeEntity, Employee>(
                 payrollNew.EmployeeDepartment.ToLowerInvariant(),
                 payrollNew.EmployeeId.ToString("n"),
-                EmployeeEntity.Map.To);
+                EmployeeEntity.Map.ToEmployee);
 
             var employee = option.IfNone(() => throw new Exception($"Could not find employee [{payrollNew.EmployeeDepartment}] [{payrollNew.EmployeeId}]"));
 
@@ -123,7 +123,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
             var option = await querier.GetEntity<EmployeeEntity, Employee>(
                 payrollEntity.EmployeeDepartment.ToLowerInvariant(),
                 payrollEntity.EmployeeId.ToString("n"),
-                EmployeeEntity.Map.To);
+                EmployeeEntity.Map.ToEmployee);
 
             var employee = option.IfNone(() => throw new Exception($"Could not find employee for payroll [{payroll.Id}]"));
 
