@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Employee } from './state/employee-model';
-import { catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import { Payroll } from './state/payroll-model';
+import { catchError } from 'rxjs/operators';
+
 import { EnvService } from '../shared/env.service';
+
+import { Employee } from './state/employee-model';
+import { Payroll } from './state/payroll-model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,22 +27,22 @@ export class DataService {
     this.http
       .get<Employee[]>(`${this.apiUrl}/EmployeesGetTrigger`)
       .pipe(
-        catchError(err => {
+        catchError((err) => {
           console.log('Could not fetch employees');
           return throwError(err);
         }),
       )
-      .subscribe(result => (this.employees = result));
+      .subscribe((result) => (this.employees = result));
 
     this.http
       .get<Payroll[]>(`${this.apiUrl}/PayrollGetTrigger`)
       .pipe(
-        catchError(err => {
+        catchError((err) => {
           console.log('Could not fetch payroll');
           return throwError(err);
         }),
       )
-      .subscribe(result => (this.payroll = result));
+      .subscribe((result) => (this.payroll = result));
   }
 
   getEmployees(): Employee[] {
@@ -52,7 +54,7 @@ export class DataService {
   }
 
   removeEmployee(id: string) {
-    const employee = this.employees.find(e => e.id === id);
+    const employee = this.employees.find((e) => e.id === id);
 
     if (!employee) {
       return;
@@ -61,8 +63,8 @@ export class DataService {
     employee.status = 'DISABLED';
 
     this.payroll
-      .filter(p => p.employeeId === id)
-      .filter(payroll => !!this.payroll.find(p => p.id === payroll.id))
-      .forEach(payroll => payroll.employeeStatus = 'DISABLED');
+      .filter((p) => p.employeeId === id)
+      .filter((payroll) => !!this.payroll.find((p) => p.id === payroll.id))
+      .forEach((payroll) => (payroll.employeeStatus = 'DISABLED'));
   }
 }
