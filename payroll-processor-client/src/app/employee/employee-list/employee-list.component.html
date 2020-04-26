@@ -33,9 +33,9 @@
       <td>
         <button
           [ngClass]="'btn btn-outline-warning btn-sm'"
-          (click)="remove(employee.id)"
+          (click)="disable(employee.id)"
           [disabled]="employee.status === 'DISABLED'"
-          >Remove</button
+          >Disable</button
         >
       </td>
     </tr>

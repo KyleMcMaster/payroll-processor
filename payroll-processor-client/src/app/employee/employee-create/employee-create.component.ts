@@ -28,7 +28,7 @@ export class EmployeeCreateComponent implements OnInit {
       id: '00000000-0000-0000-0000-000000000000',
       department: this.filterForm.get('department').value,
       email: this.filterForm.get('email').value,
-      employmentStartedOn: new Date().toLocaleTimeString(),
+      employmentStartedOn: new Date().toLocaleDateString(),
       firstName: this.filterForm.get('firstName').value,
       lastName: this.filterForm.get('lastName').value,
       phone: this.filterForm.get('phone').value,

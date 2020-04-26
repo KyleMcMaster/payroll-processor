@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -16,7 +15,7 @@ export class EmployeeCreateService {
   constructor(
     private http: HttpClient,
     private employeeListStore: EmployeeListStore,
-    private router: Router,
+    // private router: Router,
     envService: EnvService,
   ) {
     this.apiUrl = envService.apiRootUrl;
