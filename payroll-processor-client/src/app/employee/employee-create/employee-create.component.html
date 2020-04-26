@@ -1,8 +1,8 @@
 <div class="row">
-  <section class="d-flex flex-column px-3">
+  <section class="d-flex px-3">
     <form [formGroup]="filterForm">
       <div class="row">
-        <div class="input-group mb-1 col-4">
+        <div class="mb-1 col-4">
           <input
             formControlName="firstName"
             type="text"
@@ -11,7 +11,7 @@
             aria-label="Users First Name"
           />
         </div>
-        <div class="input-group mb-1 col-4">
+        <div class="mb-1 col-4">
           <input
             type="text"
             formControlName="lastName"
@@ -20,7 +20,7 @@
             aria-label="Users Last Name"
           />
         </div>
-        <div class="input-group mb-1 col-4">
+        <div class="mb-1 col-4">
           <input
             type="email"
             formControlName="email"
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-group mb-1 col-4">
+        <div class="mb-1 col-4">
           <input
             type="text"
             formControlName="phone"
@@ -40,7 +40,7 @@
             aria-label="Users Phone Number"
           />
         </div>
-        <div class="input-group mb-1 col-4">
+        <div class="mb-1 col-4">
           <input
             formControlName="department"
             type="text"
@@ -49,7 +49,7 @@
             aria-label="Users Department"
           />
         </div>
-        <div class="input-group mb-1 col-4">
+        <div class="mb-1 col-4">
           <input
             type="text"
             formControlName="title"
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-group mb-1 col-4">
+        <div class="mb-1 col-4">
           <button class="btn btn-outline-info table-margin" (click)="create()"
             >Create</button
           >
