@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { EmployeeCreate } from '../employee-list/state/employee-list.model';
+import { Department, EmployeeCreate } from '../employee-list/state/employee-list.model';
 
 import { EmployeeCreateService } from './employee-create.service';
 
@@ -20,6 +20,9 @@ export class EmployeeCreateComponent implements OnInit {
     phone: new FormControl(''),
     title: new FormControl(''),
   });
+
+  departments: Department[] = ['Finance', 'HR', 'IT', 'Sales'];
+
   constructor(private employeeCreateService: EmployeeCreateService) {}
 
   ngOnInit(): void {}
@@ -28,13 +31,11 @@ export class EmployeeCreateComponent implements OnInit {
     const employee: EmployeeCreate = {
       department: this.filterForm.get('department').value,
       email: this.filterForm.get('email').value,
-      employmentStartedOn: this.filterForm
-        .get('employmentStartedOn')
-        .value.toLocaleDateString(),
+      employmentStartedOn: this.filterForm.get('employmentStartedOn').value,
       firstName: this.filterForm.get('firstName').value,
       lastName: this.filterForm.get('lastName').value,
       phone: this.filterForm.get('phone').value,
-      status: 'ACTIVE',
+      status: 'ACTIVE', // All employees created as ACTIVE?
       title: this.filterForm.get('title').value,
     };
 
