@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Employee } from '../employee-list/state/employee-list.model';
+import { Employee, EmployeeCreate } from '../employee-list/state/employee-list.model';
 import { EmployeeListStore } from '../employee-list/state/employee-list.store';
 
 import { EnvService } from 'src/app/shared/env.service';
@@ -21,7 +21,7 @@ export class EmployeeCreateService {
     this.apiUrl = envService.apiRootUrl;
   }
 
-  createEmployee(employee: Employee) {
+  createEmployee(employee: EmployeeCreate) {
     console.log(employee);
     return this.http
       .post<Employee>(`${this.apiUrl}/employees`, employee)

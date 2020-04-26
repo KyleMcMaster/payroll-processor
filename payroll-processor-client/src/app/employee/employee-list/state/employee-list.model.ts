@@ -35,5 +35,6 @@ export interface EmployeeCreate {
   firstName: string;
   lastName: string;
   phone: string;
+  status: Status;
   title: string;
 }
