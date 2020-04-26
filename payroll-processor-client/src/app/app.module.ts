@@ -15,7 +15,6 @@ import { EmployeeListComponent } from './employee/employee-list/employee-list.co
 import { EmployeeComponent } from './employee/employee.component';
 import { PayrollListComponent } from './payroll/payroll-list/payroll-list.component';
 import { PayrollComponent } from './payroll/payroll.component';
-import { RiskListComponent } from './risk-list/risk-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { RiskListComponent } from './risk-list/risk-list.component';
     EmployeeListComponent,
     PayrollComponent,
     PayrollListComponent,
-    RiskListComponent,
   ],
   imports: [
     AppRoutingModule,

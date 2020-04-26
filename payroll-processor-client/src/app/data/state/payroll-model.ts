@@ -1,5 +1,4 @@
 import { Status } from 'src/app/employee/employee-list/state/employee-list.model';
-import { Risk, risks } from 'src/app/risk-list/state/risk-model';
 
 export interface Payroll {
   id: string;
@@ -23,6 +22,8 @@ export function createInitialState(): Payroll {
     employeeStatus: 'ACTIVE',
     grossPayroll: 0,
     payrollPeriod: 1,
-    risk: risks[1],
+    risk: 'LOW',
   };
 }
+
+export type Risk = 'HIGH' | 'MEDIUM' | 'LOW';
