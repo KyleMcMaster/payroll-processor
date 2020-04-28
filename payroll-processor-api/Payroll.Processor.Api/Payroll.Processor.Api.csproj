@@ -20,5 +20,4 @@
     <ProjectReference Include="..\Payroll.Processor.Data.Persistence\Payroll.Processor.Data.Persistence.csproj" />
   </ItemGroup>
 
-
 </Project>
