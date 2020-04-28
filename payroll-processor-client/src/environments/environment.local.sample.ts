@@ -2,5 +2,6 @@ import { Environment } from './environment-types';
 
 export const environment: Environment = {
   production: false,
-  domain: 'http://localhost:7071',
+  functionsDomain: 'http://localhost:7071',
+  apiDomain: 'http://localhost:5000',
 };

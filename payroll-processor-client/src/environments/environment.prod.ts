@@ -2,5 +2,6 @@ import { Environment } from './environment-types';
 
 export const environment: Environment = {
   production: true,
-  domain: '<your hosting url>',
+  functionsDomain: '<your functions domain>',
+  apiDomain: '<your api domain>',
 };

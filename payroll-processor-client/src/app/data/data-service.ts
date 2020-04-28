@@ -18,14 +18,14 @@ export class DataService {
   private readonly apiUrl: string;
 
   constructor(private http: HttpClient, envService: EnvService) {
-    this.apiUrl = envService.apiRootUrl;
+    this.apiUrl = envService.functionsRootUrl;
 
     this.loadData();
   }
 
   private loadData() {
     this.http
-      .get<Employee[]>(`${this.apiUrl}/EmployeesGetTrigger`)
+      .get<Employee[]>(`${this.apiUrl}/employees`)
       .pipe(
         catchError((err) => {
           console.log('Could not fetch employees');
@@ -35,7 +35,7 @@ export class DataService {
       .subscribe((result) => (this.employees = result));
 
     this.http
-      .get<Payroll[]>(`${this.apiUrl}/PayrollGetTrigger`)
+      .get<Payroll[]>(`${this.apiUrl}/payrolls`)
       .pipe(
         catchError((err) => {
           console.log('Could not fetch payroll');
