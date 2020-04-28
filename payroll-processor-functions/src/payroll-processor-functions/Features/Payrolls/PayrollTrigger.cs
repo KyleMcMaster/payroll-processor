@@ -16,6 +16,18 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 {
     public class PayrollTrigger
     {
+        private readonly ApiClient apiClient;
+
+        public PayrollTrigger(ApiClient apiClient)
+        {
+            if (apiClient is null)
+            {
+                throw new ArgumentNullException(nameof(apiClient));
+            }
+
+            this.apiClient = apiClient;
+        }
+
         [FunctionName(nameof(GetPayrolls))]
         public async Task<ActionResult<Payroll[]>> GetPayrolls(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "payrolls")] HttpRequest req,
@@ -147,6 +159,11 @@ namespace PayrollProcessor.Functions.Features.Payrolls
             await employeeTable.ExecuteAsync(employeeUpdate);
 
             var employeePayrollUpdate = TableOperation.InsertOrReplace(EmployeePayrollEntity.Map.From(payroll));
+
+            await apiClient.SendNotification(
+                nameof(UpdatePayrollFromQueue),
+                payroll
+            );
 
             await employeePayrollsTable.ExecuteAsync(employeePayrollUpdate);
         }
