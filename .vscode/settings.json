@@ -1,7 +1,0 @@
-{
-  "files.exclude": {
-    "payroll-processor-api": true,
-    "payroll-processor-client": true,
-    "payroll-processor-functions": true
-  }
-}
