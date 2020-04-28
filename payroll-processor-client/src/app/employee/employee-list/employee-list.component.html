@@ -14,7 +14,7 @@
       [ngClass]="{
         'table-secondary': employee.status === 'DISABLED'
       }"
-      *ngFor="let employee of getEmployees()"
+      *ngFor="let employee of employees | async"
     >
       <th scope="row"> {{ employee.firstName + ' ' + employee.lastName }} </th>
       <td>{{ employee.title }}</td>
@@ -33,9 +33,8 @@
       <td>
         <button
           [ngClass]="'btn btn-outline-warning btn-sm'"
-          (click)="remove(employee.id)"
           [disabled]="employee.status === 'DISABLED'"
-          >Remove</button
+          >Disable</button
         >
       </td>
     </tr>
@@ -47,7 +46,7 @@
       <th></th>
       <th></th>
       <th></th>
-      <th><button class="btn btn-outline-info">Add</button></th>
+      <th></th>
     </tr>
   </tfoot>
 </table>
