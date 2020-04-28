@@ -1,0 +1,79 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "API: Clean (Debug)",
+      "detail": "Cleans the Payroll Processor API solution Debug builds via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "Payroll.Processor.Api.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "API: Build (Debug)",
+      "detail": "Builds the Payroll Processor API solution in Debug mode via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "Payroll.Processor.Api.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "API: Clean (Debug)",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "API: Clean (Release)",
+      "detail": "Cleans the Payroll Processor API solution Release builds via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "Payroll.Processor.Api.sln",
+        "--configuration",
+        "Release",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Api: Test",
+      "detail": "Runs tests against the Payroll Processor API solution",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "Payroll.Processor.Api.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "API: Publish",
+      "command": "dotnet",
+      "args": [
+        "publish",
+        "Payroll.Processor.Api.sln",
+        "--configuration",
+        "Release",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "API: Clean (Release)",
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
