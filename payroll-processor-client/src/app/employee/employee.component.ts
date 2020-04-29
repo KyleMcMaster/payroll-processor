@@ -8,8 +8,8 @@ import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent {
-  faLock = faLock;
-  faUnlock = faUnlock;
+  readonly faLock = faLock;
+  readonly faUnlock = faUnlock;
   isReadonly = true;
 
   constructor() {}
