@@ -40,3 +40,8 @@ export interface EmployeeCreate {
   status: Status;
   title: string;
 }
+
+export interface EmployeeUpdate {
+  department: Department;
+  status: Status;
+}

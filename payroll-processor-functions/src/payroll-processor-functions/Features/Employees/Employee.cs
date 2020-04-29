@@ -42,4 +42,10 @@ namespace PayrollProcessor.Functions.Features.Employees
         public string Status { get; set; } = "";
         public string Title { get; set; } = "";
     }
+
+    public class EmployeeUpdate
+    {
+        public string Status { get; set; } = "";
+        public string Department { get; set; } = "";
+    }
 }

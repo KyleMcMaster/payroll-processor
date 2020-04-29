@@ -31,9 +31,9 @@ namespace PayrollProcessor.Functions.Features.Employees
 
         [FunctionName(nameof(CreateEmployee))]
         public async Task<ActionResult<Employee>> CreateEmployee(
-                [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] HttpRequest req,
-                [Table(Resource.Table.Employees)] CloudTable employeeTable,
-                ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] HttpRequest req,
+            [Table(Resource.Table.Employees)] CloudTable employeeTable,
+            ILogger log)
         {
             log.LogInformation($"Creating a new employee: [{req}]");
 
@@ -47,6 +47,33 @@ namespace PayrollProcessor.Functions.Features.Employees
             }
 
             return EmployeeEntity.Map.ToEmployee(employeeEntity);
+        }
+
+        [FunctionName(nameof(UpdateEmployee))]
+        public async Task<ActionResult<Employee>> UpdateEmployee(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "PUT", Route = "employees/{id:Guid}")] HttpRequest req,
+            [Table(Resource.Table.Employees)] CloudTable employeeTable,
+            Guid id,
+            ILogger log)
+        {
+            log.LogInformation($"Updating an employee: [{req}]");
+
+            var updateParams = await Request.Parse<EmployeeUpdate>(req);
+
+            var querier = new TableQuerier(employeeTable);
+
+            var option = await querier.GetEntity<EmployeeEntity, Employee>(
+                updateParams.Department.ToLowerInvariant(),
+                id.ToString("n"),
+                EmployeeEntity.Map.ToEmployee);
+
+            var employee = option.IfNone(() => throw new Exception($"Could not find employee [{updateParams.Department}] [{id}]"));
+
+            employee.Status = updateParams.Status;
+
+            await employeeTable.ExecuteAsync(TableOperation.InsertOrMerge(EmployeeEntity.Map.From(employee)));
+
+            return employee;
         }
     }
 }
