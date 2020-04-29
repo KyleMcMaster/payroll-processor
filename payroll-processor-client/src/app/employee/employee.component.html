@@ -1,1 +1,16 @@
-<div class="table-margin"><app-employee-list></app-employee-list></div>
+<div class="container employee-margin">
+  <div class="row justify-content-end">
+    <fa-icon
+      *ngIf="isReadonly"
+      [icon]="faLock"
+      (click)="toggleReadonly()"
+    ></fa-icon>
+    <fa-icon
+      *ngIf="!isReadonly"
+      [icon]="faUnlock"
+      (click)="toggleReadonly()"
+    ></fa-icon>
+  </div>
+  <app-employee-list></app-employee-list>
+  <app-employee-create *ngIf="!isReadonly"></app-employee-create>
+</div>

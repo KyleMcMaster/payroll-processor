@@ -1,7 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Employee } from '../../data/state/employee-model';
-import { DataService } from 'src/app/data/data-service';
-import { faSmileBeam, faSkull } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
+
+import { Employee } from './state/employee-list.model';
+import { EmployeeListQuery } from './state/employee-list.query';
+import { EmployeeListService } from './state/employee-list.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -9,22 +13,19 @@ import { faSmileBeam, faSkull } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./employee-list.component.scss'],
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
-  faSkull = faSkull;
-  faSmileBeam = faSmileBeam;
+  readonly faSkull = faSkull;
+  readonly faSmileBeam = faSmileBeam;
+  readonly employees: Observable<Employee[]>;
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private service: EmployeeListService,
+    private query: EmployeeListQuery,
+  ) {
+    this.employees = this.query.selectAll();
+    this.service.getEmployees();
+  }
 
   ngOnInit() {}
 
   ngOnDestroy() {}
-
-  getEmployees(): Employee[] {
-    return this.dataService.getEmployees();
-  }
-
-  add() {}
-
-  remove(id: string) {
-    this.dataService.removeEmployee(id);
-  }
 }
