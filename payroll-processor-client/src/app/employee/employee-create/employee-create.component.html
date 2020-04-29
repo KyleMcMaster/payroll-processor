@@ -1,0 +1,82 @@
+<div>
+  <section>
+    <span>Enter new employee details:</span>
+    <form [formGroup]="filterForm">
+      <div class="row">
+        <div class="mb-1 col-4">
+          <input
+            formControlName="firstName"
+            type="text"
+            class="form-control"
+            placeholder="First Name"
+            aria-label="Users First Name"
+          />
+        </div>
+        <div class="mb-1 col-4">
+          <input
+            type="text"
+            formControlName="lastName"
+            class="form-control"
+            placeholder="Last Name"
+            aria-label="Users Last Name"
+          />
+        </div>
+        <div class="mb-1 col-4">
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="User Email"
+            aria-label="Users Email Address"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-1 col-3">
+          <input
+            type="text"
+            formControlName="phone"
+            class="form-control"
+            placeholder="Phone"
+            aria-label="Users Phone Number"
+          />
+        </div>
+        <div class="mb-1 col-3">
+          <select class="custom-select" formControlName="department">
+            <option value="" disabled>Choose a department</option>
+            <option
+              *ngFor="let department of departments"
+              [ngValue]="department"
+              >{{ department }}</option
+            >
+          </select>
+        </div>
+        <div class="mb-1 col-3">
+          <input
+            type="text"
+            formControlName="title"
+            class="form-control"
+            placeholder="Title"
+            aria-label="Users Title"
+          />
+        </div>
+        <div class="mb-1 col-3">
+          <input
+            type="date"
+            formControlName="employmentStartedOn"
+            class="form-control"
+            placeholder="04/26/2020"
+            aria-label="Users Start Date Of Employment"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-1 col-4">
+          <button class="btn btn-outline-info table-margin" (click)="create()"
+            >Create</button
+          >
+        </div>
+      </div>
+    </form>
+  </section>
+</div>

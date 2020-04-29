@@ -5,14 +5,12 @@ import { catchError } from 'rxjs/operators';
 
 import { EnvService } from '../shared/env.service';
 
-import { Employee } from './state/employee-model';
 import { Payroll } from './state/payroll-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private employees: Employee[] = [];
   private payroll: Payroll[] = [];
 
   private readonly apiUrl: string;
@@ -25,46 +23,32 @@ export class DataService {
 
   private loadData() {
     this.http
-      .get<Employee[]>(`${this.apiUrl}/EmployeesGetTrigger`)
+      .get<Payroll[]>(`${this.apiUrl}/Payrolls`)
       .pipe(
         catchError((err) => {
-          console.log('Could not fetch employees');
-          return throwError(err);
-        }),
-      )
-      .subscribe((result) => (this.employees = result));
-
-    this.http
-      .get<Payroll[]>(`${this.apiUrl}/PayrollGetTrigger`)
-      .pipe(
-        catchError((err) => {
-          console.log('Could not fetch payroll');
+          console.log('Could not fetch payrolls');
           return throwError(err);
         }),
       )
       .subscribe((result) => (this.payroll = result));
   }
 
-  getEmployees(): Employee[] {
-    return this.employees;
-  }
-
   getPayroll(): Payroll[] {
     return this.payroll;
   }
 
-  removeEmployee(id: string) {
-    const employee = this.employees.find((e) => e.id === id);
+  // removeEmployee(id: string) {
+  //   const employee = this.employees.find((e) => e.id === id);
 
-    if (!employee) {
-      return;
-    }
+  //   if (!employee) {
+  //     return;
+  //   }
 
-    employee.status = 'DISABLED';
+  //   employee.status = 'DISABLED';
 
-    this.payroll
-      .filter((p) => p.employeeId === id)
-      .filter((payroll) => !!this.payroll.find((p) => p.id === payroll.id))
-      .forEach((payroll) => (payroll.employeeStatus = 'DISABLED'));
-  }
+  //   this.payroll
+  //     .filter((p) => p.employeeId === id)
+  //     .filter((payroll) => !!this.payroll.find((p) => p.id === payroll.id))
+  //     .forEach((payroll) => (payroll.employeeStatus = 'DISABLED'));
+  // }
 }
