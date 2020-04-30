@@ -5,15 +5,15 @@
       "name": "docs"
     },
     {
-      "path": "payroll-processor-api",
+      "path": "api",
       "name": "api"
     },
     {
-      "path": "payroll-processor-client",
+      "path": "client",
       "name": "client"
     },
     {
-      "path": "payroll-processor-functions",
+      "path": "functions",
       "name": "functions"
     },
     {
@@ -29,9 +29,9 @@
       "**/CVS": true,
       "**/.DS_Store": true,
       "node_modules": true,
-      "payroll-processor-api": true,
-      "payroll-processor-client": true,
-      "payroll-processor-functions": true,
+      "api": true,
+      "client": true,
+      "functions": true,
       "docs": true,
       "**/bin": true,
       "**/obj": true,
