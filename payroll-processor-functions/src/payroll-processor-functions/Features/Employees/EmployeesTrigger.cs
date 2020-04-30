@@ -43,15 +43,15 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             if (!(tableResult.Result is EmployeeEntity employeeEntity))
             {
-                throw new Exception($"Could not save payroll");
+                throw new Exception($"Could not save employee");
             }
 
             return EmployeeEntity.Map.ToEmployee(employeeEntity);
         }
 
-        [FunctionName(nameof(UpdateEmployee))]
-        public async Task<ActionResult<Employee>> UpdateEmployee(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "PUT", Route = "employees/{id:Guid}")] HttpRequest req,
+        [FunctionName(nameof(UpdateEmployeeStatus))]
+        public async Task<ActionResult<Employee>> UpdateEmployeeStatus(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "PUT", Route = "employees/{id:Guid}/status")] HttpRequest req,
             [Table(Resource.Table.Employees)] CloudTable employeeTable,
             Guid id,
             ILogger log)
@@ -71,9 +71,16 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             employee.Status = updateParams.Status;
 
-            await employeeTable.ExecuteAsync(TableOperation.InsertOrMerge(EmployeeEntity.Map.From(employee)));
+            var tableResult = await employeeTable.ExecuteAsync(
+                operation: TableOperation.InsertOrMerge(
+                    entity: EmployeeEntity.Map.From(employee)));
 
-            return employee;
+            if (!(tableResult.Result is EmployeeEntity employeeEntity))
+            {
+                throw new Exception($"Could not update employee");
+            }
+
+            return EmployeeEntity.Map.ToEmployee(employeeEntity);
         }
     }
 }

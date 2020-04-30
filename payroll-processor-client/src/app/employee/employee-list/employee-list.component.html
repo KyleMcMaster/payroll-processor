@@ -33,10 +33,11 @@
       <td>
         <button
           [ngClass]="'btn btn-outline-warning btn-sm'"
-          [disabled]="employee.status === 'DISABLED'"
           (click)="updateEmployeeStatus(employee.id)"
-          >Disable</button
         >
+          <span *ngIf="employee.status === 'DISABLED'">Enable</span>
+          <span *ngIf="employee.status === 'ACTIVE'">Disable</span>
+        </button>
       </td>
     </tr>
   </tbody>

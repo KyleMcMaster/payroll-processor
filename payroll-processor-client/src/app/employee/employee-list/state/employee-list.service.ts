@@ -41,7 +41,7 @@ export class EmployeeListService {
   updateEmployeeStatus(id: string, employee: EmployeeUpdate) {
     this.store.setLoading(true);
     return this.http
-      .put<Employee>(`${this.apiUrl}/Employees/${id}`, employee)
+      .put<Employee>(`${this.apiUrl}/Employees/${id}/status`, employee)
       .pipe(
         tap((detail) => {
           this.store.upsert(detail.id, detail);
