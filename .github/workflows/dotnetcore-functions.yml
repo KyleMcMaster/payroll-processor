@@ -1,5 +1,5 @@
-# build and test payroll-processor-functions
-name: dotnet core payroll-processor-functions - build
+# build and test Payroll.Processor.Functions
+name: dotnet core Payroll.Processor.Functions - build
 
 on:
   push:
@@ -19,6 +19,6 @@ jobs:
         with:
           dotnet-version: 3.1.101
       - name: Build with dotnet
-        run: dotnet build payroll-processor-functions/Payroll.Processor.Functions.sln --configuration Release
+        run: dotnet build functions/Payroll.Processor.Functions.sln --configuration Release
       - name: Unit Tests
-        run: dotnet test payroll-processor-functions/Payroll.Processor.Functions.sln
+        run: dotnet test functions/Payroll.Processor.Functions.sln
