@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { Employee, EmployeeUpdate } from './employee-list.model';
 import { EmployeeListStore } from './employee-list.store';
@@ -43,14 +43,14 @@ export class EmployeeListService {
     return this.http
       .put<Employee>(`${this.apiUrl}/Employees/${id}/status`, employee)
       .pipe(
-        tap((detail) => {
-          this.store.upsert(detail.id, detail);
-        }),
         catchError((err) => {
           console.log('Could not update employee');
           return throwError(err);
         }),
       )
-      .subscribe();
+      .subscribe({
+        next: (detail) => this.store.upsert(detail.id, detail),
+        complete: () => this.store.setLoading(false),
+      });
   }
 }
