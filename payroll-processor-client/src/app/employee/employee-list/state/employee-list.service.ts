@@ -38,13 +38,24 @@ export class EmployeeListService {
       });
   }
 
-  updateEmployeeStatus(id: string, employee: EmployeeUpdate) {
+  updateEmployeeStatus(employee: Employee) {
     this.store.setLoading(true);
+
+    const status = employee.status === 'ACTIVE' ? 'DISABLED' : 'ACTIVE';
+
+    const employeeUpdate: EmployeeUpdate = {
+      department: employee.department,
+      status,
+    };
+
     return this.http
-      .put<Employee>(`${this.apiUrl}/Employees/${id}/status`, employee)
+      .put<Employee>(
+        `${this.apiUrl}/Employees/${employee.id}/status`,
+        employeeUpdate,
+      )
       .pipe(
         catchError((err) => {
-          console.log('Could not update employee');
+          console.log(`Could not update employee ${employee.id}`);
           return throwError(err);
         }),
       )

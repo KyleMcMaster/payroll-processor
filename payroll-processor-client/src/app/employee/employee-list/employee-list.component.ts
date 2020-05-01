@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
 
-import { Employee, EmployeeUpdate } from './state/employee-list.model';
+import { Employee } from './state/employee-list.model';
 import { EmployeeListQuery } from './state/employee-list.query';
 import { EmployeeListService } from './state/employee-list.service';
 
@@ -30,24 +29,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  updateEmployeeStatus(id: string) {
-    let employee: Employee;
-
-    this.employees
-      .pipe(
-        tap((employees) => {
-          return (employee = employees.find((emp) => emp.id === id));
-        }),
-      )
-      .subscribe();
-
-    const status = employee.status === 'ACTIVE' ? 'DISABLED' : 'ACTIVE';
-
-    const employeeUpdate: EmployeeUpdate = {
-      department: employee.department,
-      status,
-    };
-
-    this.service.updateEmployeeStatus(id, employeeUpdate);
+  updateEmployeeStatus(employee: Employee) {
+    this.service.updateEmployeeStatus(employee);
   }
 }
