@@ -147,12 +147,7 @@ namespace Payroll.Processor.Functions.Features.Payrolls
                         p.GrossPayroll = payroll.GrossPayroll;
                         p.PayrollPeriod = p.PayrollPeriod;
                     },
-                    () =>
-                    {
-                        employee.Payrolls = employee.Payrolls.Length() < 30
-                            ? employee.Payrolls.Append(new[] { new EmployeePayroll { Id = payroll.Id, CheckDate = payroll.CheckDate, GrossPayroll = payroll.GrossPayroll, PayrollPeriod = payroll.PayrollPeriod } })
-                            : employee.Payrolls;
-                    });
+                    () => employee.UpdatePayrolls(payroll));
 
             var employeeUpdate = TableOperation.Replace(EmployeeEntity.Map.From(employee));
 

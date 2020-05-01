@@ -12,10 +12,7 @@ namespace Payroll.Processor.Functions.Features.Payrolls
         public string EmployeeDepartment { get; set; } = "";
         public string Version { get; set; } = "";
 
-        public Payroll(Guid id)
-        {
-            Id = id;
-        }
+        public Payroll(Guid id) => Id = id;
 
         public Payroll()
         {

@@ -36,7 +36,7 @@ namespace Payroll.Processor.Functions.Infrastructure
             string partitionKey
         ) where TEntity : ITableEntity, new()
         {
-            var filter = TableQuery.GenerateFilterCondition(
+            string? filter = TableQuery.GenerateFilterCondition(
                 "PartitionKey",
                 QueryComparisons.Equal,
                 partitionKey);
