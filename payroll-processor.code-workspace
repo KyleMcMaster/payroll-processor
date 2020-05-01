@@ -46,13 +46,22 @@
     },
 
     "[csharp]": {
-      "editor.defaultFormatter": "ms-dotnettools.csharp"
+      "editor.defaultFormatter": "ms-dotnettools.csharp",
+      "editor.codeActionsOnSave": {
+        /* Not enabled yet:
+          https://github.com/OmniSharp/omnisharp-vscode/issues/2796
+          https://github.com/OmniSharp/omnisharp-roslyn/pull/1581
+        */
+        "source.fixAll": true,
+        "source.organizeImports": true
+      }
     },
 
     "omnisharp.defaultLaunchSolution": "Payroll.Processor.Functions.sln",
     "omnisharp.autoStart": true,
     "omnisharp.enableEditorConfigSupport": true,
-    "omnisharp.enableRoslynAnalyzers": true
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.useEditorFormattingSettings": true
   },
   "extensions": {
     "recommendations": [
