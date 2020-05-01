@@ -6,7 +6,7 @@ Sample HRIS application where a list of employees and their payroll information 
 
 ### Api
 
-![dotnet core api - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20Payroll.Processor.Api%20-%20build/badge.svg)
+![dotnet core api - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Api%20-%20build/badge.svg)
 
 ### Client
 
@@ -15,7 +15,7 @@ Sample HRIS application where a list of employees and their payroll information 
 
 ### Functions
 
-![dotnet core functions - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20Payroll.Processor.Functionss%20-%20build/badge.svg?branch=master)
+![dotnet core functions - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Functionss%20-%20build/badge.svg?branch=master)
 
 ## Motivation
 
@@ -79,12 +79,12 @@ or open the root of the repository in VS Code (`code .`) and when prompted, open
 
 ### .NET
 
-The Azure Functions solution (`Payroll.Processor.Functions.sln`) is set up as the default solution
+The Azure Functions solution (`PayrollProcessor.Functions.sln`) is set up as the default solution
 for [Omnisharp](https://github.com/OmniSharp/omnisharp-vscode), and is loaded as soon as the
 VS Code workspace is opened.
 
 If you want to switch to work on the API solution, use the "Omnisharp: Select Project" command from the command palette
-and select `Payroll.Processor.Api.sln`.
+and select `PayrollProcessor.Api.sln`.
 
 ### Client
 
@@ -115,19 +115,22 @@ and select `Payroll.Processor.Api.sln`.
 
 - Copy
 
-  `functions/Payroll.Processor.Functions/local.settings.json.sample`
+  `functions/PayrollProcessor.Functions/local.settings.json.sample`
 
   to
 
-  `functions/Payroll.Processor.Functions/local.settings.json`
+  `functions/PayrollProcessor.Functions/local.settings.json`
 
 - F5 or run from the VS Code Debug drop down "Function: Run & Attach (Debug)"
 
-- Optional: Run any of the following tasks
+- Optional: Run any of the following tasks (Task: Run Task)
 
-  - Function: Run (Debug)
   - Function: Test
   - Function: Build (Debug)
+
+- Optional: Run any of the follow launch configurations (Debug: Select and Start Debugging)
+
+  - Function: Run & Attach (Debug)
 
 ### Data Storage
 
