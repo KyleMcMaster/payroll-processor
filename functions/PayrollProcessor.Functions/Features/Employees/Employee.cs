@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PayrollProcessor.Functions.Features.Payrolls;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
@@ -37,16 +38,21 @@ namespace PayrollProcessor.Functions.Features.Employees
                 return;
             }
 
-            var newerPayroll = Payrolls
+            /*
+             * Find and (if found) replace the least older of all payrolls
+             * older than the one provided
+             * This keeps the set attached to the Employee as the latest 30 by CheckDate
+             */
+            var leastOlderPayroll = Payrolls
                 .Select(p => new { payroll = p, diff = (p.CheckDate - payroll.CheckDate).Ticks })
                 .Where(obj => obj.diff > 0)
                 .OrderBy(obj => obj.diff)
                 .Select(obj => obj.payroll)
                 .FirstOrDefault();
 
-            if (newerPayroll is object)
+            if (leastOlderPayroll is object)
             {
-                Payrolls = Payrolls.Where(p => p.Id != newerPayroll.Id).Prepend(employeePayroll);
+                Payrolls = Payrolls.Where(p => p.Id != leastOlderPayroll.Id).Prepend(employeePayroll);
             }
         }
     }
