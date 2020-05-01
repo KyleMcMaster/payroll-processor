@@ -7,7 +7,7 @@
       "command": "dotnet",
       "args": [
         "clean",
-        "Payroll.Processor.Api.sln",
+        "PayrollProcessor.Api.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -20,7 +20,7 @@
       "command": "dotnet",
       "args": [
         "build",
-        "Payroll.Processor.Api.sln",
+        "PayrollProcessor.Api.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -38,7 +38,7 @@
       "command": "dotnet",
       "args": [
         "clean",
-        "Payroll.Processor.Api.sln",
+        "PayrollProcessor.Api.sln",
         "--configuration",
         "Release",
         "/property:GenerateFullPaths=true",
@@ -53,7 +53,7 @@
       "command": "dotnet",
       "args": [
         "test",
-        "Payroll.Processor.Api.sln",
+        "PayrollProcessor.Api.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -65,7 +65,7 @@
       "command": "dotnet",
       "args": [
         "publish",
-        "Payroll.Processor.Api.sln",
+        "PayrollProcessor.Api.sln",
         "--configuration",
         "Release",
         "/property:GenerateFullPaths=true",

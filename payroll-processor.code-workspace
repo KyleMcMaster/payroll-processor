@@ -57,7 +57,7 @@
       }
     },
 
-    "omnisharp.defaultLaunchSolution": "Payroll.Processor.Functions.sln",
+    "omnisharp.defaultLaunchSolution": "PayrollProcessor.Functions.sln",
     "omnisharp.autoStart": true,
     "omnisharp.enableEditorConfigSupport": true,
     "omnisharp.enableRoslynAnalyzers": true,

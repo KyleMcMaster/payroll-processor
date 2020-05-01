@@ -7,7 +7,7 @@
       "command": "dotnet",
       "args": [
         "clean",
-        "Payroll.Processor.Functions.sln",
+        "PayrollProcessor.Functions.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -20,7 +20,7 @@
       "command": "dotnet",
       "args": [
         "build",
-        "Payroll.Processor.Functions.sln",
+        "PayrollProcessor.Functions.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -38,7 +38,7 @@
       "command": "dotnet",
       "args": [
         "clean",
-        "Payroll.Processor.Functions.sln",
+        "PayrollProcessor.Functions.sln",
         "--configuration",
         "Release",
         "/property:GenerateFullPaths=true",
@@ -53,19 +53,23 @@
       "command": "dotnet",
       "args": [
         "test",
-        "Payroll.Processor.Functions.sln",
+        "PayrollProcessor.Functions.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
       "type": "process",
-      "problemMatcher": "$msCompile"
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
     },
     {
       "label": "Function: Publish",
       "command": "dotnet",
       "args": [
         "publish",
-        "Payroll.Processor.Functions.sln",
+        "PayrollProcessor.Functions.sln",
         "--configuration",
         "Release",
         "/property:GenerateFullPaths=true",
@@ -74,18 +78,6 @@
       "type": "process",
       "dependsOn": "Function: Clean (Release)",
       "problemMatcher": "$msCompile"
-    },
-    {
-      "type": "func",
-      "label": "Function: Run (Debug)",
-      "detail": "Runs the Payroll Processor function via Azure Function Core Tools on http://localhost:7071",
-      "dependsOn": "Function: Build (Debug)",
-      "options": {
-        "cwd": "${workspaceFolder}/Payroll.Processor.Functions/bin/Debug/netcoreapp3.1"
-      },
-      "command": "host start",
-      "isBackground": true,
-      "problemMatcher": "$func-watch"
     }
   ]
 }
