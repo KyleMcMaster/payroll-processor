@@ -1,5 +1,6 @@
 using System;
 using Microsoft.WindowsAzure.Storage.Table;
+using PayrollProcessor.Functions.Domain.Features.Payrolls;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {
@@ -10,7 +11,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
     {
         public DateTimeOffset CheckDate { get; set; }
         public Guid EmployeeId { get; set; }
-        public double GrossPayroll { get; set; }
+        public decimal GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
         public string EmployeeDepartment { get; set; } = "";
 
@@ -58,7 +59,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
     {
         public DateTimeOffset CheckDate { get; set; }
         public Guid EmployeeId { get; set; }
-        public double GrossPayroll { get; set; }
+        public decimal GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
         public string EmployeeDepartment { get; set; } = "";
 

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using PayrollProcessor.Functions.Features.Payrolls;
+using PayrollProcessor.Functions.Domain.Features.Payrolls;
 
-namespace PayrollProcessor.Functions.Features.Employees
+namespace PayrollProcessor.Functions.Domain.Features.Employees
 {
     public class Employee
     {
@@ -31,7 +31,7 @@ namespace PayrollProcessor.Functions.Features.Employees
                 PayrollPeriod = payroll.PayrollPeriod
             };
 
-            if (Payrolls.Length() < 30)
+            if (Payrolls.Count() < 30)
             {
                 Payrolls = Payrolls.Prepend(employeePayroll);
 
@@ -55,25 +55,5 @@ namespace PayrollProcessor.Functions.Features.Employees
                 Payrolls = Payrolls.Where(p => p.Id != leastOlderPayroll.Id).Prepend(employeePayroll);
             }
         }
-    }
-
-    public class EmployeePayroll
-    {
-        public Guid Id { get; set; }
-        public DateTimeOffset CheckDate { get; set; }
-        public double GrossPayroll { get; set; }
-        public string PayrollPeriod { get; set; } = "";
-    }
-
-    public class EmployeeNew
-    {
-        public string Department { get; set; } = "";
-        public string Email { get; set; } = "";
-        public DateTimeOffset EmploymentStartedOn { get; set; }
-        public string FirstName { get; set; } = "";
-        public string LastName { get; set; } = "";
-        public string Phone { get; set; } = "";
-        public string Status { get; set; } = "";
-        public string Title { get; set; } = "";
     }
 }

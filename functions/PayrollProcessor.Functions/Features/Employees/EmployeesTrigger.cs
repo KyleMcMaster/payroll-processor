@@ -9,6 +9,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using PayrollProcessor.Functions.Features.Resources;
 using System;
 using System.Linq;
+using PayrollProcessor.Functions.Domain.Features.Employees;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
@@ -31,9 +32,9 @@ namespace PayrollProcessor.Functions.Features.Employees
 
         [FunctionName(nameof(CreateEmployee))]
         public async Task<ActionResult<Employee>> CreateEmployee(
-                [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] HttpRequest req,
-                [Table(Resource.Table.Employees)] CloudTable employeeTable,
-                ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] HttpRequest req,
+            [Table(Resource.Table.Employees)] CloudTable employeeTable,
+            ILogger log)
         {
             log.LogInformation($"Creating a new employee: [{req}]");
 

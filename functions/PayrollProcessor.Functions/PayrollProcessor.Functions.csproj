@@ -28,4 +28,8 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PayrollProcessor.Functions.Seeding\PayrollProcessor.Functions.Seeding.csproj" />
+    <ProjectReference Include="..\PayrollProcessor.Functions.Domain\PayrollProcessor.Functions.Domain.csproj" />
+  </ItemGroup>
 </Project>

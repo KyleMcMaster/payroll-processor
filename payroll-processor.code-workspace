@@ -52,7 +52,7 @@
           https://github.com/OmniSharp/omnisharp-vscode/issues/2796
           https://github.com/OmniSharp/omnisharp-roslyn/pull/1581
         */
-        "source.fixAll": true,
+        "source.fixAll": false,
         "source.organizeImports": true
       }
     },
