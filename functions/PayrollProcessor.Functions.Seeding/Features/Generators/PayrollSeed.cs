@@ -13,7 +13,7 @@ namespace PayrollProcessor.Functions.Seeding.Features.Generators
         private readonly Faker<Payroll> payrolls;
 
         public PayrollSeed() =>
-            payrolls = new DomainFaker<Payroll>(typeof(Payroll).GetConstructors().First())
+            payrolls = new DomainFaker<Payroll>(typeof(Payroll).GetConstructors().First(), () => new Payroll(Guid.NewGuid()))
                     .RuleFor(e => e.Id, f => Guid.NewGuid())
                     .RuleFor(e => e.EmployeeId, f => Guid.NewGuid())
                     .RuleFor(e => e.GrossPayroll, f => f.Finance.Amount(300, 2_500))

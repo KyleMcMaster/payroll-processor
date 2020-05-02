@@ -12,10 +12,10 @@ namespace PayrollProcessor.Functions.Seeding.Infrastructure
     /// <typeparam name="T"></typeparam>
     public class DomainFaker<T> : Faker<T> where T : class
     {
-        public DomainFaker(ConstructorInfo constructor) =>
-            CustomInstantiator(f => ResolveConstructor(f, constructor));
+        public DomainFaker(ConstructorInfo constructor, Func<T> factory) =>
+            CustomInstantiator(f => ResolveConstructor(f, constructor, factory));
 
-        protected virtual T ResolveConstructor(Faker _, ConstructorInfo constructor)
+        protected virtual T ResolveConstructor(Faker _, ConstructorInfo constructor, Func<T> factory)
         {
             var pi = constructor.GetParameters();
 
@@ -29,7 +29,14 @@ namespace PayrollProcessor.Functions.Seeding.Infrastructure
                 }
             }
 
-            return Activator.CreateInstance(typeof(T), liveParameters.ToArray()) as T;
+            object? obj = Activator.CreateInstance(typeof(T), liveParameters.ToArray());
+
+            if (obj is T item)
+            {
+                return item;
+            }
+
+            return factory();
         }
     }
 }

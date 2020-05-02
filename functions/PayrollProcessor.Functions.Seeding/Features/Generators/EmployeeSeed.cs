@@ -14,7 +14,7 @@ namespace PayrollProcessor.Functions.Seeding.Features.Generators
 
         public EmployeeSeed()
         {
-            employeeGenerator = new DomainFaker<Employee>(typeof(Employee).GetConstructors().First())
+            employeeGenerator = new DomainFaker<Employee>(typeof(Employee).GetConstructors().First(), () => new Employee(Guid.NewGuid()))
                 .RuleFor(e => e.Id, f => Guid.NewGuid())
                 .RuleFor(e => e.Department, f => f.PickRandom(EmployeeDepartment.All.Select(s => s.CodeName).ToList()))
                 .RuleFor(e => e.FirstName, f => f.Name.FirstName())
