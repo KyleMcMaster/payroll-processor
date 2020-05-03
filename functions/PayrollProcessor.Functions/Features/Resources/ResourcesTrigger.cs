@@ -33,6 +33,23 @@ namespace PayrollProcessor.Functions.Features.Resources
             return new OkResult();
         }
 
+        [FunctionName(nameof(DeleteAllResources))]
+        public async Task<ActionResult> DeleteAllResources(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "DELETE", Route = "resources")] HttpRequest req,
+            ILogger log)
+        {
+            log.LogInformation($"Deleting all tables and queues: [{req}]");
+
+            var manager = new ResourceManager();
+
+            await manager.DeleteTable(Resource.Table.Employees);
+            await manager.DeleteTable(Resource.Table.Payrolls);
+            await manager.DeleteTable(Resource.Table.EmployeePayrolls);
+            await manager.DeleteQueue(Resource.Queue.PayrollUpdates);
+
+            return new OkResult();
+        }
+
         [FunctionName(nameof(CreateData))]
         public async Task<ActionResult> CreateData(
             [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "resources/data")] HttpRequest req,
@@ -41,7 +58,7 @@ namespace PayrollProcessor.Functions.Features.Resources
             [Table(Resource.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
             ILogger log)
         {
-            log.LogInformation($"Creating all data: [{req}]");
+            log.LogInformation($"Creating all seed data: [{req}]");
 
             req.Query.TryGetValue("employeesCount", out var employeesCountQuery);
             req.Query.TryGetValue("payrollsMaxCount", out var payrollsMaxCountQuery);

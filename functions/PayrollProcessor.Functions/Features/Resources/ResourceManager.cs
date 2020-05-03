@@ -27,7 +27,13 @@ namespace PayrollProcessor.Functions.Features.Resources
             tableClient.GetTableReference(tableName).CreateIfNotExistsAsync();
 
 
-        public Task CreateQueue(string queueName)
-            => queueClient.GetQueueReference(queueName).CreateIfNotExistsAsync();
+        public Task CreateQueue(string queueName) =>
+            queueClient.GetQueueReference(queueName).CreateIfNotExistsAsync();
+
+        public Task DeleteTable(string tableName) =>
+            tableClient.GetTableReference(tableName).DeleteIfExistsAsync();
+
+        public Task DeleteQueue(string queueName) =>
+            queueClient.GetQueueReference(queueName).DeleteIfExistsAsync();
     }
 }

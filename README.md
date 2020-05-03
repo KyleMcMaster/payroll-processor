@@ -143,14 +143,18 @@ The locally stored data can be viewed using the [Azure Storage Explorer](https:/
 
 ### Initialization / Seeding
 
+#### Create Tables / Queues
+
 To initialize the data storage structure (a few tables and a queue):
 
 - Turn on the Azure Storage Emulator
 - Run the functions project
 - Make a POST request to `http://localhost:7071/api/resources/`
-- Optional: Use `Create Seed Resources` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
+- Optional: Use `Create Resources` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
 
 The creation process will skip any resources that already exist.
+
+#### Create Seed Data
 
 There is also an endpoint to initialize randomly generated data in the data storage:
 
@@ -161,3 +165,13 @@ There is also an endpoint to initialize randomly generated data in the data stor
     - `employeesCount`: Sets the number of employees created by the request
     - `payrollsMaxCount`: Sets the maximum number of payrolls created for each employee (random value 1-max)
 - Optional: Use `Create Seed Data` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
+
+#### Reset Tables / Queues and Data
+
+Finally, there's an endpoint to clear/reset all the data currently in the app.
+This can be useful if you are changing schemas and don't want to write migrations.
+
+- Turn on the Azure Storage Emulator
+- Run the functions project
+- Make a DELETE request to `http://localhost:7071/api/resources`
+- Optional: Use `Delete Resources` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
