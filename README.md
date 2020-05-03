@@ -141,6 +141,9 @@ The project currently stores data in Azure Table Storage, which can be simulated
 
 The locally stored data can be viewed using the [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/).
 
+This project also uses the [Azure Cosmos Db Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator)
+which can be downloaded at [https://aka.ms/cosmosdb-emulator](https://aka.ms/cosmosdb-emulator)
+
 ### Initialization / Seeding
 
 #### Create Tables / Queues
