@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Bogus;
+using System;
 
 namespace PayrollProcessor.Functions.Seeding.Infrastructure
 {
@@ -12,31 +10,7 @@ namespace PayrollProcessor.Functions.Seeding.Infrastructure
     /// <typeparam name="T"></typeparam>
     public class DomainFaker<T> : Faker<T> where T : class
     {
-        public DomainFaker(ConstructorInfo constructor, Func<T> factory) =>
-            CustomInstantiator(f => ResolveConstructor(f, constructor, factory));
-
-        protected virtual T ResolveConstructor(Faker _, ConstructorInfo constructor, Func<T> factory)
-        {
-            var pi = constructor.GetParameters();
-
-            var liveParameters = new List<object>();
-
-            foreach (var param in pi)
-            {
-                if (param.ParameterType == typeof(Guid))
-                {
-                    liveParameters.Add(Guid.NewGuid());
-                }
-            }
-
-            object? obj = Activator.CreateInstance(typeof(T), liveParameters.ToArray());
-
-            if (obj is T item)
-            {
-                return item;
-            }
-
-            return factory();
-        }
+        public DomainFaker(Func<Faker, T> factory) =>
+            CustomInstantiator(factory);
     }
 }

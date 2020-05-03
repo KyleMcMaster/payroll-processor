@@ -42,11 +42,17 @@ namespace PayrollProcessor.Functions.Features.Resources
         {
             log.LogInformation($"Creating all data: [{req}]");
 
+            req.Query.TryGetValue("employeesCount", out var employeesCountQuery);
+            req.Query.TryGetValue("payrollsMaxCount", out var payrollsMaxCountQuery);
+
+            int employeesCount = int.Parse(employeesCountQuery.FirstOrDefault() ?? "5");
+            int payrollsMaxCount = int.Parse(payrollsMaxCountQuery.FirstOrDefault() ?? "10");
+
             var employeeSeed = new EmployeeSeed();
 
             var domainSeed = new DomainSeed(employeeSeed);
 
-            foreach (var (employee, payrolls) in domainSeed.BuildAll(5, 10))
+            foreach (var (employee, payrolls) in domainSeed.BuildAll(employeesCount, payrollsMaxCount))
             {
                 var employeeTableResult = await employeeTable.ExecuteAsync(TableOperation.Insert(EmployeeEntity.Map.From(employee)));
 

@@ -47,14 +47,11 @@
 
     "[csharp]": {
       "editor.defaultFormatter": "ms-dotnettools.csharp",
-      "editor.codeActionsOnSave": {
-        /* Not enabled yet:
-          https://github.com/OmniSharp/omnisharp-vscode/issues/2796
-          https://github.com/OmniSharp/omnisharp-roslyn/pull/1581
-        */
-        "source.fixAll": false,
-        "source.organizeImports": true
-      }
+      /* Not enabled yet:
+        https://github.com/OmniSharp/omnisharp-vscode/issues/2796
+        https://github.com/OmniSharp/omnisharp-roslyn/pull/1581
+      */
+      "editor.codeActionsOnSave": {}
     },
 
     "omnisharp.defaultLaunchSolution": "PayrollProcessor.Functions.sln",
