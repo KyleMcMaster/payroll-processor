@@ -59,7 +59,7 @@ namespace PayrollProcessor.Functions.Features.Employees
         {
             log.LogInformation($"Updating an employee: [{req}]");
 
-            var updateParams = await Request.Parse<EmployeeUpdate>(req);
+            var updateParams = await Request.Parse<EmployeeStatusUpdate>(req);
 
             var querier = new TableQuerier(employeeTable);
 
@@ -70,7 +70,7 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             var employee = option.IfNone(() => throw new Exception($"Could not find employee [{updateParams.Department}] [{id}]"));
 
-            employee.Status = updateParams.Status;
+            employee.Status = EmployeeDepartment.Find(updateParams.Status).CodeName;
 
             var tableResult = await employeeTable.ExecuteAsync(
                 operation: TableOperation.InsertOrMerge(
