@@ -11,8 +11,8 @@ using PayrollProcessor.Functions.Infrastructure;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
-using PayrollProcessor.Functions.Domain.Features.Payrolls;
-using PayrollProcessor.Functions.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Features.Payrolls;
+using PayrollProcessor.Core.Domain.Features.Employees;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {

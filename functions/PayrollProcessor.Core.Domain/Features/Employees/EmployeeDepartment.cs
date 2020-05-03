@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PayrollProcessor.Functions.Domain.Features.Employees
+namespace PayrollProcessor.Core.Domain.Features.Employees
 {
     public class EmployeeDepartment
     {

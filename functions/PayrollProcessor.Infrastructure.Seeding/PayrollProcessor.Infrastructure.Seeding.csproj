@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PayrollProcessor.Functions.Domain\PayrollProcessor.Functions.Domain.csproj" />
+    <ProjectReference Include="..\PayrollProcessor.Core.Domain\PayrollProcessor.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>

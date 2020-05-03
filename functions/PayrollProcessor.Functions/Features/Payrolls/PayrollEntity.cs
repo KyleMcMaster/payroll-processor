@@ -1,7 +1,7 @@
 using System;
 using Microsoft.WindowsAzure.Storage.Table;
-using PayrollProcessor.Functions.Domain.Features.Employees;
-using PayrollProcessor.Functions.Domain.Features.Payrolls;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Features.Payrolls;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {

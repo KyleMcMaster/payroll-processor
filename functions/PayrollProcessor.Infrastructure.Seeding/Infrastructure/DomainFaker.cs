@@ -1,7 +1,7 @@
 using Bogus;
 using System;
 
-namespace PayrollProcessor.Functions.Seeding.Infrastructure
+namespace PayrollProcessor.Infrastructure.Seeding.Infrastructure
 {
     /// <summary>
     /// Creates Fakers that use a specific factory function

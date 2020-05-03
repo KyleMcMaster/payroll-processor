@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Bogus;
-using PayrollProcessor.Functions.Domain.Features.Employees;
-using PayrollProcessor.Functions.Seeding.Infrastructure;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Infrastructure.Seeding.Infrastructure;
 
-namespace PayrollProcessor.Functions.Seeding.Features.Generators
+namespace PayrollProcessor.Infrastructure.Seeding.Features.Generators
 {
     public class EmployeeSeed
     {

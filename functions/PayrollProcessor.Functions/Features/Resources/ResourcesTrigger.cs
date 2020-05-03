@@ -9,8 +9,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Table;
 using PayrollProcessor.Functions.Features.Employees;
 using PayrollProcessor.Functions.Features.Payrolls;
-using PayrollProcessor.Functions.Seeding.Features.Employees;
-using PayrollProcessor.Functions.Seeding.Features.Generators;
+using PayrollProcessor.Infrastructure.Seeding.Features.Employees;
+using PayrollProcessor.Infrastructure.Seeding.Features.Generators;
 
 namespace PayrollProcessor.Functions.Features.Resources
 {

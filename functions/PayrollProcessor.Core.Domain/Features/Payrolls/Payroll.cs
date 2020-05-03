@@ -1,6 +1,6 @@
 using System;
 
-namespace PayrollProcessor.Functions.Domain.Features.Payrolls
+namespace PayrollProcessor.Core.Domain.Features.Payrolls
 {
     public class Payroll
     {

@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bogus;
-using PayrollProcessor.Functions.Domain.Features.Employees;
-using PayrollProcessor.Functions.Domain.Features.Payrolls;
-using PayrollProcessor.Functions.Seeding.Features.Generators;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Features.Payrolls;
+using PayrollProcessor.Infrastructure.Seeding.Features.Generators;
 
-namespace PayrollProcessor.Functions.Seeding.Features.Employees
+namespace PayrollProcessor.Infrastructure.Seeding.Features.Employees
 {
     public class DomainSeed
     {

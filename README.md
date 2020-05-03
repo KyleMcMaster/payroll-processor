@@ -79,7 +79,7 @@ or open the root of the repository in VS Code (`code .`) and when prompted, open
 
 ### .NET
 
-The Azure Functions solution (`PayrollProcessor.Functions.sln`) is set up as the default solution
+The Azure Functions solution (`PayrollProcessor.sln`) is set up as the default solution
 for [Omnisharp](https://github.com/OmniSharp/omnisharp-vscode), and is loaded as soon as the
 VS Code workspace is opened.
 

@@ -9,7 +9,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using PayrollProcessor.Functions.Features.Resources;
 using System;
 using System.Linq;
-using PayrollProcessor.Functions.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Features.Employees;
 
 namespace PayrollProcessor.Functions.Features.Employees
 {
