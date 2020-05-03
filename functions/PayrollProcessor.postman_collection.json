@@ -120,7 +120,7 @@
 			"response": []
 		},
 		{
-			"name": "Create Resources",
+			"name": "Create Seed Resources",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
 					"content-type": true
@@ -148,6 +148,48 @@
 						""
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Seed Data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/resources/data?employeesCount=300&payrollsMaxCount=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"resources",
+						"data"
+					],
+					"query": [
+						{
+							"key": "employeesCount",
+							"value": "300"
+						},
+						{
+							"key": "payrollsMaxCount",
+							"value": "5"
+						}
+					]
+				},
+				"description": "Creates Employees, EmployeePayrolls, and Payrolls based on query string params"
 			},
 			"response": []
 		}
