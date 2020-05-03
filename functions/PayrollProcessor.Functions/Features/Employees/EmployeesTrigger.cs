@@ -70,7 +70,7 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             var employee = option.IfNone(() => throw new Exception($"Could not find employee [{updateParams.Department}] [{id}]"));
 
-            employee.Status = EmployeeDepartment.Find(updateParams.Status).CodeName;
+            employee.Status = EmployeeStatus.Find(updateParams.Status).CodeName;
 
             var tableResult = await employeeTable.ExecuteAsync(
                 operation: TableOperation.InsertOrMerge(
