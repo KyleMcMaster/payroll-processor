@@ -23,7 +23,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PayrollProcessor.Functions.Seeding\PayrollProcessor.Functions.Seeding.csproj" />
-    <ProjectReference Include="..\PayrollProcessor.Functions.Domain\PayrollProcessor.Functions.Domain.csproj" />
+    <ProjectReference Include="..\PayrollProcessor.Infrastructure.Seeding\PayrollProcessor.Infrastructure.Seeding.csproj" />
+    <ProjectReference Include="..\PayrollProcessor.Core.Domain\PayrollProcessor.Core.Domain.csproj" />
   </ItemGroup>
 </Project>

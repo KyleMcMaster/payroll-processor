@@ -54,7 +54,7 @@
       "editor.codeActionsOnSave": {}
     },
 
-    "omnisharp.defaultLaunchSolution": "PayrollProcessor.Functions.sln",
+    "omnisharp.defaultLaunchSolution": "PayrollProcessor.sln",
     "omnisharp.autoStart": true,
     "omnisharp.enableEditorConfigSupport": true,
     "omnisharp.enableRoslynAnalyzers": true,

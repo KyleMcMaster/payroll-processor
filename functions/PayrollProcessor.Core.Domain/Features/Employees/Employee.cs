@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PayrollProcessor.Functions.Domain.Features.Payrolls;
+using PayrollProcessor.Core.Domain.Features.Payrolls;
 
-namespace PayrollProcessor.Functions.Domain.Features.Employees
+namespace PayrollProcessor.Core.Domain.Features.Employees
 {
     public class Employee
     {
