@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "API: Run & Attach (Debug)",
+      "type": "coreclr",
+      "preLaunchTask": "API: Build (Debug)",
+      "request": "launch",
+      "program": "${workspaceFolder}/PayrollProcessor.Api/bin/Debug/netcoreapp3.1/PayrollProcessor.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/PayrollProcessor.Api/bin/Debug/netcoreapp3.1",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5000"
+      },
+      "launchBrowser": {
+        "enabled": false,
+        "args": "${auto-detect-url}",
+        "windows": {
+          "command": "cmd.exe",
+          "args": "/C start ${auto-detect-url}"
+        },
+        "osx": {
+          "command": "open"
+        },
+        "linux": {
+          "command": "xdg-open"
+        }
+      }
+    },
+    {
+      "name": "API: Attach",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickProcess}"
+    }
+  ]
+}

@@ -5,15 +5,15 @@
       "name": "docs"
     },
     {
-      "path": "payroll-processor-api",
+      "path": "api",
       "name": "api"
     },
     {
-      "path": "payroll-processor-client",
+      "path": "client",
       "name": "client"
     },
     {
-      "path": "payroll-processor-functions",
+      "path": "functions",
       "name": "functions"
     },
     {
@@ -29,9 +29,9 @@
       "**/CVS": true,
       "**/.DS_Store": true,
       "node_modules": true,
-      "payroll-processor-api": true,
-      "payroll-processor-client": true,
-      "payroll-processor-functions": true,
+      "api": true,
+      "client": true,
+      "functions": true,
       "docs": true,
       "**/bin": true,
       "**/obj": true,
@@ -46,13 +46,22 @@
     },
 
     "[csharp]": {
-      "editor.defaultFormatter": "ms-dotnettools.csharp"
+      "editor.defaultFormatter": "ms-dotnettools.csharp",
+      "editor.codeActionsOnSave": {
+        /* Not enabled yet:
+          https://github.com/OmniSharp/omnisharp-vscode/issues/2796
+          https://github.com/OmniSharp/omnisharp-roslyn/pull/1581
+        */
+        "source.fixAll": false,
+        "source.organizeImports": true
+      }
     },
 
-    "omnisharp.defaultLaunchSolution": "Payroll.Processor.Functions.sln",
+    "omnisharp.defaultLaunchSolution": "PayrollProcessor.Functions.sln",
     "omnisharp.autoStart": true,
     "omnisharp.enableEditorConfigSupport": true,
-    "omnisharp.enableRoslynAnalyzers": true
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.useEditorFormattingSettings": true
   },
   "extensions": {
     "recommendations": [

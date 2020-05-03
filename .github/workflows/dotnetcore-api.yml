@@ -1,5 +1,5 @@
-# build and test payroll-processor-api
-name: dotnet core payroll-processor-api - build
+# build and test PayrollProcessor.Api
+name: dotnet core PayrollProcessor.Api - build
 
 on:
   push:
@@ -19,6 +19,6 @@ jobs:
         with:
           dotnet-version: 3.1.101
       - name: Build with dotnet
-        run: dotnet build payroll-processor-api/Payroll.Processor.Api.sln --configuration Release
+        run: dotnet build api/PayrollProcessor.Api.sln --configuration Release
       - name: Unit Tests
-        run: dotnet test payroll-processor-api/Payroll.Processor.Api.sln
+        run: dotnet test api/PayrollProcessor.Api.sln
