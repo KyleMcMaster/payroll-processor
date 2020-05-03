@@ -132,7 +132,7 @@ and select `PayrollProcessor.Api.sln`.
 
   - Function: Run & Attach (Debug)
 
-### Data Storage
+## Data Storage
 
 The project currently stores data in Azure Table Storage, which can be simulated locally using the [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator).
 
@@ -141,10 +141,23 @@ The project currently stores data in Azure Table Storage, which can be simulated
 
 The locally stored data can be viewed using the [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/).
 
+### Initialization / Seeding
+
 To initialize the data storage structure (a few tables and a queue):
 
 - Turn on the Azure Storage Emulator
 - Run the functions project
 - Make a POST request to `http://localhost:7071/api/resources/`
+- Optional: Use `Create Seed Resources` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
 
 The creation process will skip any resources that already exist.
+
+There is also an endpoint to initialize randomly generated data in the data storage:
+
+- Turn on the Azure Storage Emulator
+- Run the functions project
+- Make a POST request to `http://localhost:7071/api/resources/data`
+  - There are 2 optional query parameters
+    - `employeesCount`: Sets the number of employees created by the request
+    - `payrollsMaxCount`: Sets the maximum number of payrolls created for each employee (random value 1-max)
+- Optional: Use `Create Seed Data` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
