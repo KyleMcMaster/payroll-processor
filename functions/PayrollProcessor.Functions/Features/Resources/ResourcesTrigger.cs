@@ -38,6 +38,7 @@ namespace PayrollProcessor.Functions.Features.Resources
             [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "resources/data")] HttpRequest req,
             [Table(Resource.Table.Employees)] CloudTable employeeTable,
             [Table(Resource.Table.Payrolls)] CloudTable payrollsTable,
+            [Table(Resource.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
             ILogger log)
         {
             log.LogInformation($"Creating all data: [{req}]");
@@ -63,19 +64,35 @@ namespace PayrollProcessor.Functions.Features.Resources
 
                 foreach (var grouping in payrolls.GroupBy(p => p.CheckDate.ToString("yyyyMMdd")))
                 {
-                    var batch = new TableBatchOperation();
+                    var payrollsTableBatch = new TableBatchOperation();
 
                     foreach (var payroll in grouping.Select(g => g))
                     {
-                        batch.Add(TableOperation.Insert(PayrollEntity.Map.From(payroll)));
+                        payrollsTableBatch.Add(TableOperation.Insert(PayrollEntity.Map.From(payroll)));
                     }
 
-                    var payrollsTableResult = await payrollsTable.ExecuteBatchAsync(batch);
+                    var payrollsTableResult = await payrollsTable.ExecuteBatchAsync(payrollsTableBatch);
 
-                    if (payrollsTableResult.Count != batch.Count)
+                    if (payrollsTableResult.Count != payrollsTableBatch.Count)
                     {
                         throw new Exception($"Could not save payrolls for employee [{employee.Id}]");
                     }
+                }
+
+                var employeePayrollsTableBatch = new TableBatchOperation();
+
+                var mapFunc = EmployeePayrollEntity.Map.From(employee);
+
+                foreach (var employeePayroll in employee.Payrolls)
+                {
+                    employeePayrollsTableBatch.Add(TableOperation.Insert(mapFunc(employeePayroll)));
+                }
+
+                var employeeParollsResult = await employeePayrollsTable.ExecuteBatchAsync(employeePayrollsTableBatch);
+
+                if (employeeParollsResult.Count != employee.Payrolls.Count())
+                {
+                    throw new Exception($"Could not create employee payrolls for employee [{employee.Id}]");
                 }
             }
 
