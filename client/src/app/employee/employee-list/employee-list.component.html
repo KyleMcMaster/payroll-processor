@@ -12,7 +12,7 @@
   <tbody>
     <tr
       [ngClass]="{
-        'table-secondary': employee.status === 'DISABLED'
+        'table-secondary': employee.status === 'Disabled'
       }"
       *ngFor="let employee of employees | async"
     >
@@ -22,11 +22,11 @@
       <td>{{ employee.employmentStartedOn | date }}</td>
       <td>
         <fa-icon
-          *ngIf="employee.status === 'ACTIVE'"
+          *ngIf="employee.status === 'Enabled'"
           [icon]="faSmileBeam"
         ></fa-icon>
         <fa-icon
-          *ngIf="employee.status === 'DISABLED'"
+          *ngIf="employee.status === 'Disabled'"
           [icon]="faSkull"
         ></fa-icon>
       </td>
@@ -35,8 +35,8 @@
           [ngClass]="'btn btn-outline-warning btn-sm'"
           (click)="updateEmployeeStatus(employee)"
         >
-          <span *ngIf="employee.status === 'DISABLED'">Enable</span>
-          <span *ngIf="employee.status === 'ACTIVE'">Disable</span>
+          <span *ngIf="employee.status === 'Disabled'">Enable</span>
+          <span *ngIf="employee.status === 'Enabled'">Disable</span>
         </button>
       </td>
     </tr>
