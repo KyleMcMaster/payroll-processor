@@ -15,19 +15,10 @@ namespace PayrollProcessor.Infrastructure.Seeding.Features.Employees
         public DomainSeed(EmployeeSeed employeeSeed) =>
             this.employeeSeed = employeeSeed;
 
-        public IEnumerable<(Employee, IEnumerable<Payroll>)> BuildAll(int employeesCount, int payrollsMaxCount) =>
-            employeeSeed
-                .BuildMany(employeesCount, payrollsMaxCount)
-                .Select(e =>
-                {
-                    var payrolls = Build(e, e.Payrolls)
-                        .ToList()
-                        .AsEnumerable();
+        public IEnumerable<EmployeeDetails> BuildAll(int employeesCount, int payrollsMaxCount) =>
+            employeeSeed.BuildMany(employeesCount, payrollsMaxCount);
 
-                    return (e, payrolls);
-                });
-
-        private IEnumerable<Payroll> Build(Employee employee, IEnumerable<EmployeePayroll> payrolls) =>
+        private IEnumerable<Payroll> Build(EmployeeDetails employee, IEnumerable<EmployeePayroll> payrolls) =>
             payrolls.Select(p => new Payroll(Guid.NewGuid())
             {
                 CheckDate = p.CheckDate,

@@ -144,6 +144,8 @@ The locally stored data can be viewed using the [Azure Storage Explorer](https:/
 This project also uses the [Azure Cosmos Db Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator)
 which can be downloaded at [https://aka.ms/cosmosdb-emulator](https://aka.ms/cosmosdb-emulator)
 
+> Note: There is a [Linux/MacOS emulator](https://github.com/zeit/cosmosdb-server) available as well
+
 ### Initialization / Seeding
 
 #### Create Tables / Queues

@@ -7,7 +7,7 @@ namespace PayrollProcessor.Functions.Infrastructure
 {
     public static class Request
     {
-        public async static Task<T> Parse<T>(HttpRequest request)
+        public async static Task<T> ParseBody<T>(HttpRequest request)
         {
             string requestBody = await new StreamReader(request.Body).ReadToEndAsync();
 

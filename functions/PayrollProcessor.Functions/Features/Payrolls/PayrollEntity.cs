@@ -1,108 +1,66 @@
 using System;
-using Microsoft.WindowsAzure.Storage.Table;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Features.Payrolls;
+using PayrollProcessor.Functions.Infrastructure;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {
     /// <summary>
     /// The Table storage representation of a Payroll
     /// </summary>
-    public class PayrollEntity : TableEntity
+    public class PayrollEntity : CosmosDBEntity
     {
-        public DateTimeOffset CheckDate { get; set; }
-        public Guid EmployeeId { get; set; }
+        public string CheckDate { get; set; } = "";
+        public string EmployeeId { get; set; } = "";
         public decimal GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
         public string EmployeeDepartment { get; set; } = "";
+        public string EmployeeFirstName { get; set; } = "";
+        public string EmployeeLastName { get; set; } = "";
 
         public static class Map
         {
-            public static Payroll To(PayrollEntity entity) =>
-                new Payroll(Guid.Parse(entity.RowKey))
+            public static Payroll ToPayroll(PayrollEntity entity) =>
+                new Payroll(Guid.Parse(entity.Id))
                 {
-                    CheckDate = entity.CheckDate,
-                    EmployeeId = entity.EmployeeId,
+                    CheckDate = DateTimeOffset.Parse(entity.CheckDate),
+                    EmployeeId = Guid.Parse(entity.EmployeeId),
                     GrossPayroll = entity.GrossPayroll,
                     PayrollPeriod = entity.PayrollPeriod,
                     EmployeeDepartment = entity.EmployeeDepartment,
+                    EmployeeFirstName = entity.EmployeeFirstName,
+                    EmployeeLastName = entity.EmployeeLastName,
                     Version = entity.ETag
                 };
 
             public static PayrollEntity From(Payroll payroll) =>
                 new PayrollEntity
                 {
-                    PartitionKey = payroll.CheckDate.ToString("yyyyMMdd"),
-                    RowKey = payroll.Id.ToString("n"),
-                    CheckDate = payroll.CheckDate,
-                    EmployeeId = payroll.EmployeeId,
+                    Id = payroll.Id.ToString("n"),
+                    Type = nameof(Payroll),
+                    CheckDate = payroll.CheckDate.ToString("yyyyMMdd"),
+                    EmployeeId = payroll.EmployeeId.ToString("n"),
                     GrossPayroll = payroll.GrossPayroll,
                     PayrollPeriod = payroll.PayrollPeriod,
                     EmployeeDepartment = payroll.EmployeeDepartment,
+                    EmployeeFirstName = payroll.EmployeeFirstName,
+                    EmployeeLastName = payroll.EmployeeLastName,
                     ETag = payroll.Version
                 };
 
-            public static PayrollEntity From(PayrollNew payroll) =>
+            public static PayrollEntity From(Employee employee, EmployeePayroll payroll) =>
                 new PayrollEntity
                 {
-                    PartitionKey = payroll.CheckDate.ToString("yyyyMMdd"),
-                    RowKey = Guid.NewGuid().ToString("n"),
-                    CheckDate = payroll.CheckDate,
-                    EmployeeId = payroll.EmployeeId,
+                    Id = Guid.NewGuid().ToString("n"),
+                    Type = nameof(Payroll),
+                    CheckDate = payroll.CheckDate.ToString("yyyyMMdd"),
+                    EmployeeId = payroll.EmployeeId.ToString("n"),
                     GrossPayroll = payroll.GrossPayroll,
-                    PayrollPeriod = payroll.PayrollPeriod,
-                    EmployeeDepartment = payroll.EmployeeDepartment,
+                    EmployeeDepartment = employee.Department,
+                    EmployeeFirstName = employee.FirstName,
+                    EmployeeLastName = employee.LastName,
+                    PayrollPeriod = payroll.PayrollPeriod
                 };
-        }
-    }
-
-    public class EmployeePayrollEntity : TableEntity
-    {
-        public DateTimeOffset CheckDate { get; set; }
-        public Guid EmployeeId { get; set; }
-        public decimal GrossPayroll { get; set; }
-        public string PayrollPeriod { get; set; } = "";
-        public string EmployeeDepartment { get; set; } = "";
-
-        public static class Map
-        {
-            public static Payroll To(EmployeePayrollEntity entity) =>
-                new Payroll(Guid.Parse(entity.RowKey))
-                {
-                    CheckDate = entity.CheckDate,
-                    EmployeeId = entity.EmployeeId,
-                    GrossPayroll = entity.GrossPayroll,
-                    PayrollPeriod = entity.PayrollPeriod,
-                    EmployeeDepartment = entity.EmployeeDepartment,
-                    Version = entity.ETag
-                };
-
-            public static EmployeePayrollEntity From(Payroll payroll) =>
-                new EmployeePayrollEntity
-                {
-                    PartitionKey = payroll.EmployeeId.ToString("n"),
-                    RowKey = payroll.Id.ToString("n"),
-                    CheckDate = payroll.CheckDate,
-                    EmployeeId = payroll.EmployeeId,
-                    GrossPayroll = payroll.GrossPayroll,
-                    PayrollPeriod = payroll.PayrollPeriod,
-                    EmployeeDepartment = payroll.EmployeeDepartment,
-                    ETag = payroll.Version
-                };
-
-            public static Func<EmployeePayroll, EmployeePayrollEntity> From
-                (Employee employee) =>
-                (EmployeePayroll employeePayroll) =>
-                    new EmployeePayrollEntity
-                    {
-                        PartitionKey = employee.Id.ToString("n"),
-                        RowKey = employeePayroll.Id.ToString("n"),
-                        CheckDate = employeePayroll.CheckDate,
-                        EmployeeId = employee.Id,
-                        GrossPayroll = employeePayroll.GrossPayroll,
-                        PayrollPeriod = employeePayroll.PayrollPeriod,
-                        EmployeeDepartment = employee.Department,
-                    };
         }
     }
 }

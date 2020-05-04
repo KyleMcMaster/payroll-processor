@@ -4,165 +4,158 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Queue;
-using Microsoft.WindowsAzure.Storage.Table;
-using PayrollProcessor.Functions.Features.Employees;
 using PayrollProcessor.Functions.Features.Resources;
 using PayrollProcessor.Functions.Infrastructure;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
 using PayrollProcessor.Core.Domain.Features.Payrolls;
-using PayrollProcessor.Core.Domain.Features.Employees;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {
     public class PayrollTrigger
     {
         private readonly ApiClient apiClient;
+        private readonly IPayrollsQueryHandler queryHandler;
 
-        public PayrollTrigger(ApiClient apiClient)
+        public PayrollTrigger(ApiClient apiClient, IPayrollsQueryHandler queryHandler)
         {
-            if (apiClient is null)
-            {
-                throw new ArgumentNullException(nameof(apiClient));
-            }
-
-            this.apiClient = apiClient;
+            this.apiClient = apiClient ?? throw new ArgumentNullException(nameof(apiClient));
+            this.queryHandler = queryHandler ?? throw new ArgumentNullException(nameof(queryHandler));
         }
 
         [FunctionName(nameof(GetPayrolls))]
         public async Task<ActionResult<Payroll[]>> GetPayrolls(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "payrolls")] HttpRequest req,
-            [Table(Resource.Table.Payrolls)] CloudTable payrollesTable,
             ILogger log)
         {
             log.LogInformation($"Retrieving all payrolls: [{req}]");
 
-            var payrollQuerier = new TableQuerier(payrollesTable);
+            int.TryParse(req.Query["count"], out int count);
 
-            var payrolls = await payrollQuerier.GetAllData<Payroll, PayrollEntity>(e => PayrollEntity.Map.To(e));
-
-            return payrolls.ToArray();
-        }
-
-        [FunctionName(nameof(GetAllPayrollsForEmployee))]
-        public async Task<ActionResult<Payroll[]>> GetAllPayrollsForEmployee(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "employees/{employeeId}/payrolls")] HttpRequest req,
-            [Table(Resource.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
-            Guid employeeId,
-            ILogger log)
-        {
-            log.LogInformation($"Retrieving all payrolls for employee [{employeeId}]: [{req}]");
-
-            var payrollQuerier = new TableQuerier(employeePayrollsTable);
-
-            var payrolls = await payrollQuerier
-                .GetAllDataByPartitionKey<Payroll, EmployeePayrollEntity>(
-                    e => EmployeePayrollEntity.Map.To(e),
-                    employeeId.ToString("n"));
+            var payrolls = await queryHandler.GetMany(count);
 
             return payrolls.ToArray();
         }
 
-        [FunctionName(nameof(CreatePayroll))]
-        public async Task<ActionResult<Payroll>> CreatePayroll(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "payrolls")] HttpRequest req,
-            [Table(Resource.Table.Employees)] CloudTable employeeTable,
-            [Table(Resource.Table.Payrolls)] CloudTable payrollsTable,
-            [Queue(Resource.Queue.PayrollUpdates)] CloudQueue payrollUpdatesQueue,
-            ILogger log)
-        {
-            log.LogInformation($"Creating a new payroll: [{req}]");
+        // [FunctionName(nameof(GetAllPayrollsForEmployee))]
+        // public async Task<ActionResult<Payroll[]>> GetAllPayrollsForEmployee(
+        //     [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "employees/{employeeId}/payrolls")] HttpRequest req,
+        //     [Table(AppResources.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
+        //     Guid employeeId,
+        //     ILogger log)
+        // {
+        //     log.LogInformation($"Retrieving all payrolls for employee [{employeeId}]: [{req}]");
 
-            var payrollNew = await Request.Parse<PayrollNew>(req);
+        //     var payrollQuerier = new TableQuerier(employeePayrollsTable);
 
-            var querier = new TableQuerier(employeeTable);
+        //     var payrolls = await payrollQuerier
+        //         .GetAllDataByPartitionKey<Payroll, EmployeePayrollEntity>(
+        //             e => EmployeePayrollEntity.Map.To(e),
+        //             employeeId.ToString("n"));
 
-            var option = await querier.GetEntity<EmployeeEntity, Employee>(
-                payrollNew.EmployeeDepartment.ToLowerInvariant(),
-                payrollNew.EmployeeId.ToString("n"),
-                EmployeeEntity.Map.ToEmployee);
+        //     return payrolls.ToArray();
+        // }
 
-            var employee = option.IfNone(() => throw new Exception($"Could not find employee [{payrollNew.EmployeeDepartment}] [{payrollNew.EmployeeId}]"));
+        // [FunctionName(nameof(CreatePayroll))]
+        // public async Task<ActionResult<Payroll>> CreatePayroll(
+        //     [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "payrolls")] HttpRequest req,
+        //     [Table(AppResources.Table.Employees)] CloudTable employeeTable,
+        //     [Table(AppResources.Table.Payrolls)] CloudTable payrollsTable,
+        //     [Queue(AppResources.Queue.PayrollUpdates)] CloudQueue payrollUpdatesQueue,
+        //     ILogger log)
+        // {
+        //     log.LogInformation($"Creating a new payroll: [{req}]");
 
-            var tableResult = await payrollsTable.ExecuteAsync(TableOperation.Insert(PayrollEntity.Map.From(payrollNew)));
+        //     var payrollNew = await Request.ParseBody<PayrollNew>(req);
 
-            if (!(tableResult.Result is PayrollEntity payrollEntity))
-            {
-                throw new Exception($"Could not save payroll");
-            }
+        //     var querier = new TableQuerier(employeeTable);
 
-            await payrollUpdatesQueue.AddMessageAsync(EntityQueueMessageProcessor.ToQueueMessage(payrollEntity));
+        //     var option = await querier.GetEntity<EmployeeEntity, Employee>(
+        //         payrollNew.EmployeeDepartment.ToLowerInvariant(),
+        //         payrollNew.EmployeeId.ToString("n"),
+        //         EmployeeEntity.Map.ToEmployee);
 
-            return PayrollEntity.Map.To(payrollEntity);
-        }
+        //     var employee = option.IfNone(() => throw new Exception($"Could not find employee [{payrollNew.EmployeeDepartment}] [{payrollNew.EmployeeId}]"));
 
-        [FunctionName(nameof(UpdatePayroll))]
-        public async Task<ActionResult<Payroll>> UpdatePayroll(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "PUT", Route = "payrolls")] HttpRequest req,
-            [Table(Resource.Table.Payrolls)] CloudTable payrollsTable,
-            [Queue(Resource.Queue.PayrollUpdates)] CloudQueue payrollUpdatesQueue,
-            ILogger log)
-        {
-            log.LogInformation($"Creating a new payroll: [{req}]");
+        //     var tableResult = await payrollsTable.ExecuteAsync(TableOperation.Insert(PayrollEntity.Map.From(payrollNew)));
 
-            var payroll = await Request.Parse<Payroll>(req);
+        //     if (!(tableResult.Result is PayrollEntity payrollEntity))
+        //     {
+        //         throw new Exception($"Could not save payroll");
+        //     }
 
-            var payrollEntity = PayrollEntity.Map.From(payroll);
+        //     await payrollUpdatesQueue.AddMessageAsync(EntityQueueMessageProcessor.ToQueueMessage(payrollEntity));
 
-            var payrollUpdate = TableOperation.Replace(payrollEntity);
+        //     return PayrollEntity.Map.To(payrollEntity);
+        // }
 
-            await payrollsTable.ExecuteAsync(payrollUpdate);
+        // [FunctionName(nameof(UpdatePayroll))]
+        // public async Task<ActionResult<Payroll>> UpdatePayroll(
+        //     [HttpTrigger(AuthorizationLevel.Anonymous, "PUT", Route = "payrolls")] HttpRequest req,
+        //     [Table(AppResources.Table.Payrolls)] CloudTable payrollsTable,
+        //     [Queue(AppResources.Queue.PayrollUpdates)] CloudQueue payrollUpdatesQueue,
+        //     ILogger log)
+        // {
+        //     log.LogInformation($"Creating a new payroll: [{req}]");
 
-            await payrollUpdatesQueue.AddMessageAsync(EntityQueueMessageProcessor.ToQueueMessage(payrollEntity));
+        //     var payroll = await Request.ParseBody<Payroll>(req);
 
-            return payroll;
-        }
+        //     var payrollEntity = PayrollEntity.Map.From(payroll);
 
-        [FunctionName(nameof(UpdatePayrollFromQueue))]
-        public async Task UpdatePayrollFromQueue(
-            [QueueTrigger(Resource.Queue.PayrollUpdates)] CloudQueueMessage message,
-            [Table(Resource.Table.Employees)] CloudTable employeeTable,
-            [Table(Resource.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
-            ILogger log)
-        {
-            log.LogInformation($"Processing payrollUpdates queue: [{message}]");
+        //     var payrollUpdate = TableOperation.Replace(payrollEntity);
 
-            var payrollEntity = EntityQueueMessageProcessor.FromQueueMessage<PayrollEntity>(message);
+        //     await payrollsTable.ExecuteAsync(payrollUpdate);
 
-            var payroll = PayrollEntity.Map.To(payrollEntity);
+        //     await payrollUpdatesQueue.AddMessageAsync(EntityQueueMessageProcessor.ToQueueMessage(payrollEntity));
 
-            var querier = new TableQuerier(employeeTable);
+        //     return payroll;
+        // }
 
-            var option = await querier.GetEntity<EmployeeEntity, Employee>(
-                payrollEntity.EmployeeDepartment.ToLowerInvariant(),
-                payrollEntity.EmployeeId.ToString("n"),
-                EmployeeEntity.Map.ToEmployee);
+        // [FunctionName(nameof(UpdatePayrollFromQueue))]
+        // public async Task UpdatePayrollFromQueue(
+        //     [QueueTrigger(AppResources.Queue.PayrollUpdates)] CloudQueueMessage message,
+        //     [Table(AppResources.Table.Employees)] CloudTable employeeTable,
+        //     [Table(AppResources.Table.EmployeePayrolls)] CloudTable employeePayrollsTable,
+        //     ILogger log)
+        // {
+        //     log.LogInformation($"Processing payrollUpdates queue: [{message}]");
 
-            var employee = option.IfNone(() => throw new Exception($"Could not find employee for payroll [{payroll.Id}]"));
+        //     var payrollEntity = EntityQueueMessageProcessor.FromQueueMessage<PayrollEntity>(message);
 
-            employee
-                .Payrolls
-                .Find(p => p.Id == payroll.Id)
-                .Match(p =>
-                    {
-                        p.GrossPayroll = payroll.GrossPayroll;
-                        p.PayrollPeriod = p.PayrollPeriod;
-                    },
-                    () => employee.UpdatePayrolls(payroll));
+        //     var payroll = PayrollEntity.Map.To(payrollEntity);
 
-            var employeeUpdate = TableOperation.Replace(EmployeeEntity.Map.From(employee));
+        //     var querier = new TableQuerier(employeeTable);
 
-            await employeeTable.ExecuteAsync(employeeUpdate);
+        //     var option = await querier.GetEntity<EmployeeEntity, Employee>(
+        //         payrollEntity.EmployeeDepartment.ToLowerInvariant(),
+        //         payrollEntity.EmployeeId.ToString("n"),
+        //         EmployeeEntity.Map.ToEmployee);
 
-            var employeePayrollUpdate = TableOperation.InsertOrReplace(EmployeePayrollEntity.Map.From(payroll));
+        //     var employee = option.IfNone(() => throw new Exception($"Could not find employee for payroll [{payroll.Id}]"));
 
-            await apiClient.SendNotification(
-                nameof(UpdatePayrollFromQueue),
-                payroll
-            );
+        //     employee
+        //         .Payrolls
+        //         .Find(p => p.Id == payroll.Id)
+        //         .Match(p =>
+        //             {
+        //                 p.GrossPayroll = payroll.GrossPayroll;
+        //                 p.PayrollPeriod = p.PayrollPeriod;
+        //             },
+        //             () => employee.UpdatePayrolls(payroll));
 
-            await employeePayrollsTable.ExecuteAsync(employeePayrollUpdate);
-        }
+        //     var employeeUpdate = TableOperation.Replace(EmployeeEntity.Map.From(employee));
+
+        //     await employeeTable.ExecuteAsync(employeeUpdate);
+
+        //     var employeePayrollUpdate = TableOperation.InsertOrReplace(EmployeePayrollEntity.Map.From(payroll));
+
+        //     await apiClient.SendNotification(
+        //         nameof(UpdatePayrollFromQueue),
+        //         payroll
+        //     );
+
+        //     await employeePayrollsTable.ExecuteAsync(employeePayrollUpdate);
+        // }
     }
 }

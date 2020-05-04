@@ -19,35 +19,35 @@ namespace PayrollProcessor.Functions.Tests.Features.Employees
         private ILogger Logger { get; }
         private EmployeesTrigger Trigger { get; }
 
-        public EmployeesTriggerTests()
-        {
-            DefaultHttpRequest = Substitute.For<HttpRequest>();
+        // public EmployeesTriggerTests()
+        // {
+        //     DefaultHttpRequest = Substitute.For<HttpRequest>();
 
-            Logger = Substitute.For<ILogger>();
+        //     Logger = Substitute.For<ILogger>();
 
-            Table = TableStorageFixtures.CreateTable("employees");
+        //     Table = TableStorageFixtures.CreateTable("employees");
 
-            Trigger = new EmployeesTrigger();
-        }
+        //     Trigger = new EmployeesTrigger();
+        // }
 
-        [Fact]
-        public async void GetEmployees_Should_Return_All_Employees()
-        {
-            var entity = new EmployeeEntity { PartitionKey = "employees", RowKey = Guid.NewGuid().ToString("n") };
+        // [Fact]
+        // public async void GetEmployees_Should_Return_All_Employees()
+        // {
+        //     var entity = new EmployeeEntity { PartitionKey = "employees", RowKey = Guid.NewGuid().ToString("n") };
 
-            var segment = TableStorageFixtures.CreateSegment(new[] { entity });
+        //     var segment = TableStorageFixtures.CreateSegment(new[] { entity });
 
-            Table
-                .ExecuteQuerySegmentedAsync(Arg.Any<TableQuery<EmployeeEntity>>(), Arg.Any<TableContinuationToken>())
-                .Returns(segment);
+        //     Table
+        //         .ExecuteQuerySegmentedAsync(Arg.Any<TableQuery<EmployeeEntity>>(), Arg.Any<TableContinuationToken>())
+        //         .Returns(segment);
 
-            var result = await Trigger.GetEmployees(DefaultHttpRequest, Table, Logger);
+        //     var result = await Trigger.GetEmployees(DefaultHttpRequest, Table, Logger);
 
-            var employeesResult = result.Value;
+        //     var employeesResult = result.Value;
 
-            employeesResult.Should().HaveCount(1);
-            employeesResult.First().Id.Should().Be(Guid.Parse(entity.RowKey));
-        }
+        //     employeesResult.Should().HaveCount(1);
+        //     employeesResult.First().Id.Should().Be(Guid.Parse(entity.RowKey));
+        // }
     }
 
     public static class TableStorageFixtures

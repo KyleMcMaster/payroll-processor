@@ -72,7 +72,8 @@
       "stylelint.vscode-stylelint",
       "k--kato.docomment",
       "jchannon.csharpextensions",
-      "vstirbu.vscode-mermaid-preview"
+      "vstirbu.vscode-mermaid-preview",
+      "ms-azuretools.vscode-cosmosdb"
     ]
   }
 }
