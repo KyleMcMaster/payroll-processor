@@ -27,7 +27,9 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@microsoft/signalr": "^3.1.3",
     "@ng-bootstrap/ng-bootstrap": "^5.2.2",
+    "bootstrap": "^4.4.1",
     "hammerjs": "^2.0.8",
+    "ngx-toastr": "12.0.1",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
