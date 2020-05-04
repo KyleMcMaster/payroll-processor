@@ -1,6 +1,7 @@
 using System;
 using Microsoft.WindowsAzure.Storage.Table;
-using PayrollProcessor.Functions.Domain.Features.Payrolls;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Features.Payrolls;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {
@@ -88,6 +89,20 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeDepartment = payroll.EmployeeDepartment,
                     ETag = payroll.Version
                 };
+
+            public static Func<EmployeePayroll, EmployeePayrollEntity> From
+                (Employee employee) =>
+                (EmployeePayroll employeePayroll) =>
+                    new EmployeePayrollEntity
+                    {
+                        PartitionKey = employee.Id.ToString("n"),
+                        RowKey = employeePayroll.Id.ToString("n"),
+                        CheckDate = employeePayroll.CheckDate,
+                        EmployeeId = employee.Id,
+                        GrossPayroll = employeePayroll.GrossPayroll,
+                        PayrollPeriod = employeePayroll.PayrollPeriod,
+                        EmployeeDepartment = employee.Department,
+                    };
         }
     }
 }

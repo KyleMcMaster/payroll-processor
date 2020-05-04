@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Functions"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Functions.Tests", "PayrollProcessor.Functions.Tests\PayrollProcessor.Functions.Tests.csproj", "{C5A59580-FC82-403E-B2D0-1EA613A6577B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Functions.Seeding", "PayrollProcessor.Functions.Seeding\PayrollProcessor.Functions.Seeding.csproj", "{33654685-10D4-486D-A333-54BDA0C8FA29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Infrastructure.Seeding", "PayrollProcessor.Infrastructure.Seeding\PayrollProcessor.Infrastructure.Seeding.csproj", "{33654685-10D4-486D-A333-54BDA0C8FA29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Functions.Domain", "PayrollProcessor.Functions.Domain\PayrollProcessor.Functions.Domain.csproj", "{09AADC6B-78C8-4FC9-A59A-30AB68AAC361}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Core.Domain", "PayrollProcessor.Core.Domain\PayrollProcessor.Core.Domain.csproj", "{09AADC6B-78C8-4FC9-A59A-30AB68AAC361}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

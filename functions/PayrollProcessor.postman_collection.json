@@ -101,7 +101,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"employeeId\": \"ed00b46a-963f-4795-bc75-3f646373e984\",\n\t\"checkDate\": \"2020-04-19T07:22Z\",\n\t\"grossPayroll\": 100,\n\t\"payrollPeriod\": \"2\",\n\t\"employeeDepartment\": \"test\"\n}"
+					"raw": "{\n\t\"employeeId\": \"ed00b46a-963f-4795-bc75-3f646373e984\",\n\t\"checkDate\": \"2020-04-28T07:22Z\",\n\t\"grossPayroll\": 100,\n\t\"payrollPeriod\": \"2\",\n\t\"employeeDepartment\": \"test\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:7071/api/payrolls/",
@@ -131,8 +131,82 @@
 				"header": [
 					{
 						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7071/api/resources/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"resources",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Seed Data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/resources/data?employeesCount=5&payrollsMaxCount=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"resources",
+						"data"
+					],
+					"query": [
+						{
+							"key": "employeesCount",
+							"value": "5"
+						},
+						{
+							"key": "payrollsMaxCount",
+							"value": "10"
+						}
+					]
+				},
+				"description": "Creates Employees, EmployeePayrolls, and Payrolls based on query string params"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Resources",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"url": {
