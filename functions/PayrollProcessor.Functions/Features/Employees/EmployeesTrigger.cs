@@ -66,7 +66,7 @@ namespace PayrollProcessor.Functions.Features.Employees
         public async Task<ActionResult<Employee>> CreateEmployee(
             [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees")] EmployeeNew newEmployee,
             HttpRequest req,
-            [Queue(AppResources.Queue.DepartmentUpdates)] CloudQueue departmentUpdatesQueue,
+            [Queue(AppResources.Queue.EmployeeUpdates)] CloudQueue employeeUpdatesQueue,
             ILogger log)
         {
             log.LogInformation($"Creating a new employee: [{req}]");
@@ -79,7 +79,7 @@ namespace PayrollProcessor.Functions.Features.Employees
                 Source = nameof(CreateEmployee)
             };
 
-            await departmentUpdatesQueue.AddMessageAsync(QueueMessageFactory.ToQueueMessage(message));
+            await employeeUpdatesQueue.AddMessageAsync(QueueMessageFactory.ToQueueMessage(message));
 
             return employee;
         }
@@ -132,7 +132,7 @@ namespace PayrollProcessor.Functions.Features.Employees
         public async Task<ActionResult<EmployeePayroll>> CreateEmployeePayroll(
             [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "employees/{employeeId}/payrolls")] EmployeePayrollNew newEmployeePayroll,
             Guid employeeId,
-            [Queue(AppResources.Queue.DepartmentUpdates)] CloudQueue departmentUpdatesQueue,
+            [Queue(AppResources.Queue.EmployeePayrollUpdates)] CloudQueue employeePayrollUpdatesQueue,
             HttpRequest req,
             ILogger log)
         {
@@ -151,7 +151,7 @@ namespace PayrollProcessor.Functions.Features.Employees
                 Source = nameof(CreateEmployeePayroll)
             };
 
-            await departmentUpdatesQueue.AddMessageAsync(QueueMessageFactory.ToQueueMessage(message));
+            await employeePayrollUpdatesQueue.AddMessageAsync(QueueMessageFactory.ToQueueMessage(message));
 
             return employeePayroll;
         }

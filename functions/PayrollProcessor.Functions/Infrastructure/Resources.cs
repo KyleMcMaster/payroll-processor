@@ -11,7 +11,8 @@ namespace PayrollProcessor.Functions.Infrastructure
 
         public static class Queue
         {
-            public const string DepartmentUpdates = "department-updates";
+            public const string EmployeeUpdates = "employee-updates";
+            public const string EmployeePayrollUpdates = "employee-payroll-updates";
         }
 
         public static class CosmosDb

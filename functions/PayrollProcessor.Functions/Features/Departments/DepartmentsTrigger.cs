@@ -82,10 +82,10 @@ namespace PayrollProcessor.Functions.Features.Departments
 
         [FunctionName(nameof(CreateEmployeeFromQueue))]
         public async Task CreateEmployeeFromQueue(
-            [QueueTrigger(AppResources.Queue.DepartmentUpdates)] CloudQueueMessage message,
+            [QueueTrigger(AppResources.Queue.EmployeeUpdates)] CloudQueueMessage message,
             ILogger log)
         {
-            log.LogInformation($"Processing {AppResources.Queue.DepartmentUpdates} queue: [{message}]");
+            log.LogInformation($"Processing {AppResources.Queue.EmployeeUpdates} queue: [{message}]");
 
             var (employeeId, source) = QueueMessageFactory.FromQueueMessage<EmployeeCreation>(message);
 
@@ -103,10 +103,10 @@ namespace PayrollProcessor.Functions.Features.Departments
 
         [FunctionName(nameof(CreatePayrollFromQueue))]
         public async Task CreatePayrollFromQueue(
-            [QueueTrigger(AppResources.Queue.DepartmentUpdates)] CloudQueueMessage message,
+            [QueueTrigger(AppResources.Queue.EmployeePayrollUpdates)] CloudQueueMessage message,
             ILogger log)
         {
-            log.LogInformation($"Processing {AppResources.Queue.DepartmentUpdates} queue: [{message}]");
+            log.LogInformation($"Processing {AppResources.Queue.EmployeeUpdates} queue: [{message}]");
 
             var (employeeId, employeePayrollId, source) = QueueMessageFactory.FromQueueMessage<EmployeePayrollCreation>(message);
 
