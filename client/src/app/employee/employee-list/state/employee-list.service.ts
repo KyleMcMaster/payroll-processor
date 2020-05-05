@@ -2,11 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import { EnvService } from '../../../shared/env.service';
 import { Employee } from './employee-list.model';
 import { EmployeeListStore } from './employee-list.store';
-
-import { EnvService } from 'src/app/shared/env.service';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeListService {
@@ -17,7 +15,7 @@ export class EmployeeListService {
     envService: EnvService,
     private store: EmployeeListStore,
   ) {
-    this.apiUrl = envService.apiRootUrl;
+    this.apiUrl = envService.functionsRootUrl;
   }
 
   getEmployees() {

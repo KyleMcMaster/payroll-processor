@@ -58,6 +58,10 @@
         "/consoleloggerparameters:NoSummary"
       ],
       "type": "process",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
       "problemMatcher": "$msCompile"
     },
     {

@@ -79,7 +79,7 @@ or open the root of the repository in VS Code (`code .`) and when prompted, open
 
 ### .NET
 
-The Azure Functions solution (`PayrollProcessor.Functions.sln`) is set up as the default solution
+The Azure Functions solution (`PayrollProcessor.sln`) is set up as the default solution
 for [Omnisharp](https://github.com/OmniSharp/omnisharp-vscode), and is loaded as soon as the
 VS Code workspace is opened.
 
@@ -132,7 +132,7 @@ and select `PayrollProcessor.Api.sln`.
 
   - Function: Run & Attach (Debug)
 
-### Data Storage
+## Data Storage
 
 The project currently stores data in Azure Table Storage, which can be simulated locally using the [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator).
 
@@ -141,10 +141,37 @@ The project currently stores data in Azure Table Storage, which can be simulated
 
 The locally stored data can be viewed using the [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/).
 
+### Initialization / Seeding
+
+#### Create Tables / Queues
+
 To initialize the data storage structure (a few tables and a queue):
 
 - Turn on the Azure Storage Emulator
 - Run the functions project
 - Make a POST request to `http://localhost:7071/api/resources/`
+- Optional: Use `Create Resources` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
 
 The creation process will skip any resources that already exist.
+
+#### Create Seed Data
+
+There is also an endpoint to initialize randomly generated data in the data storage:
+
+- Turn on the Azure Storage Emulator
+- Run the functions project
+- Make a POST request to `http://localhost:7071/api/resources/data`
+  - There are 2 optional query parameters
+    - `employeesCount`: Sets the number of employees created by the request
+    - `payrollsMaxCount`: Sets the maximum number of payrolls created for each employee (random value 1-max)
+- Optional: Use `Create Seed Data` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
+
+#### Reset Tables / Queues and Data
+
+Finally, there's an endpoint to clear/reset all the data currently in the app.
+This can be useful if you are changing schemas and don't want to write migrations.
+
+- Turn on the Azure Storage Emulator
+- Run the functions project
+- Make a DELETE request to `http://localhost:7071/api/resources`
+- Optional: Use `Delete Resources` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection

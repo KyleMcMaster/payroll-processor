@@ -1,5 +1,7 @@
 using System;
 using Microsoft.WindowsAzure.Storage.Table;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Features.Payrolls;
 
 namespace PayrollProcessor.Functions.Features.Payrolls
 {
@@ -10,7 +12,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
     {
         public DateTimeOffset CheckDate { get; set; }
         public Guid EmployeeId { get; set; }
-        public double GrossPayroll { get; set; }
+        public decimal GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
         public string EmployeeDepartment { get; set; } = "";
 
@@ -58,7 +60,7 @@ namespace PayrollProcessor.Functions.Features.Payrolls
     {
         public DateTimeOffset CheckDate { get; set; }
         public Guid EmployeeId { get; set; }
-        public double GrossPayroll { get; set; }
+        public decimal GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
         public string EmployeeDepartment { get; set; } = "";
 
@@ -87,6 +89,20 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeDepartment = payroll.EmployeeDepartment,
                     ETag = payroll.Version
                 };
+
+            public static Func<EmployeePayroll, EmployeePayrollEntity> From
+                (Employee employee) =>
+                (EmployeePayroll employeePayroll) =>
+                    new EmployeePayrollEntity
+                    {
+                        PartitionKey = employee.Id.ToString("n"),
+                        RowKey = employeePayroll.Id.ToString("n"),
+                        CheckDate = employeePayroll.CheckDate,
+                        EmployeeId = employee.Id,
+                        GrossPayroll = employeePayroll.GrossPayroll,
+                        PayrollPeriod = employeePayroll.PayrollPeriod,
+                        EmployeeDepartment = employee.Department,
+                    };
         }
     }
 }

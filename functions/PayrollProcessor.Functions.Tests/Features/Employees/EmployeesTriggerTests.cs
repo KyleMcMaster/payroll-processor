@@ -55,15 +55,17 @@ namespace PayrollProcessor.Functions.Tests.Features.Employees
         public static CloudTable CreateTable(string tableName) =>
             Substitute.For<CloudTable>(new Uri($"http://127.0.0.1:10002/devstoreaccount1/{tableName}"));
 
+#nullable disable
         public static TableQuerySegment<T> CreateSegment<T>(IEnumerable<T> data)
         {
             // https://github.com/Azure/azure-storage-net/issues/619#issuecomment-364090291
 
             var ctor = typeof(TableQuerySegment<T>)
                 .GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
-                .FirstOrDefault(c => c.GetParameters().Count() == 1);
+                .First(c => c.GetParameters().Count() == 1);
 
             return ctor.Invoke(new object[] { data.ToList() }) as TableQuerySegment<T>;
         }
+#nullable enable
     }
 }

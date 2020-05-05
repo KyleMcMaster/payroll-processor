@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
+using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Functions.Infrastructure;
 
 namespace PayrollProcessor.Functions.Features.Employees
@@ -60,9 +61,8 @@ namespace PayrollProcessor.Functions.Features.Employees
                 };
             }
 
-            public static EmployeeEntity From(EmployeeNew employee)
-            {
-                return new EmployeeEntity
+            public static EmployeeEntity From(EmployeeNew employee) =>
+                new EmployeeEntity
                 {
                     PartitionKey = employee.Department.ToLowerInvariant(),
                     RowKey = Guid.NewGuid().ToString("n"),
@@ -75,7 +75,6 @@ namespace PayrollProcessor.Functions.Features.Employees
                     Title = employee.Title,
                     Payrolls = "",
                 };
-            }
         }
     }
 }

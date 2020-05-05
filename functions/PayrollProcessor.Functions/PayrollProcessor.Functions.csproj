@@ -3,12 +3,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
     <RootNamespace>PayrollProcessor.Functions</RootNamespace>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,5 +21,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PayrollProcessor.Infrastructure.Seeding\PayrollProcessor.Infrastructure.Seeding.csproj" />
+    <ProjectReference Include="..\PayrollProcessor.Core.Domain\PayrollProcessor.Core.Domain.csproj" />
   </ItemGroup>
 </Project>

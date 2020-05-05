@@ -23,14 +23,17 @@ namespace PayrollProcessor.Functions.Features.Resources
             queueClient = storageAccount.CreateCloudQueueClient();
         }
 
-        public async Task CreateTable(string tableName)
-        {
-            await tableClient.GetTableReference(tableName).CreateIfNotExistsAsync();
-        }
+        public Task CreateTable(string tableName) =>
+            tableClient.GetTableReference(tableName).CreateIfNotExistsAsync();
 
-        public async Task CreateQueue(string queueName)
-        {
-            await queueClient.GetQueueReference(queueName).CreateIfNotExistsAsync();
-        }
+
+        public Task CreateQueue(string queueName) =>
+            queueClient.GetQueueReference(queueName).CreateIfNotExistsAsync();
+
+        public Task DeleteTable(string tableName) =>
+            tableClient.GetTableReference(tableName).DeleteIfExistsAsync();
+
+        public Task DeleteQueue(string queueName) =>
+            queueClient.GetQueueReference(queueName).DeleteIfExistsAsync();
     }
 }
