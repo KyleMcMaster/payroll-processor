@@ -16,14 +16,14 @@ export class DataService {
   private readonly apiUrl: string;
 
   constructor(private http: HttpClient, envService: EnvService) {
-    this.apiUrl = envService.apiRootUrl;
+    this.apiUrl = envService.functionsRootUrl;
 
     this.loadData();
   }
 
   private loadData() {
     this.http
-      .get<Payroll[]>(`${this.apiUrl}/Payrolls`)
+      .get<Payroll[]>(`${this.apiUrl}/payrolls`)
       .pipe(
         catchError((err) => {
           console.log('Could not fetch payrolls');

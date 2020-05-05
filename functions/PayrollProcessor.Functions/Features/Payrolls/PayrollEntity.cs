@@ -16,9 +16,8 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 
         public static class Map
         {
-            public static Payroll To(PayrollEntity entity)
-            {
-                return new Payroll(Guid.Parse(entity.RowKey))
+            public static Payroll To(PayrollEntity entity) =>
+                new Payroll(Guid.Parse(entity.RowKey))
                 {
                     CheckDate = entity.CheckDate,
                     EmployeeId = entity.EmployeeId,
@@ -27,11 +26,9 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeDepartment = entity.EmployeeDepartment,
                     Version = entity.ETag
                 };
-            }
 
-            public static PayrollEntity From(Payroll payroll)
-            {
-                return new PayrollEntity
+            public static PayrollEntity From(Payroll payroll) =>
+                new PayrollEntity
                 {
                     PartitionKey = payroll.CheckDate.ToString("yyyyMMdd"),
                     RowKey = payroll.Id.ToString("n"),
@@ -42,11 +39,9 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeDepartment = payroll.EmployeeDepartment,
                     ETag = payroll.Version
                 };
-            }
 
-            public static PayrollEntity From(PayrollNew payroll)
-            {
-                return new PayrollEntity
+            public static PayrollEntity From(PayrollNew payroll) =>
+                new PayrollEntity
                 {
                     PartitionKey = payroll.CheckDate.ToString("yyyyMMdd"),
                     RowKey = Guid.NewGuid().ToString("n"),
@@ -56,7 +51,6 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     PayrollPeriod = payroll.PayrollPeriod,
                     EmployeeDepartment = payroll.EmployeeDepartment,
                 };
-            }
         }
     }
 
@@ -70,9 +64,8 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 
         public static class Map
         {
-            public static Payroll To(EmployeePayrollEntity entity)
-            {
-                return new Payroll(Guid.Parse(entity.RowKey))
+            public static Payroll To(EmployeePayrollEntity entity) =>
+                new Payroll(Guid.Parse(entity.RowKey))
                 {
                     CheckDate = entity.CheckDate,
                     EmployeeId = entity.EmployeeId,
@@ -81,11 +74,9 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeDepartment = entity.EmployeeDepartment,
                     Version = entity.ETag
                 };
-            }
 
-            public static EmployeePayrollEntity From(Payroll payroll)
-            {
-                return new EmployeePayrollEntity
+            public static EmployeePayrollEntity From(Payroll payroll) =>
+                new EmployeePayrollEntity
                 {
                     PartitionKey = payroll.EmployeeId.ToString("n"),
                     RowKey = payroll.Id.ToString("n"),
@@ -96,7 +87,6 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                     EmployeeDepartment = payroll.EmployeeDepartment,
                     ETag = payroll.Version
                 };
-            }
         }
     }
 }

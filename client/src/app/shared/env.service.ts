@@ -11,7 +11,11 @@ export class EnvService {
     return environment;
   }
 
+  get functionsRootUrl(): string {
+    return `${this.env.functionsDomain}/api`;
+  }
+
   get apiRootUrl(): string {
-    return `${this.env.domain}/api`;
+    return `${this.env.apiDomain}/api`;
   }
 }

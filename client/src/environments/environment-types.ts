@@ -1,4 +1,5 @@
 export interface Environment {
   production: boolean;
-  domain: string;
+  functionsDomain: string;
+  apiDomain: string;
 }

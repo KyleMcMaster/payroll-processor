@@ -1,9 +1,11 @@
 using AutoMapper;
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PayrollProcessor.Api.Features.Notifications;
 using PayrollProcessor.Data.Persistence.Context;
 
 namespace PayrollProcessor.Api
@@ -20,7 +22,18 @@ namespace PayrollProcessor.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .WithOrigins(Configuration.GetValue<string>("CORS:client:domain"))
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
+
             services.AddControllers();
+            services.AddSignalR();
 
             services.AddScoped<IDbContext, DbContext>();
 
@@ -35,15 +48,16 @@ namespace PayrollProcessor.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationHub>("/hub/notifications");
             });
 
             app.UseCors();

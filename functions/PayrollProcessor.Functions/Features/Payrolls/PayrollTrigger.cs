@@ -16,6 +16,18 @@ namespace PayrollProcessor.Functions.Features.Payrolls
 {
     public class PayrollTrigger
     {
+        private readonly ApiClient apiClient;
+
+        public PayrollTrigger(ApiClient apiClient)
+        {
+            if (apiClient is null)
+            {
+                throw new ArgumentNullException(nameof(apiClient));
+            }
+
+            this.apiClient = apiClient;
+        }
+
         [FunctionName(nameof(GetPayrolls))]
         public async Task<ActionResult<Payroll[]>> GetPayrolls(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = "payrolls")] HttpRequest req,
@@ -135,18 +147,18 @@ namespace PayrollProcessor.Functions.Features.Payrolls
                         p.GrossPayroll = payroll.GrossPayroll;
                         p.PayrollPeriod = p.PayrollPeriod;
                     },
-                    () =>
-                    {
-                        employee.Payrolls = employee.Payrolls.Length() < 30
-                            ? employee.Payrolls.Append(new[] { new EmployeePayroll { Id = payroll.Id, CheckDate = payroll.CheckDate, GrossPayroll = payroll.GrossPayroll, PayrollPeriod = payroll.PayrollPeriod } })
-                            : employee.Payrolls;
-                    });
+                    () => employee.UpdatePayrolls(payroll));
 
             var employeeUpdate = TableOperation.Replace(EmployeeEntity.Map.From(employee));
 
             await employeeTable.ExecuteAsync(employeeUpdate);
 
             var employeePayrollUpdate = TableOperation.InsertOrReplace(EmployeePayrollEntity.Map.From(payroll));
+
+            await apiClient.SendNotification(
+                nameof(UpdatePayrollFromQueue),
+                payroll
+            );
 
             await employeePayrollsTable.ExecuteAsync(employeePayrollUpdate);
         }

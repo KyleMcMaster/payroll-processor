@@ -23,7 +23,7 @@ export class EmployeeListService {
   getEmployees() {
     this.store.setLoading(true);
     return this.http
-      .get<Employee[]>(`${this.apiUrl}/Employees`)
+      .get<Employee[]>(`${this.apiUrl}/employees`)
       .pipe(
         catchError((err) => {
           this.store.setError({
