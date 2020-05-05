@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace PayrollProcessor.Functions.Infrastructure
@@ -7,12 +8,25 @@ namespace PayrollProcessor.Functions.Infrastructure
     /// </summary>
     public class CosmosDBEntity
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; } = "";
+        /// <summary>
+        /// The unique identifier of the entity
+        /// </summary>
+        /// <value></value>
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// The partition key of the entity in its collection
+        /// </summary>
+        /// <value></value>
+        public string PartitionKey { get; set; } = "";
+
+        /// <summary>
+        /// The type of entity for discriminating in collections with multiple entity types
+        /// </summary>
+        /// <value></value>
+        public string Type { get; set; } = "";
 
         [JsonProperty(PropertyName = "_etag")]
         public string ETag { internal get; set; } = "";
-
-        public string Type { get; set; } = "";
     }
 }

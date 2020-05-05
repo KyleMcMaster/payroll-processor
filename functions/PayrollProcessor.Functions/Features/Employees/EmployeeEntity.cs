@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PayrollProcessor.Core.Domain.Features.Employees;
-using PayrollProcessor.Core.Domain.Features.Payrolls;
 using PayrollProcessor.Functions.Infrastructure;
 
 namespace PayrollProcessor.Functions.Features.Employees
@@ -12,7 +11,6 @@ namespace PayrollProcessor.Functions.Features.Employees
     /// </summary>
     public class EmployeeEntity : CosmosDBEntity
     {
-        public string EmployeeId { get; set; } = "";
         public string Department { get; set; } = "";
         public DateTimeOffset EmploymentStartedOn { get; set; }
         public string Email { get; set; } = "";
@@ -28,7 +26,7 @@ namespace PayrollProcessor.Functions.Features.Employees
         public static class Map
         {
             public static Employee ToEmployee(EmployeeEntity entity) =>
-                new Employee(Guid.Parse(entity.Id))
+                new Employee(entity.Id)
                 {
                     Department = entity.Department,
                     EmploymentStartedOn = entity.EmploymentStartedOn,
@@ -42,7 +40,7 @@ namespace PayrollProcessor.Functions.Features.Employees
                 };
 
             public static EmployeeDetails ToEmployeeDetails(EmployeeEntity entity, IEnumerable<EmployeePayrollEntity> payrolls) =>
-                new EmployeeDetails(Guid.Parse(entity.Id))
+                new EmployeeDetails(entity.Id)
                 {
                     Department = entity.Department,
                     EmploymentStartedOn = entity.EmploymentStartedOn,
@@ -58,13 +56,13 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             public static EmployeeEntity From(Employee employee)
             {
-                string partitionId = employee.Id.ToString("n");
+                var partitionId = employee.Id;
 
                 return new EmployeeEntity
                 {
                     Id = partitionId,
-                    EmployeeId = partitionId,
-                    Type = nameof(Employee),
+                    PartitionKey = partitionId.ToString(),
+                    Type = nameof(EmployeeEntity),
                     Department = employee.Department,
                     EmploymentStartedOn = employee.EmploymentStartedOn,
                     FirstName = employee.FirstName,
@@ -79,11 +77,15 @@ namespace PayrollProcessor.Functions.Features.Employees
                 };
             }
 
-            public static EmployeeEntity From(EmployeeNew employee) =>
-                new EmployeeEntity
+            public static EmployeeEntity From(EmployeeNew employee)
+            {
+                var partitionId = Guid.NewGuid();
+
+                return new EmployeeEntity
                 {
-                    Id = Guid.NewGuid().ToString("n"),
-                    Type = nameof(Employee),
+                    Id = partitionId,
+                    PartitionKey = partitionId.ToString(),
+                    Type = nameof(EmployeeEntity),
                     Department = employee.Department,
                     EmploymentStartedOn = employee.EmploymentStartedOn,
                     FirstName = employee.FirstName,
@@ -96,22 +98,25 @@ namespace PayrollProcessor.Functions.Features.Employees
                     Status = employee.Status,
                     Title = employee.Title
                 };
+            }
         }
     }
 
+    /// <summary>
+    /// The datastore representation of a single payroll record for a given employee
+    /// </summary>
     public class EmployeePayrollEntity : CosmosDBEntity
     {
         public DateTimeOffset CheckDate { get; set; }
-        public string EmployeeId { get; set; } = "";
         public decimal GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
 
         public static class Map
         {
             public static EmployeePayroll ToEmployeePayroll(EmployeePayrollEntity entity) =>
-                new EmployeePayroll(Guid.Parse(entity.Id))
+                new EmployeePayroll(entity.Id)
                 {
-                    EmployeeId = Guid.Parse(entity.EmployeeId),
+                    EmployeeId = Guid.Parse(entity.PartitionKey),
                     CheckDate = entity.CheckDate,
                     GrossPayroll = entity.GrossPayroll,
                     PayrollPeriod = entity.PayrollPeriod,
@@ -121,34 +126,22 @@ namespace PayrollProcessor.Functions.Features.Employees
             public static EmployeePayrollEntity From(EmployeePayroll payroll) =>
                 new EmployeePayrollEntity
                 {
-                    Id = payroll.Id.ToString("n"),
-                    Type = nameof(Payroll),
+                    Id = payroll.Id,
+                    PartitionKey = payroll.EmployeeId.ToString(),
+                    Type = nameof(EmployeePayrollEntity),
                     CheckDate = payroll.CheckDate,
-                    EmployeeId = payroll.EmployeeId.ToString("n"),
                     GrossPayroll = payroll.GrossPayroll,
                     PayrollPeriod = payroll.PayrollPeriod,
                     ETag = payroll.Version
                 };
 
-            public static EmployeePayrollEntity From(Payroll payroll) =>
+            public static EmployeePayrollEntity From(Employee employee, EmployeePayrollNew payroll) =>
                 new EmployeePayrollEntity
                 {
-                    Id = payroll.Id.ToString("n"),
-                    Type = nameof(Payroll),
+                    Id = Guid.NewGuid(),
+                    PartitionKey = employee.Id.ToString(),
+                    Type = nameof(EmployeePayrollEntity),
                     CheckDate = payroll.CheckDate,
-                    EmployeeId = payroll.EmployeeId.ToString("n"),
-                    GrossPayroll = payroll.GrossPayroll,
-                    PayrollPeriod = payroll.PayrollPeriod,
-                    ETag = payroll.Version
-                };
-
-            public static EmployeePayrollEntity From(EmployeePayrollNew payroll) =>
-                new EmployeePayrollEntity
-                {
-                    Id = Guid.NewGuid().ToString("n"),
-                    Type = nameof(Payroll),
-                    CheckDate = payroll.CheckDate,
-                    EmployeeId = payroll.EmployeeId.ToString("n"),
                     GrossPayroll = payroll.GrossPayroll,
                     PayrollPeriod = payroll.PayrollPeriod,
                 };

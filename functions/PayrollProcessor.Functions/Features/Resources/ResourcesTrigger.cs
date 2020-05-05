@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using PayrollProcessor.Functions.Features.Employees;
-using PayrollProcessor.Functions.Features.Payrolls;
+using PayrollProcessor.Functions.Features.Departments;
 using PayrollProcessor.Infrastructure.Seeding.Features.Employees;
 using PayrollProcessor.Infrastructure.Seeding.Features.Generators;
 
@@ -32,8 +32,10 @@ namespace PayrollProcessor.Functions.Features.Resources
 
             var dbResponse = await client.CreateDatabaseIfNotExistsAsync(Databases.PayrollProcessor.Name);
 
-            await dbResponse.Database.CreateContainerIfNotExistsAsync(new ContainerProperties(Databases.PayrollProcessor.Containers.Employees, partitionKeyPath: "/employeeId"));
-            await dbResponse.Database.CreateContainerIfNotExistsAsync(new ContainerProperties(Databases.PayrollProcessor.Containers.Payrolls, partitionKeyPath: "/checkDate"));
+            await dbResponse.Database.CreateContainerIfNotExistsAsync(
+                new ContainerProperties(Databases.PayrollProcessor.Containers.Employees, partitionKeyPath: "/partitionKey"));
+            await dbResponse.Database.CreateContainerIfNotExistsAsync(
+                new ContainerProperties(Databases.PayrollProcessor.Containers.Departments, partitionKeyPath: "/partitionKey"));
 
             return new OkResult();
         }
@@ -68,21 +70,23 @@ namespace PayrollProcessor.Functions.Features.Resources
             var domainSeed = new DomainSeed(new EmployeeSeed());
 
             var employeesContainer = client.GetContainer(Databases.PayrollProcessor.Name, Databases.PayrollProcessor.Containers.Employees);
-            var payrollsContainer = client.GetContainer(Databases.PayrollProcessor.Name, Databases.PayrollProcessor.Containers.Payrolls);
+            var departmentsContainer = client.GetContainer(Databases.PayrollProcessor.Name, Databases.PayrollProcessor.Containers.Departments);
 
             foreach (var employee in domainSeed.BuildAll(employeesCount, payrollsMaxCount))
             {
                 var employeeEntity = EmployeeEntity.Map.From(employee);
+                var departmentEmployeeEntity = DepartmentEmployeeEntity.Map.CreateNewFrom(employee);
 
-                var response = await employeesContainer.CreateItemAsync(employeeEntity);
+                await employeesContainer.CreateItemAsync(employeeEntity);
+                await departmentsContainer.CreateItemAsync(departmentEmployeeEntity);
 
                 foreach (var payroll in employee.Payrolls)
                 {
-                    var payrollEntity = PayrollEntity.Map.From(employee, payroll);
-                    var employeePayroll = EmployeePayrollEntity.Map.From(payroll);
+                    var departmentPayrollEntity = DepartmentPayrollEntity.Map.CreateNewFrom(employee, payroll);
+                    var employeePayrollEntity = EmployeePayrollEntity.Map.From(payroll);
 
-                    await payrollsContainer.CreateItemAsync(payrollEntity);
-                    await employeesContainer.CreateItemAsync(employeePayroll);
+                    await departmentsContainer.CreateItemAsync(departmentPayrollEntity);
+                    await employeesContainer.CreateItemAsync(employeePayrollEntity);
                 }
             }
 

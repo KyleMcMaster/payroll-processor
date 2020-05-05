@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bogus;
+using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Features.Employees;
-using PayrollProcessor.Core.Domain.Features.Payrolls;
 using PayrollProcessor.Infrastructure.Seeding.Features.Generators;
 
 namespace PayrollProcessor.Infrastructure.Seeding.Features.Employees
@@ -18,8 +17,8 @@ namespace PayrollProcessor.Infrastructure.Seeding.Features.Employees
         public IEnumerable<EmployeeDetails> BuildAll(int employeesCount, int payrollsMaxCount) =>
             employeeSeed.BuildMany(employeesCount, payrollsMaxCount);
 
-        private IEnumerable<Payroll> Build(EmployeeDetails employee, IEnumerable<EmployeePayroll> payrolls) =>
-            payrolls.Select(p => new Payroll(Guid.NewGuid())
+        private IEnumerable<DepartmentPayroll> Build(EmployeeDetails employee, IEnumerable<EmployeePayroll> payrolls) =>
+            payrolls.Select(p => new DepartmentPayroll(Guid.NewGuid())
             {
                 CheckDate = p.CheckDate,
                 EmployeeDepartment = employee.Department,

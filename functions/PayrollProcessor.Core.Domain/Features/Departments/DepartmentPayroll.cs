@@ -1,10 +1,11 @@
 using System;
 
-namespace PayrollProcessor.Core.Domain.Features.Payrolls
+namespace PayrollProcessor.Core.Domain.Features.Departments
 {
-    public class Payroll
+    public class DepartmentPayroll
     {
         public Guid Id { get; set; }
+        public Guid EmployeePayrollId { get; set; }
         public DateTimeOffset CheckDate { get; set; }
         public Guid EmployeeId { get; set; }
         public decimal GrossPayroll { get; set; }
@@ -14,6 +15,6 @@ namespace PayrollProcessor.Core.Domain.Features.Payrolls
         public string EmployeeLastName { get; set; } = "";
         public string Version { get; set; } = "";
 
-        public Payroll(Guid id) => Id = id;
+        public DepartmentPayroll(Guid id) => Id = id;
     }
 }

@@ -1,8 +1,11 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using Microsoft.WindowsAzure.Storage.Table;
 using NSubstitute;
+using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Functions.Features.Employees;
 using System;
 using System.Collections.Generic;
@@ -14,58 +17,60 @@ namespace PayrollProcessor.Functions.Tests.Features.Employees
 {
     public class EmployeesTriggerTests
     {
-        private HttpRequest DefaultHttpRequest { get; }
-        private CloudTable Table { get; }
-        private ILogger Logger { get; }
-        private EmployeesTrigger Trigger { get; }
+        private readonly HttpRequest httpRequest;
+        private readonly ILogger logger;
 
-        // public EmployeesTriggerTests()
-        // {
-        //     DefaultHttpRequest = Substitute.For<HttpRequest>();
+        private readonly IEmployeesQueryHandler employeesQueryHandler;
+        private readonly IEmployeeCreateCommandHandler employeeCreateCommandHandler;
+        private readonly IEmployeeUpdateCommandHandler employeeUpdateCommandHandler;
+        private readonly IEmployeePayrollCreateCommandHandler employeePayrollCreateCommandHandler;
 
-        //     Logger = Substitute.For<ILogger>();
-
-        //     Table = TableStorageFixtures.CreateTable("employees");
-
-        //     Trigger = new EmployeesTrigger();
-        // }
-
-        // [Fact]
-        // public async void GetEmployees_Should_Return_All_Employees()
-        // {
-        //     var entity = new EmployeeEntity { PartitionKey = "employees", RowKey = Guid.NewGuid().ToString("n") };
-
-        //     var segment = TableStorageFixtures.CreateSegment(new[] { entity });
-
-        //     Table
-        //         .ExecuteQuerySegmentedAsync(Arg.Any<TableQuery<EmployeeEntity>>(), Arg.Any<TableContinuationToken>())
-        //         .Returns(segment);
-
-        //     var result = await Trigger.GetEmployees(DefaultHttpRequest, Table, Logger);
-
-        //     var employeesResult = result.Value;
-
-        //     employeesResult.Should().HaveCount(1);
-        //     employeesResult.First().Id.Should().Be(Guid.Parse(entity.RowKey));
-        // }
-    }
-
-    public static class TableStorageFixtures
-    {
-        public static CloudTable CreateTable(string tableName) =>
-            Substitute.For<CloudTable>(new Uri($"http://127.0.0.1:10002/devstoreaccount1/{tableName}"));
-
-#nullable disable
-        public static TableQuerySegment<T> CreateSegment<T>(IEnumerable<T> data)
+        public EmployeesTriggerTests()
         {
-            // https://github.com/Azure/azure-storage-net/issues/619#issuecomment-364090291
-
-            var ctor = typeof(TableQuerySegment<T>)
-                .GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
-                .First(c => c.GetParameters().Count() == 1);
-
-            return ctor.Invoke(new object[] { data.ToList() }) as TableQuerySegment<T>;
+            httpRequest = Substitute.For<HttpRequest>();
+            logger = Substitute.For<ILogger>();
+            employeesQueryHandler = Substitute.For<IEmployeesQueryHandler>();
+            employeeCreateCommandHandler = Substitute.For<IEmployeeCreateCommandHandler>();
+            employeeUpdateCommandHandler = Substitute.For<IEmployeeUpdateCommandHandler>();
+            employeePayrollCreateCommandHandler = Substitute.For<IEmployeePayrollCreateCommandHandler>();
         }
-#nullable enable
+
+        [Fact]
+        public async void GetEmployees_Should_Return_All_Employees()
+        {
+            var sut = new EmployeesTrigger(
+                employeesQueryHandler,
+                employeeCreateCommandHandler,
+                employeeUpdateCommandHandler,
+                employeePayrollCreateCommandHandler);
+
+            var queryValues = new Dictionary<string, StringValues>
+            {
+                { "count", "4" },
+                { "firstName", "first" },
+                { "lastName", "last" },
+                { "email", "test@test.com" }
+            };
+
+            httpRequest.Query.Returns(new QueryCollection(queryValues));
+
+            var employee = new Employee(Guid.NewGuid())
+            {
+                Email = "test@test.com",
+                FirstName = "first",
+                LastName = "last",
+            };
+
+            employeesQueryHandler
+                .GetMany(Arg.Is(4), Arg.Is("first"), Arg.Is("last"), Arg.Is("test@test.com"))
+                .Returns(new[] { employee });
+
+            var result = await sut.GetEmployees(httpRequest, logger);
+
+            var employeesResult = result.Value;
+
+            employeesResult.Should().HaveCount(1);
+            employeesResult.First().Id.Should().Be(employee.Id);
+        }
     }
 }

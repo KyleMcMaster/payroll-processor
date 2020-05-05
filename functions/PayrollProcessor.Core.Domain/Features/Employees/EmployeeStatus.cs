@@ -6,8 +6,8 @@ namespace PayrollProcessor.Core.Domain.Features.Employees
 {
     public class EmployeeStatus
     {
-        public string CodeName { get; set; }
-        public string DisplayName { get; set; }
+        public string CodeName { get; }
+        public string DisplayName { get; }
 
         protected EmployeeStatus(string codeName, string displayName)
         {
