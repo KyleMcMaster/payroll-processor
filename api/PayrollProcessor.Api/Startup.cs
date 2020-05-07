@@ -7,40 +7,51 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PayrollProcessor.Api.Features.Notifications;
 using PayrollProcessor.Data.Persistence.Context;
+using PayrollProcessor.Api.Infrastructure.Routing;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace PayrollProcessor.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
-            {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
                         .WithOrigins(Configuration.GetValue<string>("CORS:client:domain"))
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .AllowCredentials());
+                        .AllowCredentials()));
+
+            services.AddControllers(options => options.UseGlobalRoutePrefix("api/v{version:apiVersion}"));
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
             });
 
-            services.AddControllers();
             services.AddSignalR();
 
             services.AddScoped<IDbContext, DbContext>();
 
             services.AddAutoMapper(typeof(DbContext).Assembly);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PayrollProcessor", Version = "v1" });
+                c.EnableAnnotations();
+            });
+
+            services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -57,10 +68,15 @@ namespace PayrollProcessor.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
                 endpoints.MapHub<NotificationHub>("/hub/notifications");
             });
 
             app.UseCors();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Payroll Processor API V1"));
         }
     }
 }
