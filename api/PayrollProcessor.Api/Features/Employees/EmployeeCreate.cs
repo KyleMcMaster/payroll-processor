@@ -24,7 +24,7 @@ namespace PayrollProcessor.Api.Features.Employees
             this.generator = generator;
         }
 
-        [HttpGet("employees"), MapToApiVersion("1")]
+        [HttpPost("employees"), MapToApiVersion("1")]
         [SwaggerOperation(
             Summary = "Creates a new employee",
             Description = "Creates a new employee and returns the entity's id",

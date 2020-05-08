@@ -38,10 +38,10 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                     ETag = payroll.Version
                 };
 
-            public static EmployeePayrollRecord From(Employee employee, EmployeePayrollNew payroll) =>
+            public static EmployeePayrollRecord From(Employee employee, Guid newPayrollId, EmployeePayrollNew payroll) =>
                 new EmployeePayrollRecord
                 {
-                    Id = Guid.NewGuid(),
+                    Id = newPayrollId,
                     PartitionKey = employee.Id.ToString(),
                     CheckDate = payroll.CheckDate,
                     GrossPayroll = payroll.GrossPayroll,
