@@ -6,7 +6,7 @@ namespace PayrollProcessor.Data.Domain.Intrastructure.Operations.Commands
 {
     public interface ICommandHandler<TCommand, TError> where TCommand : ICommand<TError>
     {
-        Task<Either<Unit, TError>> Execute(TCommand command, CancellationToken token);
+        Task<Either<TError, Unit>> Execute(TCommand command, CancellationToken token);
     }
 
     public interface ICommandHandler<TCommand, TError, TResponse> where TCommand : ICommand<TError, TResponse>
@@ -16,7 +16,7 @@ namespace PayrollProcessor.Data.Domain.Intrastructure.Operations.Commands
 
     public interface ICommandHandlerSync<TCommand, TError> where TCommand : ICommandSync<TError>
     {
-        Either<Unit, TError> Execute(TCommand command, CancellationToken token);
+        Either<TError, Unit> Execute(TCommand command, CancellationToken token);
     }
 
     public interface ICommandHandlerSync<TCommand, TError, TResponse> where TCommand : ICommandSync<TError, TResponse>

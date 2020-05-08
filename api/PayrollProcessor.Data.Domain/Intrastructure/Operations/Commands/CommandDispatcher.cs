@@ -19,7 +19,7 @@ namespace PayrollProcessor.Data.Domain.Intrastructure.Operations.Commands
         public CommandDispatcher(ServiceProviderDelegate serviceFactory) =>
             this.serviceFactory = serviceFactory ?? throw new ArgumentNullException(nameof(serviceFactory));
 
-        public Task<Either<Unit, TError>> Dispatch<TError>(ICommand<TError> command, CancellationToken token = default)
+        public Task<Either<TError, Unit>> Dispatch<TError>(ICommand<TError> command, CancellationToken token = default)
         {
             Guard.Against.Null(command, nameof(command));
 
@@ -54,13 +54,13 @@ namespace PayrollProcessor.Data.Domain.Intrastructure.Operations.Commands
 
     internal abstract class CommandHandlerWrapper<TError> : HandlerBase
     {
-        public abstract Task<Either<Unit, TError>> Dispatch(ICommand<TError> command, ServiceProviderDelegate serviceFactory, CancellationToken token);
+        public abstract Task<Either<TError, Unit>> Dispatch(ICommand<TError> command, ServiceProviderDelegate serviceFactory, CancellationToken token);
     }
 
     internal class CommandHandlerWrapperImpl<TCommand, TError> : CommandHandlerWrapper<TError>
         where TCommand : ICommand<TError>
     {
-        public override Task<Either<Unit, TError>> Dispatch(ICommand<TError> command, ServiceProviderDelegate serviceFactory, CancellationToken token) =>
+        public override Task<Either<TError, Unit>> Dispatch(ICommand<TError> command, ServiceProviderDelegate serviceFactory, CancellationToken token) =>
             GetHandler<ICommandHandler<TCommand, TError>>(serviceFactory).Execute((TCommand)command, token);
     }
 
@@ -78,6 +78,6 @@ namespace PayrollProcessor.Data.Domain.Intrastructure.Operations.Commands
 
     internal abstract class CommandHandlerSyncWrapper<TError> : HandlerBase
     {
-        public abstract Either<Unit, TError> Dispatch(ICommandSync<TError> command, ServiceProviderDelegate serviceFactory, CancellationToken token);
+        public abstract Either<TError, Unit> Dispatch(ICommandSync<TError> command, ServiceProviderDelegate serviceFactory, CancellationToken token);
     }
 }

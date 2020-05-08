@@ -10,7 +10,7 @@ namespace PayrollProcessor.Api.Configuration.Persistence
 {
     public static class PersistenceConfigurationExtensions
     {
-        public static void AddCosmos(this IServiceCollection services, IConfiguration configuration) =>
+        public static void AddCosmosEFCore(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<EmployeesContext>(options =>
             {
                 string serviceEndpoint = configuration.GetValue<string>("CosmosDb:ServiceEndpoint");
