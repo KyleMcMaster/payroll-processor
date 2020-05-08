@@ -4,7 +4,7 @@ using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
 
 namespace PayrollProcessor.Data.Domain.Features.Employees
 {
-    public class EmployeeQuery : IQuery<string, Employee>
+    public class EmployeeQuery : IQuery<Employee>
     {
         public Guid EmployeeId { get; }
 

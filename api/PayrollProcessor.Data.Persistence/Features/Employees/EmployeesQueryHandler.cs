@@ -14,7 +14,7 @@ using static LanguageExt.Prelude;
 
 namespace PayrollProcessor.Data.Persistence.Features.Employees
 {
-    public class EmployeesQueryHandler : IQueryHandler<EmployeesQuery, Exception, IEnumerable<Employee>>
+    public class EmployeesQueryHandler : IQueryHandler<EmployeesQuery, IEnumerable<Employee>>
     {
         private readonly CosmosClient client;
 
@@ -25,7 +25,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
             this.client = client;
         }
 
-        public async Task<Either<Exception, IEnumerable<Employee>>> Execute(EmployeesQuery query, CancellationToken token = default)
+        public TryOptionAsync<IEnumerable<Employee>> Execute(EmployeesQuery query, CancellationToken token = default)
         {
             var (count, firstName, lastName) = query;
 
@@ -48,19 +48,22 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                 dataQuery = dataQuery.Take(count);
             }
 
-            var iterator = dataQuery.ToFeedIterator();
-
-            var employees = new List<Employee>();
-
-            while (iterator.HasMoreResults)
+            return async () =>
             {
-                foreach (var result in await iterator.ReadNextAsync())
-                {
-                    employees.Add(EmployeeRecord.Map.ToEmployee(result));
-                }
-            }
+                var iterator = dataQuery.ToFeedIterator();
 
-            return Right(employees.AsEnumerable());
+                var employees = new List<Employee>();
+
+                while (iterator.HasMoreResults)
+                {
+                    foreach (var result in await iterator.ReadNextAsync())
+                    {
+                        employees.Add(EmployeeRecord.Map.ToEmployee(result));
+                    }
+                }
+
+                return Some(employees.AsEnumerable());
+            };
         }
     }
 }

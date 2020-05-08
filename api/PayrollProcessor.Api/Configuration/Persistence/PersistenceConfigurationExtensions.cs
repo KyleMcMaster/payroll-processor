@@ -3,6 +3,7 @@ using Microsoft.Azure.Cosmos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PayrollProcessor.Data.Domain.Intrastructure.Operations.Factories;
 using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
 using PayrollProcessor.Data.Persistence.Features.Employees;
 
@@ -37,7 +38,10 @@ namespace PayrollProcessor.Api.Configuration.Persistence
                 });
             });
 
-        public static void AddCQRSTypes(this IServiceCollection services) =>
+        public static void AddCQRSTypes(this IServiceCollection services)
+        {
+            services.AddTransient<ServiceProviderDelegate>(ctx => t => ctx.GetRequiredService(t));
+
             services.Scan(scan => scan
                 .FromAssemblies(typeof(EmployeeRecord).Assembly, typeof(QueryDispatcher).Assembly)
                 .AddClasses(classes => classes
@@ -56,5 +60,6 @@ namespace PayrollProcessor.Api.Configuration.Persistence
                     }))
                     .AsImplementedInterfaces()
                     .WithScopedLifetime());
+        }
     }
 }

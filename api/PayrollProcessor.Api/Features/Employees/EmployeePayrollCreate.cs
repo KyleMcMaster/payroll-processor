@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Data.Domain.Features.Employees;
 using PayrollProcessor.Data.Domain.Intrastructure.Identifiers;
@@ -11,7 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Api.Features.Employees
 {
-    public class EmployeePayrollCreate : BaseAsyncEndpoint<EmployeePayrollCreateRequest, EmployeePayrollCreateResponse>
+    public class EmployeePayrollCreate : BaseAsyncEndpoint<EmployeePayrollCreateRequest, EmployeePayroll>
     {
         private readonly IQueryDispatcher queryDispatcher;
         private readonly ICommandDispatcher commandDispatcher;
@@ -31,58 +32,42 @@ namespace PayrollProcessor.Api.Features.Employees
             this.queryDispatcher = queryDispatcher;
         }
 
-        // [HttpPost("employees/{employeeId:Guid}/payrolls"), MapToApiVersion("1")]
-        // [SwaggerOperation(
-        //     Summary = "Creates a new employee payroll",
-        //     Description = "Creates a new employee payroll for the specific employee specified by the route parameter",
-        //     OperationId = "EmployeePayroll.Create",
-        //     Tags = new[] { "Employees", "Payrolls" })
-        // ]
-        // public override Task<ActionResult<EmployeePayrollCreateResponse>> HandleAsync([FromRoute] Guid employeeId, [FromBody] EmployeePayrollCreateRequest request)
-        // {
-        //     var newPayrollId = generator.Generate();
+        [HttpPost("employees/payrolls"), MapToApiVersion("1")]
+        [SwaggerOperation(
+            Summary = "Creates a new employee payroll",
+            Description = "Creates a new employee payroll for the specific employee specified by the route parameter",
+            OperationId = "EmployeePayroll.Create",
+            Tags = new[] { "Employees", "Payrolls" })
+        ]
+        public override Task<ActionResult<EmployeePayroll>> HandleAsync([FromBody] EmployeePayrollCreateRequest request) =>
+            queryDispatcher
+                .Dispatch(new EmployeeQuery(request.EmployeeId))
+                .Bind(employee =>
+                {
+                    var newPayroll = new EmployeePayrollNew
+                    {
+                        CheckDate = request.CheckDate,
+                        GrossPayroll = request.GrossPayroll,
+                        PayrollPeriod = request.PayrollPeriod
+                    };
 
-        //     queryDispatcher
-        //         .Dispatch(new EmployeeQuery(employeeId))
-        //         .BindAsync()
+                    var newPayrollId = generator.Generate();
 
-        //         .BindAsync((
-        //             employee =>
-        //             {
-        //                 var newPayroll = new EmployeePayrollNew
-        //                 {
-        //                     CheckDate = request.CheckDate,
-        //                     GrossPayroll = request.GrossPayroll,
-        //                     PayrollPeriod = request.PayrollPeriod
-        //                 };
+                    var command = new EmployeePayrollCreateCommand(employee, newPayrollId, newPayroll);
 
-        //                 var command = new EmployeePayrollCreateCommand(employee, newPayrollId, newPayroll);
-
-        //                 return commandDispatcher.Dispatch(command);
-        //             })
-        //         .ToAsync()
-        //         .Match<ActionResult<EmployeePayrollCreateResponse>>(
-        //             _ => new EmployeePayrollCreateResponse(newPayrollId),
-        //             ex => BadRequest(ex))
-        // }
+                    return commandDispatcher.Dispatch(command);
+                })
+                .Match<EmployeePayroll, ActionResult<EmployeePayroll>>(
+                    employeePayroll => employeePayroll,
+                    () => NotFound($"Could not find employee [{request.EmployeeId}]"),
+                    ex => new APIErrorResult(ex.Message));
     }
 
     public class EmployeePayrollCreateRequest
     {
+        public Guid EmployeeId { get; set; }
         public DateTimeOffset CheckDate { get; set; }
         public decimal GrossPayroll { get; set; }
         public string PayrollPeriod { get; set; } = "";
-    }
-
-    public class EmployeePayrollCreateResponse
-    {
-        public Guid EmployeePayrollId { get; }
-
-        public EmployeePayrollCreateResponse(Guid employeePayrollId)
-        {
-            Guard.Against.Default(employeePayrollId, nameof(employeePayrollId));
-
-            EmployeePayrollId = employeePayrollId;
-        }
     }
 }

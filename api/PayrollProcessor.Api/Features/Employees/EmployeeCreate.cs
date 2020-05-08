@@ -1,7 +1,9 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Data.Domain.Features.Employees;
 using PayrollProcessor.Data.Domain.Intrastructure.Identifiers;
@@ -10,7 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Api.Features.Employees
 {
-    public class EmployeeCreate : BaseAsyncEndpoint<EmployeeCreateRequest, EmployeeCreateResponse>
+    public class EmployeeCreate : BaseAsyncEndpoint<EmployeeCreateRequest, Employee>
     {
         private readonly ICommandDispatcher dispatcher;
         private readonly IEntityIdGenerator generator;
@@ -31,7 +33,7 @@ namespace PayrollProcessor.Api.Features.Employees
             OperationId = "Employees.Create",
             Tags = new[] { "Employees" })
         ]
-        public override Task<ActionResult<EmployeeCreateResponse>> HandleAsync([FromBody] EmployeeCreateRequest request)
+        public override Task<ActionResult<Employee>> HandleAsync([FromBody] EmployeeCreateRequest request)
         {
             var command = new EmployeeCreateCommand(
                 generator.Generate(),
@@ -49,10 +51,10 @@ namespace PayrollProcessor.Api.Features.Employees
 
             return dispatcher
                 .Dispatch(command)
-                .ToAsync()
-                .Match<ActionResult<EmployeeCreateResponse>>(
-                    _ => new EmployeeCreateResponse(command.NewId),
-                    ex => BadRequest(ex.Message));
+                .Match<Employee, ActionResult<Employee>>(
+                    employee => employee,
+                    () => UnprocessableEntity($"Could not create employee"),
+                    ex => new APIErrorResult(ex.Message));
         }
     }
 
@@ -66,17 +68,5 @@ namespace PayrollProcessor.Api.Features.Employees
         public string Phone { get; set; } = "";
         public string Status { get; set; } = "";
         public string Title { get; set; } = "";
-    }
-
-    public class EmployeeCreateResponse
-    {
-        public Guid EmployeeId { get; }
-
-        public EmployeeCreateResponse(Guid employeeId)
-        {
-            Guard.Against.Default(employeeId, nameof(employeeId));
-
-            EmployeeId = employeeId;
-        }
     }
 }

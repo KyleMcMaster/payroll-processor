@@ -4,7 +4,7 @@ using PayrollProcessor.Data.Domain.Intrastructure.Operations.Commands;
 
 namespace PayrollProcessor.Data.Domain.Features.Employees
 {
-    public class EmployeeCreateCommand : ICommand<Exception>
+    public class EmployeeCreateCommand : ICommand<Employee>
     {
         public Guid NewId { get; set; }
         public EmployeeNew Employee { get; }

@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
 
 namespace PayrollProcessor.Data.Domain.Features.Employees
 {
-    public class EmployeesQuery : IQuery<Exception, IEnumerable<Employee>>
+    public class EmployeesQuery : IQuery<IEnumerable<Employee>>
     {
         public int Count { get; }
         public string FirstName { get; }

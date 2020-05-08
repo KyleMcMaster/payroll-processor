@@ -22,32 +22,32 @@ namespace PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries
             this.serviceFactory = serviceFactory;
         }
 
-        public Task<Either<TError, TResponse>> Dispatch<TError, TResponse>(IQuery<TError, TResponse> query)
+        public TryOptionAsync<TResponse> Dispatch<TResponse>(IQuery<TResponse> query)
         {
             Guard.Against.Null(query, nameof(query));
 
             var queryType = query.GetType();
 
-            var handler = (QueryHandlerWrapper<TError, TResponse>)queryHandlers
+            var handler = (QueryHandlerWrapper<TResponse>)queryHandlers
                 .GetOrAdd(
                     queryType,
                     t => Activator
-                        .CreateInstance(typeof(QueryHandlerWrapperImpl<,,>)
-                        .MakeGenericType(queryType, typeof(TError), typeof(TResponse))));
+                        .CreateInstance(typeof(QueryHandlerWrapperImpl<,>)
+                        .MakeGenericType(queryType, typeof(TResponse))));
 
             return handler.Dispatch(query, serviceFactory);
         }
     }
 
-    internal abstract class QueryHandlerWrapper<TError, TResponse> : HandlerBase
+    internal abstract class QueryHandlerWrapper<TResponse> : HandlerBase
     {
-        public abstract Task<Either<TError, TResponse>> Dispatch(IQuery<TError, TResponse> query, ServiceProviderDelegate serviceFactory);
+        public abstract TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceFactory);
     }
 
-    internal class QueryHandlerWrapperImpl<TQuery, TError, TResponse> : QueryHandlerWrapper<TError, TResponse>
-        where TQuery : IQuery<TError, TResponse>
+    internal class QueryHandlerWrapperImpl<TQuery, TResponse> : QueryHandlerWrapper<TResponse>
+        where TQuery : IQuery<TResponse>
     {
-        public override Task<Either<TError, TResponse>> Dispatch(IQuery<TError, TResponse> query, ServiceProviderDelegate serviceFactory) =>
-            GetHandler<IQueryHandler<TQuery, TError, TResponse>>(serviceFactory).Execute((TQuery)query);
+        public override TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceFactory) =>
+            GetHandler<IQueryHandler<TQuery, TResponse>>(serviceFactory).Execute((TQuery)query);
     }
 }

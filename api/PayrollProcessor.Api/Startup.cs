@@ -9,12 +9,10 @@ using PayrollProcessor.Api.Infrastructure.Routing;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PayrollProcessor.Data.Persistence.Features.Employees;
 using PayrollProcessor.Data.Domain.Intrastructure.Operations.Factories;
-using System;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
-using Microsoft.Azure.Cosmos;
 using PayrollProcessor.Api.Configuration.Persistence;
+using LanguageExt;
+using Microsoft.Extensions.Logging;
 
 namespace PayrollProcessor.Api
 {
@@ -46,27 +44,27 @@ namespace PayrollProcessor.Api
 
             services.AddCosmosClient(Configuration);
 
-            services.AddAutoMapper(typeof(DbContext).Assembly);
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PayrollProcessor", Version = "v1" });
                 c.EnableAnnotations();
             });
 
-            services.AddTransient<ServiceProviderDelegate>(ctx => t => ctx.GetRequiredService(t));
-
             services.AddCQRSTypes();
 
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var logger = loggerFactory.CreateLogger("TryOptionAsync Fault");
+
+            TryConfig.ErrorLogger = ex => logger.LogError(ex, "Failure");
 
             app.UseRouting();
 

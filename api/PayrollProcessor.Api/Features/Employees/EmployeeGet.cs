@@ -31,9 +31,9 @@ namespace PayrollProcessor.Api.Features.Employees
         public override Task<ActionResult<Employee>> HandleAsync([FromRoute] Guid employeeId) =>
             dispatcher
                 .Dispatch(new EmployeeQuery(employeeId))
-                .ToAsync()
-                .Match<ActionResult<Employee>>(
+                .Match<Employee, ActionResult<Employee>>(
                     e => e,
-                    error => BadRequest(error));
+                    () => NotFound(),
+                    ex => new APIErrorResult(ex.Message));
     }
 }

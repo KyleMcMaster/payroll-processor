@@ -1,17 +1,14 @@
-using System;
+
 using System.Threading;
-using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using LanguageExt;
 using Microsoft.Azure.Cosmos;
 using PayrollProcessor.Data.Domain.Features.Employees;
 using PayrollProcessor.Data.Domain.Intrastructure.Operations.Commands;
 
-using static LanguageExt.Prelude;
-
 namespace PayrollProcessor.Data.Persistence.Features.Employees
 {
-    public class EmployeePayrollCreateCommandHandler : ICommandHandler<EmployeePayrollCreateCommand, Exception>
+    public class EmployeePayrollCreateCommandHandler : ICommandHandler<EmployeePayrollCreateCommand, EmployeePayroll>
     {
         private readonly CosmosClient client;
 
@@ -22,22 +19,18 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
             this.client = client;
         }
 
-        public async Task<Either<Exception, Unit>> Execute(EmployeePayrollCreateCommand command, CancellationToken token)
+        public TryOptionAsync<EmployeePayroll> Execute(EmployeePayrollCreateCommand command, CancellationToken token)
         {
             var (employee, newPayrollId, newEmployeePayroll) = command;
 
             var entity = EmployeePayrollRecord.Map.From(employee, newPayrollId, newEmployeePayroll);
 
-            try
+            return async () =>
             {
-                await client.GetEmployeesContainer().CreateItemAsync(entity);
+                var response = await client.GetEmployeesContainer().CreateItemAsync(entity);
 
-                return Right(Unit.Default);
-            }
-            catch (Exception ex)
-            {
-                return Left(ex);
-            }
+                return EmployeePayrollRecord.Map.ToEmployeePayroll(response);
+            };
         }
     }
 }

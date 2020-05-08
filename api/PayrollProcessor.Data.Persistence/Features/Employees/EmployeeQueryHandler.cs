@@ -11,7 +11,7 @@ using static LanguageExt.Prelude;
 
 namespace PayrollProcessor.Data.Persistence.Features.Employees
 {
-    public class EmployeeQueryHandler : IQueryHandler<EmployeeQuery, string, Employee>
+    public class EmployeeQueryHandler : IQueryHandler<EmployeeQuery, Employee>
     {
         private readonly CosmosClient client;
 
@@ -22,27 +22,20 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
             this.client = client;
         }
 
-        public async Task<Either<string, Employee>> Execute(EmployeeQuery query, CancellationToken token = default)
+        public TryOptionAsync<Employee> Execute(EmployeeQuery query, CancellationToken token = default)
         {
             string identifier = query.EmployeeId.ToString();
 
-            try
+            return async () =>
             {
                 var entity = await client
-                    .GetEmployeesContainer()
-                    .ReadItemAsync<EmployeeRecord>(identifier, new PartitionKey(identifier));
+                   .GetEmployeesContainer()
+                   .ReadItemAsync<EmployeeRecord>(identifier, new PartitionKey(identifier));
 
-                if (entity is null)
-                {
-                    return Left($"Could not find employee [{query.EmployeeId}]");
-                }
-
-                return Right(EmployeeRecord.Map.ToEmployee(entity));
-            }
-            catch (Exception ex)
-            {
-                return Left(ex.Message);
-            }
+                return entity is null
+                    ? None
+                    : Some(EmployeeRecord.Map.ToEmployee(entity));
+            };
         }
     }
 }
