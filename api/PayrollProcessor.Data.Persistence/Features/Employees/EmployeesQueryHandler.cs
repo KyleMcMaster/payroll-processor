@@ -56,7 +56,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
 
                 while (iterator.HasMoreResults)
                 {
-                    foreach (var result in await iterator.ReadNextAsync())
+                    foreach (var result in await iterator.ReadNextAsync(token))
                     {
                         employees.Add(EmployeeRecord.Map.ToEmployee(result));
                     }

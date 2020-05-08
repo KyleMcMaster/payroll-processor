@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PayrollProcessor.Data.Domain.Intrastructure.Operations.Factories;
 using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
 using PayrollProcessor.Data.Persistence.Features.Employees;
+using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 
 namespace PayrollProcessor.Api.Configuration.Persistence
 {
@@ -21,7 +22,7 @@ namespace PayrollProcessor.Api.Configuration.Persistence
                 options.UseCosmos(serviceEndpoint, authKey, databaseName);
             });
 
-        public static void AddCosmosClient(this IServiceCollection services, IConfiguration configuration) =>
+        public static IServiceCollection AddCosmosClient(this IServiceCollection services, IConfiguration configuration) =>
             services.AddSingleton(ctx =>
             {
                 string serviceEndpoint = configuration.GetValue<string>("CosmosDb:ServiceEndpoint");
@@ -38,7 +39,19 @@ namespace PayrollProcessor.Api.Configuration.Persistence
                 });
             });
 
-        public static void AddCQRSTypes(this IServiceCollection services)
+        public static IServiceCollection AddQueueClient(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton<IQueueClientFactory>(ctx =>
+            {
+                string connectionString = configuration.GetValue<string>("AzureStorageQueue:ConnectionString");
+
+                return new QueueClientFactory(connectionString);
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCQRSTypes(this IServiceCollection services)
         {
             services.AddTransient<ServiceProviderDelegate>(ctx => t => ctx.GetRequiredService(t));
 
@@ -60,6 +73,8 @@ namespace PayrollProcessor.Api.Configuration.Persistence
                     }))
                     .AsImplementedInterfaces()
                     .WithScopedLifetime());
+
+            return services;
         }
     }
 }

@@ -42,7 +42,10 @@ namespace PayrollProcessor.Api
 
             services.AddSignalR();
 
-            services.AddCosmosClient(Configuration);
+            services
+                .AddCosmosClient(Configuration)
+                .AddQueueClient(Configuration)
+                .AddCQRSTypes();
 
             services.AddSwaggerGen(c =>
             {
@@ -50,7 +53,6 @@ namespace PayrollProcessor.Api
                 c.EnableAnnotations();
             });
 
-            services.AddCQRSTypes();
 
             services.AddMvc();
         }

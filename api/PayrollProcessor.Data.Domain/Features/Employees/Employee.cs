@@ -19,9 +19,9 @@ namespace PayrollProcessor.Data.Domain.Features.Employees
         public Employee(Guid id) => Id = id;
     }
 
-    public class EmployeeDetails : Employee
+    public class EmployeeDetail : Employee
     {
-        public EmployeeDetails(Guid id) : base(id)
+        public EmployeeDetail(Guid id) : base(id)
         {
 
         }

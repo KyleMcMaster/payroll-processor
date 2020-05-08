@@ -30,7 +30,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
             {
                 var entity = await client
                    .GetEmployeesContainer()
-                   .ReadItemAsync<EmployeeRecord>(identifier, new PartitionKey(identifier));
+                   .ReadItemAsync<EmployeeRecord>(identifier, new PartitionKey(identifier), cancellationToken: token);
 
                 return entity is null
                     ? None

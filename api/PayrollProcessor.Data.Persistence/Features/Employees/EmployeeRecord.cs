@@ -38,8 +38,8 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                     Version = entity.ETag
                 };
 
-            public static EmployeeDetails ToEmployeeDetails(EmployeeRecord entity, IEnumerable<EmployeePayrollRecord> payrolls) =>
-                new EmployeeDetails(entity.Id)
+            public static EmployeeDetail ToEmployeeDetails(EmployeeRecord entity, IEnumerable<EmployeePayrollRecord> payrolls) =>
+                new EmployeeDetail(entity.Id)
                 {
                     Department = entity.Department,
                     EmploymentStartedOn = entity.EmploymentStartedOn,
