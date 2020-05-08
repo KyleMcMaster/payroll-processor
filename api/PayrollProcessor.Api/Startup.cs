@@ -1,16 +1,20 @@
 using AutoMapper;
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PayrollProcessor.Api.Features.Notifications;
-using PayrollProcessor.Data.Persistence.Context;
 using PayrollProcessor.Api.Infrastructure.Routing;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
+using PayrollProcessor.Data.Persistence.Features.Employees;
+using PayrollProcessor.Data.Domain.Intrastructure.Operations.Factories;
+using System;
+using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
+using Microsoft.Azure.Cosmos;
+using PayrollProcessor.Api.Configuration.Persistence;
 
 namespace PayrollProcessor.Api
 {
@@ -31,6 +35,7 @@ namespace PayrollProcessor.Api
                         .AllowCredentials()));
 
             services.AddControllers(options => options.UseGlobalRoutePrefix("api/v{version:apiVersion}"));
+
             services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
@@ -39,7 +44,7 @@ namespace PayrollProcessor.Api
 
             services.AddSignalR();
 
-            services.AddScoped<IDbContext, DbContext>();
+            services.AddCosmosClient(Configuration);
 
             services.AddAutoMapper(typeof(DbContext).Assembly);
 
@@ -48,6 +53,10 @@ namespace PayrollProcessor.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PayrollProcessor", Version = "v1" });
                 c.EnableAnnotations();
             });
+
+            services.AddTransient<ServiceProviderDelegate>(ctx => t => ctx.GetRequiredService(t));
+
+            services.AddCQRSTypes();
 
             services.AddMvc();
         }

@@ -1,11 +1,27 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
+using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Mvc;
+using PayrollProcessor.Api.Infrastructure.Responses;
+using PayrollProcessor.Data.Domain.Features.Employees;
+using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Api.Features.Employees
 {
-    public class EmployeesGet : BaseEndpoint<EmployeesGetRequest, EmployeesResponse>
+    public class EmployeesGet : BaseAsyncEndpoint<EmployeesGetRequest, EmployeesResponse>
     {
+        private readonly IQueryDispatcher dispatcher;
+
+        public EmployeesGet(IQueryDispatcher dispatcher)
+        {
+            Guard.Against.Null(dispatcher, nameof(dispatcher));
+
+            this.dispatcher = dispatcher;
+        }
+
         [HttpGet("employees"), MapToApiVersion("1")]
         [SwaggerOperation(
             Summary = "Gets employees",
@@ -13,21 +29,31 @@ namespace PayrollProcessor.Api.Features.Employees
             OperationId = "Employees.GetAll",
             Tags = new[] { "Employees" })
         ]
-        public override ActionResult<EmployeesResponse> Handle([FromQuery] EmployeesGetRequest request)
-        {
-            var response = new EmployeesResponse();
-
-            return response;
-        }
+        public override Task<ActionResult<EmployeesResponse>> HandleAsync([FromQuery] EmployeesGetRequest request) =>
+             dispatcher
+                .Dispatch(new EmployeesQuery(request.Count, request.FirstName, request.LastName))
+                .ToAsync()
+                .Match<ActionResult<EmployeesResponse>>(e => new EmployeesResponse(e), ex => BadRequest(ex.Message));
     }
 
     public class EmployeesGetRequest
     {
-
+        public int Count { get; set; }
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
     }
 
-    public class EmployeesResponse
+    public class EmployeesResponse : IListResponse<Employee>
     {
-        public string Hello { get; set; } = "World";
+        public static EmployeesResponse Empty = new EmployeesResponse(Enumerable.Empty<Employee>());
+
+        public IEnumerable<Employee> Data { get; }
+
+        public EmployeesResponse(IEnumerable<Employee> data)
+        {
+            Guard.Against.Null(data, nameof(data));
+
+            Data = data;
+        }
     }
 }
