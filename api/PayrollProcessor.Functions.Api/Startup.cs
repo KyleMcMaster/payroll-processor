@@ -6,6 +6,10 @@ using PayrollProcessor.Functions.Api.Infrastructure;
 using Microsoft.Azure.Cosmos;
 using PayrollProcessor.Core.Domain.Infrastructure.Serialization;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Factories;
+using PayrollProcessor.Data.Persistence.Features.Employees;
+using System;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -36,6 +40,27 @@ namespace PayrollProcessor.Functions.Api
                     }
                 });
             });
+
+            builder.Services.AddTransient<ServiceProviderDelegate>(ctx => t => ctx.GetRequiredService(t));
+
+            builder.Services.Scan(scan => scan
+                .FromAssemblies(typeof(EmployeeRecord).Assembly, typeof(QueryDispatcher).Assembly)
+                .AddClasses(classes => classes
+                    .Where(t =>
+                    {
+                        if (!t.IsClass || t.IsAbstract)
+                        {
+                            return false;
+                        }
+
+                        string name = t.Name;
+
+                        return name.EndsWith("QueryHandler", StringComparison.Ordinal) ||
+                            name.EndsWith("CommandHandler", StringComparison.Ordinal) ||
+                            name.EndsWith("Dispatcher", StringComparison.Ordinal);
+                    }))
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime());
 
         }
     }
