@@ -8,11 +8,11 @@ using PayrollProcessor.Api.Features.Notifications;
 using PayrollProcessor.Api.Infrastructure.Routing;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Factories;
 using PayrollProcessor.Api.Configuration.Persistence;
 using LanguageExt;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using PayrollProcessor.Api.Infrastructure.Serialization;
 
 namespace PayrollProcessor.Api
 {
@@ -24,6 +24,8 @@ namespace PayrollProcessor.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            JsonConvert.DefaultSettings = () => DefaultJsonSerializerSettings.JsonSerializerSettings;
+
             services.AddCors(options =>
                 options.AddPolicy("CorsPolicy",
                     builder => builder
@@ -52,7 +54,6 @@ namespace PayrollProcessor.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PayrollProcessor", Version = "v1" });
                 c.EnableAnnotations();
             });
-
 
             services.AddMvc();
         }

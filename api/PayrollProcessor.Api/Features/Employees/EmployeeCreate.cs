@@ -5,9 +5,9 @@ using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
 using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
-using PayrollProcessor.Data.Domain.Features.Employees;
-using PayrollProcessor.Data.Domain.Intrastructure.Identifiers;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Commands;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Api.Features.Employees

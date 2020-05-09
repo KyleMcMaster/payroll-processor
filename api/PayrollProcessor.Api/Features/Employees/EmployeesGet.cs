@@ -5,8 +5,8 @@ using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Api.Infrastructure.Responses;
-using PayrollProcessor.Data.Domain.Features.Employees;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Api.Features.Employees
@@ -47,8 +47,6 @@ namespace PayrollProcessor.Api.Features.Employees
 
     public class EmployeesResponse : IListResponse<Employee>
     {
-        public static EmployeesResponse Empty = new EmployeesResponse(Enumerable.Empty<Employee>());
-
         public IEnumerable<Employee> Data { get; }
 
         public EmployeesResponse(IEnumerable<Employee> data)

@@ -7,8 +7,8 @@ using Ardalis.GuardClauses;
 using LanguageExt;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
-using PayrollProcessor.Data.Domain.Features.Employees;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 
 using static LanguageExt.Prelude;
 
@@ -30,7 +30,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
             var (count, firstName, lastName) = query;
 
             var dataQuery = client
-                .EmployeesQueryable()
+                .EmployeesQueryable<EmployeeRecord>()
                 .Where(e => e.Type == "EmployeeEntity");
 
             if (!string.IsNullOrWhiteSpace(firstName))

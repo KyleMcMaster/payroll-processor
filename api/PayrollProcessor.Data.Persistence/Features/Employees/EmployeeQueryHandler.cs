@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using LanguageExt;
 using Microsoft.Azure.Cosmos;
-using PayrollProcessor.Data.Domain.Features.Employees;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 
 using static LanguageExt.Prelude;
 

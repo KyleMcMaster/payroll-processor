@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PayrollProcessor.Data.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Data.Persistence.Infrastructure.Records;
 
 namespace PayrollProcessor.Data.Persistence.Features.Employees

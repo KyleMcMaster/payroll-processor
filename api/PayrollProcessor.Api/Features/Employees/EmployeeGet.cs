@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Mvc;
-using PayrollProcessor.Data.Domain.Features.Employees;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
+using PayrollProcessor.Core.Domain.Features.Employees;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Api.Features.Employees
 {
 
-    public class EmployeeGet : BaseAsyncEndpoint<Guid, Employee>
+    public class EmployeeGet : BaseAsyncEndpoint<Guid, EmployeeDetail>
     {
         private readonly IQueryDispatcher dispatcher;
 
@@ -24,14 +24,14 @@ namespace PayrollProcessor.Api.Features.Employees
         [HttpGet("employees/{employeeId:Guid}"), MapToApiVersion("1")]
         [SwaggerOperation(
             Summary = "Gets a specific employee",
-            Description = "Gets a specific employee specified by the route parameter",
+            Description = "Gets a specific employee specified by the route parameter with all payrolls",
             OperationId = "Employee.Get",
             Tags = new[] { "Employees" })
         ]
-        public override Task<ActionResult<Employee>> HandleAsync([FromRoute] Guid employeeId) =>
+        public override Task<ActionResult<EmployeeDetail>> HandleAsync([FromRoute] Guid employeeId) =>
             dispatcher
-                .Dispatch(new EmployeeQuery(employeeId))
-                .Match<Employee, ActionResult<Employee>>(
+                .Dispatch(new EmployeeDetailQuery(employeeId))
+                .Match<EmployeeDetail, ActionResult<EmployeeDetail>>(
                     e => e,
                     () => NotFound(),
                     ex => new APIErrorResult(ex.Message));

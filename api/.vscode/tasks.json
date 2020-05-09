@@ -1,13 +1,14 @@
 {
   "version": "2.0.0",
   "tasks": [
+    // API Tasks
     {
       "label": "API: Clean (Debug)",
       "detail": "Cleans the Payroll Processor API solution Debug builds via dotnet CLI",
       "command": "dotnet",
       "args": [
         "clean",
-        "PayrollProcessor.Api.sln",
+        "PayrollProcessor.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -20,7 +21,7 @@
       "command": "dotnet",
       "args": [
         "build",
-        "PayrollProcessor.Api.sln",
+        "PayrollProcessor.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -38,7 +39,7 @@
       "command": "dotnet",
       "args": [
         "clean",
-        "PayrollProcessor.Api.sln",
+        "PayrollProcessor.sln",
         "--configuration",
         "Release",
         "/property:GenerateFullPaths=true",
@@ -53,7 +54,7 @@
       "command": "dotnet",
       "args": [
         "test",
-        "PayrollProcessor.Api.sln",
+        "PayrollProcessor.sln",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -69,7 +70,7 @@
       "command": "dotnet",
       "args": [
         "publish",
-        "PayrollProcessor.Api.sln",
+        "PayrollProcessor.sln",
         "--configuration",
         "Release",
         "/property:GenerateFullPaths=true",
@@ -77,6 +78,86 @@
       ],
       "type": "process",
       "dependsOn": "API: Clean (Release)",
+      "problemMatcher": "$msCompile"
+    },
+
+    // Functions Tasks
+    {
+      "label": "Function: Clean (Debug)",
+      "detail": "Cleans the Payroll Processor functions solution Debug builds via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "PayrollProcessor.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Function: Build (Debug)",
+      "detail": "Builds the Payroll Processor functions solution in Debug mode via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "PayrollProcessor.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "Function: Clean (Debug)",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Function: Clean (Release)",
+      "detail": "Cleans the Payroll Processor functions solution Release builds via dotnet CLI",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "PayrollProcessor.sln",
+        "--configuration",
+        "Release",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Function: Test",
+      "detail": "Runs tests against the Payroll Processor functions solution",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "PayrollProcessor.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Function: Publish",
+      "command": "dotnet",
+      "args": [
+        "publish",
+        "PayrollProcessor.sln",
+        "--configuration",
+        "Release",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "Function: Clean (Release)",
       "problemMatcher": "$msCompile"
     }
   ]

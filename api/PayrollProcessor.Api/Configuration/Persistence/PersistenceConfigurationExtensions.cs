@@ -3,8 +3,8 @@ using Microsoft.Azure.Cosmos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Factories;
-using PayrollProcessor.Data.Domain.Intrastructure.Operations.Queries;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Factories;
+using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using PayrollProcessor.Data.Persistence.Features.Employees;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 

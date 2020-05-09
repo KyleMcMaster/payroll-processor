@@ -1,8 +1,23 @@
+using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using Azure;
 using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Newtonsoft.Json;
 
 namespace PayrollProcessor.Data.Persistence.Infrastructure.Clients
 {
+    public interface IMessage
+    {
+        string Source { get; set; }
+    }
+
+    public static class QueueMessageBuilder
+    {
+        public static Task<Response<SendReceipt>> ToQueueMessage<TMessage>(this QueueClient client, TMessage entity) where TMessage : IMessage =>
+            client.SendMessageAsync(JsonConvert.SerializeObject(entity));
+    }
+
     public interface IQueueClientFactory
     {
         QueueClient Create(string queueName);
