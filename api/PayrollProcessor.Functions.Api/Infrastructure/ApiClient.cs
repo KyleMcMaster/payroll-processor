@@ -29,7 +29,7 @@ namespace PayrollProcessor.Functions.Api.Infrastructure
             var notification = new Notification
             {
                 Source = source,
-                Message = JsonConvert.SerializeObject(data, DefaultJsonSerializerSettings.JsonSerializerSettings)
+                Message = JsonConvert.SerializeObject(data)
             };
 
             return async () =>

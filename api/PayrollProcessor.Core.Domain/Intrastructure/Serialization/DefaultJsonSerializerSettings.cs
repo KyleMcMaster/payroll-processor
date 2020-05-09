@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace PayrollProcessor.Functions.Api.Infrastructure
+namespace PayrollProcessor.Core.Domain.Infrastructure.Serialization
 {
-    static class DefaultJsonSerializerSettings
+    public static class DefaultJsonSerializerSettings
     {
-        public static JsonSerializerSettings JsonSerializerSettings =>
+        public static JsonSerializerSettings JsonSerializerSettings { get; } =
             new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()

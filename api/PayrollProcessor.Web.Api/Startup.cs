@@ -12,7 +12,7 @@ using PayrollProcessor.Web.Api.Configuration.Persistence;
 using LanguageExt;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using PayrollProcessor.Web.Api.Infrastructure.Serialization;
+using PayrollProcessor.Core.Domain.Infrastructure.Serialization;
 
 namespace PayrollProcessor.Web.Api
 {

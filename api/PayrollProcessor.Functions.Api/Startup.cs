@@ -6,6 +6,7 @@ using PayrollProcessor.Functions.Api.Features.Resources;
 using PayrollProcessor.Functions.Api;
 using PayrollProcessor.Functions.Api.Infrastructure;
 using Microsoft.Azure.Cosmos;
+using PayrollProcessor.Core.Domain.Infrastructure.Serialization;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
