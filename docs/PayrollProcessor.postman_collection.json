@@ -57,6 +57,24 @@
 						"api",
 						"v1",
 						"employees"
+          ],
+          "query": [
+						{
+							"key": "email",
+							"value": "test@test.com"
+						},
+						{
+							"key": "count",
+							"value": "2"
+            },
+            {
+							"key": "firstName",
+							"value": "Test"
+            },
+            {
+							"key": "lastName",
+							"value": "User"
+						}
 					]
 				}
 			},

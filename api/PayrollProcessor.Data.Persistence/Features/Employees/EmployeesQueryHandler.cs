@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using LanguageExt;
 using Microsoft.Azure.Cosmos;
@@ -27,7 +25,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
 
         public TryOptionAsync<IEnumerable<Employee>> Execute(EmployeesQuery query, CancellationToken token = default)
         {
-            var (count, firstName, lastName) = query;
+            var (count, email, firstName, lastName) = query;
 
             var dataQuery = client
                 .EmployeesQueryable<EmployeeRecord>()
@@ -41,6 +39,11 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
             if (!string.IsNullOrWhiteSpace(lastName))
             {
                 dataQuery = dataQuery.Where(e => e.LastNameLower.Contains(lastName.ToLowerInvariant()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                dataQuery = dataQuery.Where(e => e.EmailLower.Contains(email.ToLowerInvariant()));
             }
 
             if (count > 0)

@@ -31,7 +31,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
         ]
         public override Task<ActionResult<EmployeesResponse>> HandleAsync([FromQuery] EmployeesGetRequest request) =>
              dispatcher
-                .Dispatch(new EmployeesQuery(request.Count, request.FirstName, request.LastName))
+                .Dispatch(new EmployeesQuery(request.Count, request.Email, request.FirstName, request.LastName))
                 .Match<IEnumerable<Employee>, ActionResult<EmployeesResponse>>(
                     e => new EmployeesResponse(e),
                     () => NotFound(),
@@ -41,6 +41,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
     public class EmployeesGetRequest
     {
         public int Count { get; set; }
+        public string Email { get; set; } = "";
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
     }

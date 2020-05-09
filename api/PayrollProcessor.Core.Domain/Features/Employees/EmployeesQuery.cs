@@ -8,18 +8,21 @@ namespace PayrollProcessor.Core.Domain.Features.Employees
         public int Count { get; }
         public string FirstName { get; }
         public string LastName { get; }
+        public string Email { get; }
 
-        public EmployeesQuery(int count, string firstName, string lastName)
+        public EmployeesQuery(int count, string email, string firstName, string lastName)
         {
+            Email = email;
             LastName = lastName;
             FirstName = firstName;
             Count = count;
 
         }
 
-        public void Deconstruct(out int count, out string firstName, out string lastName)
+        public void Deconstruct(out int count, out string email, out string firstName, out string lastName)
         {
             count = Count;
+            email = Email;
             firstName = FirstName;
             lastName = LastName;
         }
