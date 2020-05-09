@@ -13,7 +13,7 @@ using PayrollProcessor.Data.Persistence.Features.Employees;
 using PayrollProcessor.Infrastructure.Seeding.Features.Employees;
 using PayrollProcessor.Infrastructure.Seeding.Features.Generators;
 
-using static PayrollProcessor.Functions.Api.Infrastructure.AppResources.CosmosDb;
+using static PayrollProcessor.Data.Persistence.Infrastructure.Clients.AppResources.CosmosDb;
 
 namespace PayrollProcessor.Functions.Api.Features.Resources
 {

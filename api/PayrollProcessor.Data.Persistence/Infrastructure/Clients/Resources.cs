@@ -1,4 +1,4 @@
-namespace PayrollProcessor.Functions.Api.Infrastructure
+namespace PayrollProcessor.Data.Persistence.Infrastructure.Clients
 {
     public static class AppResources
     {

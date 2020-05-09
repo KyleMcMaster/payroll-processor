@@ -1,7 +1,6 @@
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Queue;
-using PayrollProcessor.Functions.Api.Features.Resources;
 using PayrollProcessor.Functions.Api.Infrastructure;
 using System.Threading.Tasks;
 using PayrollProcessor.Functions.Api.Features.Employees.QueueMessages;
@@ -12,6 +11,7 @@ using PayrollProcessor.Data.Persistence.Features.Employees.QueueMessages;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
+using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 
 namespace PayrollProcessor.Functions.Api.Features.Departments
 {

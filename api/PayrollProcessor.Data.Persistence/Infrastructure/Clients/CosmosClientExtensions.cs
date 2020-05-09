@@ -1,6 +1,4 @@
 using System.Linq;
-using PayrollProcessor.Data.Persistence.Features.Departments;
-using PayrollProcessor.Data.Persistence.Features.Employees;
 
 namespace Microsoft.Azure.Cosmos
 {

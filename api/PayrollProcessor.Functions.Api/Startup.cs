@@ -1,12 +1,11 @@
-using System;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using PayrollProcessor.Functions.Api.Features.Resources;
 using PayrollProcessor.Functions.Api;
 using PayrollProcessor.Functions.Api.Infrastructure;
 using Microsoft.Azure.Cosmos;
 using PayrollProcessor.Core.Domain.Infrastructure.Serialization;
+using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
