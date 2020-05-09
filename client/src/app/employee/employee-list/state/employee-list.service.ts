@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EnvService } from 'src/app/shared/env.service';
 import { Employee, EmployeeUpdate } from './employee-list.model';
@@ -14,6 +15,7 @@ export class EmployeeListService {
     private http: HttpClient,
     envService: EnvService,
     private store: EmployeeListStore,
+    private toastr: ToastrService,
   ) {
     this.functionsRootUrl = envService.functionsRootUrl;
   }
@@ -46,9 +48,23 @@ export class EmployeeListService {
       status,
     };
 
-    return this.http.put<Employee>(
-      `${this.functionsRootUrl}/Employees/${employee.id}/status`,
-      employeeUpdate,
-    );
+    return this.http
+      .put<Employee>(
+        `${this.functionsRootUrl}/Employees/${employee.id}/status`,
+        employeeUpdate,
+      )
+      .pipe(
+        catchError((err) => {
+          console.log(`Could not update employee ${employee.id}`);
+          return throwError(err);
+        }),
+      )
+      .subscribe({
+        next: (detail) => {
+          this.toastr.show('Employee sucessfully updated!');
+          this.store.upsert(detail.id, detail);
+        },
+        complete: () => this.store.setLoading(false),
+      });
   }
 }
