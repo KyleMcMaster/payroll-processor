@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace PayrollProcessor.Functions.Infrastructure
+namespace PayrollProcessor.Functions.Api.Infrastructure
 {
     static class DefaultJsonSerializerSettings
     {

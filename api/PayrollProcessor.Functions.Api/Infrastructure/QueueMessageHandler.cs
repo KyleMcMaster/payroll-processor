@@ -2,7 +2,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 
-namespace PayrollProcessor.Functions.Infrastructure
+namespace PayrollProcessor.Functions.Api.Infrastructure
 {
     public class QueueMessageHandler
     {

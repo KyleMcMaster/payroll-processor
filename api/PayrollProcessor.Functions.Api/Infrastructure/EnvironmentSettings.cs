@@ -1,7 +1,7 @@
 using System;
 using LanguageExt;
 
-namespace PayrollProcessor.Functions.Infrastructure
+namespace PayrollProcessor.Functions.Api.Infrastructure
 {
     public static class EnvironmentSettings
     {

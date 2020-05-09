@@ -1,7 +1,7 @@
 using System;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 
-namespace PayrollProcessor.Functions.Features.Employees.QueueMessages
+namespace PayrollProcessor.Functions.Api.Features.Employees.QueueMessages
 {
     public class EmployeePayrollCreation : IMessage
     {

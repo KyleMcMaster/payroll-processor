@@ -2,14 +2,14 @@ using System;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using PayrollProcessor.Functions.Features.Resources;
-using PayrollProcessor.Functions;
-using PayrollProcessor.Functions.Infrastructure;
+using PayrollProcessor.Functions.Api.Features.Resources;
+using PayrollProcessor.Functions.Api;
+using PayrollProcessor.Functions.Api.Infrastructure;
 using Microsoft.Azure.Cosmos;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
-namespace PayrollProcessor.Functions
+namespace PayrollProcessor.Functions.Api
 {
     public class Startup : FunctionsStartup
     {

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
-    <RootNamespace>PayrollProcessor.Functions</RootNamespace>
+    <RootNamespace>PayrollProcessor.Functions.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

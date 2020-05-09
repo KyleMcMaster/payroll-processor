@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D252B6E1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Infrastructure.Seeding", "PayrollProcessor.Infrastructure.Seeding\PayrollProcessor.Infrastructure.Seeding.csproj", "{9B9DDB90-137E-4467-AA07-6BF13D612F49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Functions.Tests", "PayrollProcessor.Functions.Tests\PayrollProcessor.Functions.Tests.csproj", "{DDD370FE-D4FA-472C-BEAD-22E1FA929E36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Functions.Api.Tests", "PayrollProcessor.Functions.Api.Tests\PayrollProcessor.Functions.Api.Tests.csproj", "{DDD370FE-D4FA-472C-BEAD-22E1FA929E36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Functions", "PayrollProcessor.Functions\PayrollProcessor.Functions.csproj", "{E2BE1D75-56ED-4BF5-A262-0DB7D386DB8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Functions.Api", "PayrollProcessor.Functions.Api\PayrollProcessor.Functions.Api.csproj", "{E2BE1D75-56ED-4BF5-A262-0DB7D386DB8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

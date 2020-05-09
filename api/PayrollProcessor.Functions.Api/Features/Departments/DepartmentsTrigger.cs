@@ -1,10 +1,10 @@
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Queue;
-using PayrollProcessor.Functions.Features.Resources;
-using PayrollProcessor.Functions.Infrastructure;
+using PayrollProcessor.Functions.Api.Features.Resources;
+using PayrollProcessor.Functions.Api.Infrastructure;
 using System.Threading.Tasks;
-using PayrollProcessor.Functions.Features.Employees.QueueMessages;
+using PayrollProcessor.Functions.Api.Features.Employees.QueueMessages;
 using Ardalis.GuardClauses;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
@@ -13,7 +13,7 @@ using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
 
-namespace PayrollProcessor.Functions.Features.Departments
+namespace PayrollProcessor.Functions.Api.Features.Departments
 {
     public class DepartmentsTrigger
     {

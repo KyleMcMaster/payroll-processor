@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace PayrollProcessor.Functions.Infrastructure
+namespace PayrollProcessor.Functions.Api.Infrastructure
 {
     /// <summary>
     /// https://github.com/Azure/azure-cosmos-dotnet-v3/issues/165#issuecomment-489112642

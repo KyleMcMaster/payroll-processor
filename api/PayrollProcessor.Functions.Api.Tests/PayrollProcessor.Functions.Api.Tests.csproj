@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>PayrollProcessor.Functions.Tests</RootNamespace>
+    <RootNamespace>PayrollProcessor.Functions.Api.Tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PayrollProcessor.Functions\PayrollProcessor.Functions.csproj" />
+    <ProjectReference Include="..\PayrollProcessor.Functions.Api\PayrollProcessor.Functions.Api.csproj" />
     <ProjectReference Include="..\PayrollProcessor.Core.Domain\PayrollProcessor.Core.Domain.csproj" />
   </ItemGroup>
 

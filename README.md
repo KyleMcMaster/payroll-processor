@@ -15,7 +15,7 @@ Sample HRIS application where a list of employees and their payroll information 
 
 ### Functions
 
-![dotnet core functions - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Functionss%20-%20build/badge.svg?branch=master)
+![dotnet core functions - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Functions.Apis%20-%20build/badge.svg?branch=master)
 
 ## Motivation
 
@@ -115,11 +115,11 @@ and select `PayrollProcessor.Api.sln`.
 
 - Copy
 
-  `functions/PayrollProcessor.Functions/local.settings.json.sample`
+  `functions/PayrollProcessor.Functions.Api/local.settings.json.sample`
 
   to
 
-  `functions/PayrollProcessor.Functions/local.settings.json`
+  `functions/PayrollProcessor.Functions.Api/local.settings.json`
 
 - F5 or run from the VS Code Debug drop down "Function: Run & Attach (Debug)"
 

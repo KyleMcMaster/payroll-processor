@@ -10,13 +10,13 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using PayrollProcessor.Data.Persistence.Features.Departments;
 using PayrollProcessor.Data.Persistence.Features.Employees;
-using PayrollProcessor.Functions.Features.Departments;
+using PayrollProcessor.Functions.Api.Features.Departments;
 using PayrollProcessor.Infrastructure.Seeding.Features.Employees;
 using PayrollProcessor.Infrastructure.Seeding.Features.Generators;
 
-using static PayrollProcessor.Functions.Infrastructure.AppResources.CosmosDb;
+using static PayrollProcessor.Functions.Api.Infrastructure.AppResources.CosmosDb;
 
-namespace PayrollProcessor.Functions.Features.Resources
+namespace PayrollProcessor.Functions.Api.Features.Resources
 {
     public class ResourcesTrigger
     {

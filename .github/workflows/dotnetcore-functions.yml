@@ -1,5 +1,5 @@
-# build and test PayrollProcessor.Functions
-name: dotnet core PayrollProcessor.Functions - build
+# build and test PayrollProcessor.Functions.Api
+name: dotnet core PayrollProcessor.Functions.Api - build
 
 on:
   push:
