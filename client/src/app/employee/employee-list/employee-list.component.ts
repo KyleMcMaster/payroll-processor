@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-
 import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
-
+import { Observable } from 'rxjs';
 import { Employee } from './state/employee-list.model';
 import { EmployeeListQuery } from './state/employee-list.query';
 import { EmployeeListService } from './state/employee-list.service';
@@ -28,4 +26,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   ngOnDestroy() {}
+
+  onToggleEmployeeStatus(employee: Employee) {
+    this.service.updateEmployeeStatus(employee);
+  }
 }

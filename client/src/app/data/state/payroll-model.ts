@@ -19,7 +19,7 @@ export function createInitialState(): Payroll {
     employeeDepartment: '',
     employeeId: '',
     employeeName: '',
-    employeeStatus: 'ACTIVE',
+    employeeStatus: 'Enabled',
     grossPayroll: 0,
     payrollPeriod: 1,
     risk: 'LOW',

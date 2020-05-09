@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-
-import { Department, EmployeeCreate } from '../employee-list/state/employee-list.model';
-
+import {
+  Department,
+  EmployeeCreate,
+} from '../employee-list/state/employee-list.model';
 import { EmployeeCreateService } from './employee-create.service';
 
 @Component({
@@ -35,7 +36,7 @@ export class EmployeeCreateComponent implements OnInit {
       firstName: this.filterForm.get('firstName').value,
       lastName: this.filterForm.get('lastName').value,
       phone: this.filterForm.get('phone').value,
-      status: 'ACTIVE', // All employees created as ACTIVE?
+      status: 'Enabled',
       title: this.filterForm.get('title').value,
     };
 

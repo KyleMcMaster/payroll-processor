@@ -44,7 +44,41 @@ namespace PayrollProcessor.Functions.Features.Employees
 
             if (!(tableResult.Result is EmployeeEntity employeeEntity))
             {
-                throw new Exception($"Could not save payroll");
+                throw new Exception($"Could not save employee");
+            }
+
+            return EmployeeEntity.Map.ToEmployee(employeeEntity);
+        }
+
+        [FunctionName(nameof(UpdateEmployeeStatus))]
+        public async Task<ActionResult<Employee>> UpdateEmployeeStatus(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "PUT", Route = "employees/{id:Guid}/status")] HttpRequest req,
+            [Table(Resource.Table.Employees)] CloudTable employeeTable,
+            Guid id,
+            ILogger log)
+        {
+            log.LogInformation($"Updating an employee: [{req}]");
+
+            var updateParams = await Request.Parse<EmployeeStatusUpdate>(req);
+
+            var querier = new TableQuerier(employeeTable);
+
+            var option = await querier.GetEntity<EmployeeEntity, Employee>(
+                updateParams.Department.ToLowerInvariant(),
+                id.ToString("n"),
+                EmployeeEntity.Map.ToEmployee);
+
+            var employee = option.IfNone(() => throw new Exception($"Could not find employee [{updateParams.Department}] [{id}]"));
+
+            employee.Status = EmployeeStatus.Find(updateParams.Status).CodeName;
+
+            var tableResult = await employeeTable.ExecuteAsync(
+                operation: TableOperation.InsertOrMerge(
+                    entity: EmployeeEntity.Map.From(employee)));
+
+            if (!(tableResult.Result is EmployeeEntity employeeEntity))
+            {
+                throw new Exception($"Could not update employee");
             }
 
             return EmployeeEntity.Map.ToEmployee(employeeEntity);
