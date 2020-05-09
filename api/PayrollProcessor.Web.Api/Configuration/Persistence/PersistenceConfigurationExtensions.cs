@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Azure.Cosmos;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Factories;
@@ -12,16 +11,6 @@ namespace PayrollProcessor.Web.Api.Configuration.Persistence
 {
     public static class PersistenceConfigurationExtensions
     {
-        public static void AddCosmosEFCore(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddDbContext<EmployeesContext>(options =>
-            {
-                string serviceEndpoint = configuration.GetValue<string>("CosmosDb:ServiceEndpoint");
-                string authKey = configuration.GetValue<string>("CosmosDb:AuthKey");
-                string databaseName = configuration.GetValue<string>("CosmosDb:DatabaseName");
-
-                options.UseCosmos(serviceEndpoint, authKey, databaseName);
-            });
-
         public static IServiceCollection AddCosmosClient(this IServiceCollection services, IConfiguration configuration) =>
             services.AddSingleton(ctx =>
             {
