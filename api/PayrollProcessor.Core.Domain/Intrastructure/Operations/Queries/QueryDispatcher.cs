@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Concurrent;
-using System.Threading.Tasks;
+using System.Threading;
 using Ardalis.GuardClauses;
 using LanguageExt;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Factories;
@@ -22,7 +22,7 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries
             this.serviceFactory = serviceFactory;
         }
 
-        public TryOptionAsync<TResponse> Dispatch<TResponse>(IQuery<TResponse> query)
+        public TryOptionAsync<TResponse> Dispatch<TResponse>(IQuery<TResponse> query, CancellationToken token = default)
         {
             Guard.Against.Null(query, nameof(query));
 
@@ -35,19 +35,19 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries
                         .CreateInstance(typeof(QueryHandlerWrapperImpl<,>)
                         .MakeGenericType(queryType, typeof(TResponse))));
 
-            return handler.Dispatch(query, serviceFactory);
+            return handler.Dispatch(query, serviceFactory, token);
         }
     }
 
     internal abstract class QueryHandlerWrapper<TResponse> : HandlerBase
     {
-        public abstract TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceFactory);
+        public abstract TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceFactory, CancellationToken token);
     }
 
     internal class QueryHandlerWrapperImpl<TQuery, TResponse> : QueryHandlerWrapper<TResponse>
         where TQuery : IQuery<TResponse>
     {
-        public override TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceFactory) =>
-            GetHandler<IQueryHandler<TQuery, TResponse>>(serviceFactory).Execute((TQuery)query);
+        public override TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceFactory, CancellationToken token) =>
+            GetHandler<IQueryHandler<TQuery, TResponse>>(serviceFactory).Execute((TQuery)query, token);
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
@@ -8,6 +7,7 @@ using PayrollProcessor.Web.Api.Infrastructure.Responses;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Threading;
 
 namespace PayrollProcessor.Web.Api.Features.Employees
 {
