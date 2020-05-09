@@ -1,11 +1,13 @@
 using System.Linq;
 
+using static PayrollProcessor.Data.Persistence.Infrastructure.Clients.AppResources.CosmosDb;
+
 namespace Microsoft.Azure.Cosmos
 {
     public static class CosmosClientExtensions
     {
         public static Container GetEmployeesContainer(this CosmosClient client) =>
-            client.GetContainer("PayrollProcessor", "Employees");
+            client.GetContainer(Databases.PayrollProcessor.Name, Databases.PayrollProcessor.Containers.Employees);
 
         public static IOrderedQueryable<TRecord> EmployeesQueryable<TRecord>(this CosmosClient client) =>
             client.GetEmployeesContainer().GetItemLinqQueryable<TRecord>();
@@ -17,7 +19,7 @@ namespace Microsoft.Azure.Cosmos
             });
 
         public static Container GetDepartmentsContainer(this CosmosClient client) =>
-            client.GetContainer("PayrollProcessor", "Departments");
+            client.GetContainer(Databases.PayrollProcessor.Name, Databases.PayrollProcessor.Containers.Departments);
 
         public static IOrderedQueryable<TRecord> DepartmentQueryable<TRecord>(this CosmosClient client) =>
             client.GetDepartmentsContainer().GetItemLinqQueryable<TRecord>();
