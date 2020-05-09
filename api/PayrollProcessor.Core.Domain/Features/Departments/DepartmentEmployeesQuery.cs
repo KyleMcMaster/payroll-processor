@@ -14,8 +14,8 @@ namespace PayrollProcessor.Core.Domain.Features.Departments
         {
             Guard.Against.NullOrWhiteSpace(department, nameof(department));
 
-            this.Count = count;
-            this.Department = department;
+            Count = count;
+            Department = department;
         }
 
         public void Deconstruct(out int count, out string department)

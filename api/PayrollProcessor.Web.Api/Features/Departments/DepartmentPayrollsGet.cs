@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Web.Api.Infrastructure.Responses;
 using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Web.Api.Features.Departments
 {
@@ -21,7 +22,14 @@ namespace PayrollProcessor.Web.Api.Features.Departments
             this.dispatcher = dispatcher;
         }
 
-        public override Task<ActionResult<DepartmentPayrollsResponse>> HandleAsync(DepartmentPayrollsRequest request) =>
+        [HttpGet("departments/payrolls"), MapToApiVersion("1")]
+        [SwaggerOperation(
+            Summary = "Gets department payrolls",
+            Description = "Gets all payrolls matching request parameters in the given department",
+            OperationId = "DepartmentPayrolls.GetAll",
+            Tags = new[] { "Payrolls", "Departments" })
+        ]
+        public override Task<ActionResult<DepartmentPayrollsResponse>> HandleAsync([FromQuery] DepartmentPayrollsRequest request) =>
             dispatcher
                 .Dispatch(new DepartmentPayrollsQuery(request.Count, request.Department, request.CheckDateFrom, request.CheckDateTo))
                 .Match<IEnumerable<DepartmentPayroll>, ActionResult<DepartmentPayrollsResponse>>(

@@ -31,11 +31,6 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
                 .DepartmentQueryable<DepartmentPayrollRecord>(department)
                 .Where(e => e.Type == nameof(DepartmentPayrollRecord));
 
-            if (count > 0)
-            {
-                dataQuery = dataQuery.Take(count);
-            }
-
             if (checkDateFrom.HasValue)
             {
                 dataQuery = dataQuery.Where(p => p.CheckDate >= checkDateFrom);
@@ -44,6 +39,11 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
             if (checkDateTo.HasValue)
             {
                 dataQuery = dataQuery.Where(p => p.CheckDate <= checkDateTo);
+            }
+
+            if (count > 0)
+            {
+                dataQuery = dataQuery.Take(count);
             }
 
             return async () =>

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cca9cfc4-7e8e-4bfb-9c39-dcdb76258948",
+		"_postman_id": "acc3a909-7960-46c1-8215-5ee6a4b13f7d",
 		"name": "Payroll Processor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -26,12 +26,12 @@
 					"raw": "{\n\t\"id\": \"87efadd8-db50-444a-af49-a6793e91a31f\",\n\t\"department\": \"test\",\n\t\"employmentStartedOn\": \"2020-03-19T07:22Z\",\n\t\"firstName\": \"tester\",\n\t\"lastName\": \"other\",\n\t\"phone\": \"234324234\",\n\t\"status\": \"enabled\",\n\t\"title\": \"normal employee\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:7071/api/employees/",
+					"raw": "http://localhost:5000/api/employees/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7071",
+					"port": "5000",
 					"path": [
 						"api",
 						"employees",
@@ -47,14 +47,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:7071/api/employees",
+					"raw": "http://localhost:5000/api/v1/employees",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7071",
+					"port": "5000",
 					"path": [
 						"api",
+						"v1",
 						"employees"
 					]
 				}
@@ -62,22 +63,54 @@
 			"response": []
 		},
 		{
-			"name": "Get All Payrolls for Employee",
+			"name": "Get Employee Details",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:7071/api/employees/87efadd8-db50-444a-af49-a6793e91a31f/payrolls",
+					"raw": "http://localhost:5000/api/v1/employees/d3d4e803-d580-4dc9-b845-c5709249a151",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7071",
+					"port": "5000",
 					"path": [
 						"api",
+						"v1",
 						"employees",
-						"87efadd8-db50-444a-af49-a6793e91a31f",
-						"payrolls"
+						"d3d4e803-d580-4dc9-b845-c5709249a151"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Department Employees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/departments/employees?department=it&count=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"departments",
+						"employees"
+					],
+					"query": [
+						{
+							"key": "department",
+							"value": "it"
+						},
+						{
+							"key": "count",
+							"value": "2"
+						}
 					]
 				}
 			},
@@ -104,12 +137,12 @@
 					"raw": "{\n\t\"employeeId\": \"ed00b46a-963f-4795-bc75-3f646373e984\",\n\t\"checkDate\": \"2020-04-28T07:22Z\",\n\t\"grossPayroll\": 100,\n\t\"payrollPeriod\": \"2\",\n\t\"employeeDepartment\": \"test\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:7071/api/payrolls/",
+					"raw": "http://localhost:5000/api/payrolls/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7071",
+					"port": "5000",
 					"path": [
 						"api",
 						"payrolls",
@@ -220,6 +253,28 @@
 						"api",
 						"resources",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Department Payrolls",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/departments/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"departments",
+						"employees"
 					]
 				}
 			},

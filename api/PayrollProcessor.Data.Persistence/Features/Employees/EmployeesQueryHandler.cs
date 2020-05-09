@@ -31,7 +31,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
 
             var dataQuery = client
                 .EmployeesQueryable<EmployeeRecord>()
-                .Where(e => e.Type == "EmployeeEntity");
+                .Where(e => e.Type == nameof(EmployeeRecord));
 
             if (!string.IsNullOrWhiteSpace(firstName))
             {
