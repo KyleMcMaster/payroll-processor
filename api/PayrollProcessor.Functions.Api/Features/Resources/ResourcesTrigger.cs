@@ -33,7 +33,7 @@ namespace PayrollProcessor.Functions.Api.Features.Resources
             [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "resources")] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation($"Creating all tables and queues: [{req}]");
+            log.LogInformation($"Creating all databases, collections, and queues: [{req}]");
 
             var dbResponse = await client.CreateDatabaseIfNotExistsAsync(Databases.PayrollProcessor.Name);
 
@@ -50,7 +50,7 @@ namespace PayrollProcessor.Functions.Api.Features.Resources
             [HttpTrigger(AuthorizationLevel.Anonymous, "DELETE", Route = "resources")] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation($"Deleting all tables and queues: [{req}]");
+            log.LogInformation($"Deleting all databases, collections, and queues: [{req}]");
 
             var db = client.GetDatabase(Databases.PayrollProcessor.Name);
 
