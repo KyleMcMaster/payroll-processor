@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Mvc;
-using PayrollProcessor.Api.Infrastructure.Responses;
+using PayrollProcessor.Web.Api.Infrastructure.Responses;
 using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 
-namespace PayrollProcessor.Api.Features.Departments
+namespace PayrollProcessor.Web.Api.Features.Departments
 {
     public class DepartmentPayrollsGet : BaseAsyncEndpoint<DepartmentPayrollsRequest, DepartmentPayrollsResponse>
     {

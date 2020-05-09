@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PayrollProcessor.Api.Infrastructure.Responses
+namespace PayrollProcessor.Web.Api.Infrastructure.Responses
 {
     public interface IListResponse<TItem>
     {

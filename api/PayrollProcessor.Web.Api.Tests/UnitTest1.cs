@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace PayrollProcessor.Api.Tests
+namespace PayrollProcessor.Web.Api.Tests
 {
     public class UnitTest1
     {

@@ -6,7 +6,7 @@ Sample HRIS application where a list of employees and their payroll information 
 
 ### Api
 
-![dotnet core api - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Api%20-%20build/badge.svg)
+![dotnet core api - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Web.Api%20-%20build/badge.svg)
 
 ### Client
 
@@ -84,7 +84,7 @@ for [Omnisharp](https://github.com/OmniSharp/omnisharp-vscode), and is loaded as
 VS Code workspace is opened.
 
 If you want to switch to work on the API solution, use the "Omnisharp: Select Project" command from the command palette
-and select `PayrollProcessor.Api.sln`.
+and select `PayrollProcessor.Web.Api.sln`.
 
 ### Client
 

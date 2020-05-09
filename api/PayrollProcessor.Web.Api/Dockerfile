@@ -7,17 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["PayrollProcessor.Api.csproj", ""]
+COPY ["PayrollProcessor.Web.Api.csproj", ""]
 COPY ["PayrollProcessor.Data.Persistence.csproj", ""]
-RUN dotnet restore "./PayrollProcessor.Api.csproj"
+RUN dotnet restore "./PayrollProcessor.Web.Api.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "PayrollProcessor.Api.csproj" -c Release -o /app/build
+RUN dotnet build "PayrollProcessor.Web.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "PayrollProcessor.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "PayrollProcessor.Web.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PayrollProcessor.Api.dll"]
+ENTRYPOINT ["dotnet", "PayrollProcessor.Web.Api.dll"]

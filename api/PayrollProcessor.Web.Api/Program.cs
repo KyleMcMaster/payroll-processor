@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace PayrollProcessor.Api
+namespace PayrollProcessor.Web.Api
 {
     public class Program
     {

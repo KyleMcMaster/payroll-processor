@@ -8,7 +8,7 @@ using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using PayrollProcessor.Data.Persistence.Features.Employees;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 
-namespace PayrollProcessor.Api.Configuration.Persistence
+namespace PayrollProcessor.Web.Api.Configuration.Persistence
 {
     public static class PersistenceConfigurationExtensions
     {

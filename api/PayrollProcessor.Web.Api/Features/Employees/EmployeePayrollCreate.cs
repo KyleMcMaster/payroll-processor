@@ -10,7 +10,7 @@ using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PayrollProcessor.Api.Features.Employees
+namespace PayrollProcessor.Web.Api.Features.Employees
 {
     public class EmployeePayrollCreate : BaseAsyncEndpoint<EmployeePayrollCreateRequest, EmployeePayroll>
     {

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 /// <summary>
 /// https://stackoverflow.com/a/58406404/939634
 /// </summary>
-namespace PayrollProcessor.Api.Infrastructure.Routing
+namespace PayrollProcessor.Web.Api.Infrastructure.Routing
 {
     public class GlobalRouteConvention : IApplicationModelConvention
     {

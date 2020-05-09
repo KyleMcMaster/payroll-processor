@@ -1,4 +1,4 @@
-namespace PayrollProcessor.Api.Features.Notifications
+namespace PayrollProcessor.Web.Api.Features.Notifications
 {
     public class Notification
     {

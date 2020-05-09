@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PayrollProcessor.Api.Features.Notifications;
-using PayrollProcessor.Api.Infrastructure.Routing;
+using PayrollProcessor.Web.Api.Features.Notifications;
+using PayrollProcessor.Web.Api.Infrastructure.Routing;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using PayrollProcessor.Api.Configuration.Persistence;
+using PayrollProcessor.Web.Api.Configuration.Persistence;
 using LanguageExt;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using PayrollProcessor.Api.Infrastructure.Serialization;
+using PayrollProcessor.Web.Api.Infrastructure.Serialization;
 
-namespace PayrollProcessor.Api
+namespace PayrollProcessor.Web.Api
 {
     public class Startup
     {

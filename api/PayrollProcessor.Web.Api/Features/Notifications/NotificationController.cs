@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace PayrollProcessor.Api.Features.Notifications
+namespace PayrollProcessor.Web.Api.Features.Notifications
 {
     [Route("api/[controller]")]
     [ApiController]
