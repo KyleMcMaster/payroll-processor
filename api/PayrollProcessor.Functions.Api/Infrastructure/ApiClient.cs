@@ -2,9 +2,8 @@ using System;
 using System.Net.Http;
 using LanguageExt;
 using Newtonsoft.Json;
-using PayrollProcessor.Functions.Api.Infrastructure;
 
-namespace PayrollProcessor.Functions.Api.Features.Resources
+namespace PayrollProcessor.Functions.Api.Infrastructure
 {
     public interface IApiClient
     {

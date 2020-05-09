@@ -79,12 +79,13 @@ or open the root of the repository in VS Code (`code .`) and when prompted, open
 
 ### .NET
 
-The Azure Functions solution (`PayrollProcessor.sln`) is set up as the default solution
+The API solution (`PayrollProcessor.sln`) is set up as the default solution
 for [Omnisharp](https://github.com/OmniSharp/omnisharp-vscode), and is loaded as soon as the
 VS Code workspace is opened.
 
-If you want to switch to work on the API solution, use the "Omnisharp: Select Project" command from the command palette
-and select `PayrollProcessor.Web.Api.sln`.
+This solution contains 2 applications - `PayrollProcessor.Functions.Api` and `PayrollProcess.Web.Api`
+
+There are VS Code tasks for the Solution (Clean, Build, Test) and at the individual application project level.
 
 ### Client
 
@@ -115,11 +116,11 @@ and select `PayrollProcessor.Web.Api.sln`.
 
 - Copy
 
-  `functions/PayrollProcessor.Functions.Api/local.settings.json.sample`
+  `api/PayrollProcessor.Functions.Api/local.settings.json.sample`
 
   to
 
-  `functions/PayrollProcessor.Functions.Api/local.settings.json`
+  `api/PayrollProcessor.Functions.Api/local.settings.json`
 
 - F5 or run from the VS Code Debug drop down "Function: Run & Attach (Debug)"
 

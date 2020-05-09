@@ -10,7 +10,6 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using PayrollProcessor.Data.Persistence.Features.Departments;
 using PayrollProcessor.Data.Persistence.Features.Employees;
-using PayrollProcessor.Functions.Api.Features.Departments;
 using PayrollProcessor.Infrastructure.Seeding.Features.Employees;
 using PayrollProcessor.Infrastructure.Seeding.Features.Generators;
 
