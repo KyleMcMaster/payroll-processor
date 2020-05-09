@@ -6,7 +6,7 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Factories
 
     public static class ServiceFactoryExtensions
     {
-        public static T GetInstance<T>(this ServiceProviderDelegate factory)
-            => (T)factory(typeof(T));
+        public static T GetInstance<T>(this ServiceProviderDelegate serviceProvider)
+            => (T)serviceProvider(typeof(T));
     }
 }

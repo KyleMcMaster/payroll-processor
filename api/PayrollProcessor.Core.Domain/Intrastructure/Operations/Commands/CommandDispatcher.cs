@@ -12,11 +12,11 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands
 {
     public class CommandDispatcher : ICommandDispatcher
     {
-        private readonly ServiceProviderDelegate serviceFactory;
+        private readonly ServiceProviderDelegate serviceProvider;
         private static readonly ConcurrentDictionary<Type, object> commandHandlers = new ConcurrentDictionary<Type, object>();
 
-        public CommandDispatcher(ServiceProviderDelegate serviceFactory) =>
-            this.serviceFactory = serviceFactory ?? throw new ArgumentNullException(nameof(serviceFactory));
+        public CommandDispatcher(ServiceProviderDelegate serviceProvider) =>
+            this.serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
         public TryOptionAsync<Unit> Dispatch(ICommand command, CancellationToken token = default)
         {
@@ -31,7 +31,7 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands
                         .CreateInstance(typeof(CommandHandlerWrapperImpl<>)
                         .MakeGenericType(commandType)));
 
-            return handler.Dispatch(command, serviceFactory, token);
+            return handler.Dispatch(command, serviceProvider, token);
         }
 
         public TryOptionAsync<TResponse> Dispatch<TResponse>(ICommand<TResponse> command, CancellationToken token = default)
@@ -47,31 +47,31 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands
                         .CreateInstance(typeof(CreateCommandHandlerWrapperImpl<,>)
                         .MakeGenericType(commandType, typeof(TResponse))));
 
-            return handler.Dispatch(command, serviceFactory, token);
+            return handler.Dispatch(command, serviceProvider, token);
         }
     }
 
     internal abstract class CommandHandlerWrapper : HandlerBase
     {
-        public abstract TryOptionAsync<Unit> Dispatch(ICommand command, ServiceProviderDelegate serviceFactory, CancellationToken token);
+        public abstract TryOptionAsync<Unit> Dispatch(ICommand command, ServiceProviderDelegate serviceProvider, CancellationToken token);
     }
 
     internal class CommandHandlerWrapperImpl<TCommand> : CommandHandlerWrapper
         where TCommand : ICommand
     {
-        public override TryOptionAsync<Unit> Dispatch(ICommand command, ServiceProviderDelegate serviceFactory, CancellationToken token) =>
-            GetHandler<ICommandHandler<TCommand>>(serviceFactory).Execute((TCommand)command, token);
+        public override TryOptionAsync<Unit> Dispatch(ICommand command, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
+            GetHandler<ICommandHandler<TCommand>>(serviceProvider).Execute((TCommand)command, token);
     }
 
     internal abstract class CommandHandlerWrapper<TResponse> : HandlerBase
     {
-        public abstract TryOptionAsync<TResponse> Dispatch(ICommand<TResponse> command, ServiceProviderDelegate serviceFactory, CancellationToken token);
+        public abstract TryOptionAsync<TResponse> Dispatch(ICommand<TResponse> command, ServiceProviderDelegate serviceProvider, CancellationToken token);
     }
 
     internal class CreateCommandHandlerWrapperImpl<TCommand, TResponse> : CommandHandlerWrapper<TResponse>
         where TCommand : ICommand<TResponse>
     {
-        public override TryOptionAsync<TResponse> Dispatch(ICommand<TResponse> command, ServiceProviderDelegate serviceFactory, CancellationToken token) =>
-            GetHandler<ICommandHandler<TCommand, TResponse>>(serviceFactory).Execute((TCommand)command, token);
+        public override TryOptionAsync<TResponse> Dispatch(ICommand<TResponse> command, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
+            GetHandler<ICommandHandler<TCommand, TResponse>>(serviceProvider).Execute((TCommand)command, token);
     }
 }

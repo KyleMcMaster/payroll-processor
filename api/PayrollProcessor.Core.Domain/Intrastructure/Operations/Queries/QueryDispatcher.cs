@@ -12,14 +12,14 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries
 {
     public class QueryDispatcher : IQueryDispatcher
     {
-        private readonly ServiceProviderDelegate serviceFactory;
+        private readonly ServiceProviderDelegate serviceProvider;
         private static readonly ConcurrentDictionary<Type, object> queryHandlers = new ConcurrentDictionary<Type, object>();
 
-        public QueryDispatcher(ServiceProviderDelegate serviceFactory)
+        public QueryDispatcher(ServiceProviderDelegate serviceProvider)
         {
-            Guard.Against.Null(serviceFactory, nameof(serviceFactory));
+            Guard.Against.Null(serviceProvider, nameof(serviceProvider));
 
-            this.serviceFactory = serviceFactory;
+            this.serviceProvider = serviceProvider;
         }
 
         public TryOptionAsync<TResponse> Dispatch<TResponse>(IQuery<TResponse> query, CancellationToken token = default)
@@ -35,19 +35,19 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries
                         .CreateInstance(typeof(QueryHandlerWrapperImpl<,>)
                         .MakeGenericType(queryType, typeof(TResponse))));
 
-            return handler.Dispatch(query, serviceFactory, token);
+            return handler.Dispatch(query, serviceProvider, token);
         }
     }
 
     internal abstract class QueryHandlerWrapper<TResponse> : HandlerBase
     {
-        public abstract TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceFactory, CancellationToken token);
+        public abstract TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceProvider, CancellationToken token);
     }
 
     internal class QueryHandlerWrapperImpl<TQuery, TResponse> : QueryHandlerWrapper<TResponse>
         where TQuery : IQuery<TResponse>
     {
-        public override TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceFactory, CancellationToken token) =>
-            GetHandler<IQueryHandler<TQuery, TResponse>>(serviceFactory).Execute((TQuery)query, token);
+        public override TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
+            GetHandler<IQueryHandler<TQuery, TResponse>>(serviceProvider).Execute((TQuery)query, token);
     }
 }
