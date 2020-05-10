@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading;
 using Ardalis.GuardClauses;
+using LanguageExt;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 using PayrollProcessor.Core.Domain.Features.Departments;
@@ -21,7 +22,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
             this.client = client;
         }
 
-        public LanguageExt.TryOptionAsync<DepartmentEmployee> Execute(DepartmentEmployeeQuery query, CancellationToken token)
+        public TryOptionAsync<DepartmentEmployee> Execute(DepartmentEmployeeQuery query, CancellationToken token)
         {
             var dataQuery = client.GetDepartmentsContainer()
                 .GetItemLinqQueryable<DepartmentEmployeeRecord>(

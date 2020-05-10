@@ -77,6 +77,14 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
 
                 return recordToUpdate;
             }
+
+            public static DepartmentPayrollRecord Merge(Employee employee, DepartmentPayrollRecord recordToUpdate)
+            {
+                recordToUpdate.EmployeeFirstName = employee.FirstName;
+                recordToUpdate.EmployeeLastName = employee.LastName;
+
+                return recordToUpdate;
+            }
         }
     }
 }
