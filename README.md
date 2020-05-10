@@ -4,18 +4,14 @@ Sample HRIS application where a list of employees and their payroll information 
 
 ## Build status
 
-### Api
+### Api and Functions
 
-![dotnet core api - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Api%20-%20build/badge.svg)
+![dotnet core - build & test](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20-%20build%20&%20test/badge.svg)
 
 ### Client
 
 ![.github/workflows/npm.yml](https://github.com/KyleMcMaster/payroll-processor/workflows/.github/workflows/npm.yml/badge.svg)
 [![Styled with Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
-
-### Functions
-
-![dotnet core functions - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Functionss%20-%20build/badge.svg)
 
 ## Motivation
 
@@ -40,10 +36,10 @@ Things I would like to explore:
 
 - TODOs
 
-  - Move seed data to CosmosDB document instead of boilerplate c# code
-  - Refactor client to use Akita state management
-  - Toggle between Api and Azure Function backends
   - Advanced analytics like payroll totals by department, risk, and time
+  - Integrate Cosmos Db change feed
+  - Handle poison queue messages
+  - Add helpful notifications from SignalR messages
 
 ## Contributors ✨
 
@@ -77,14 +73,61 @@ This project uses VS Code [Multi-root Workspaces](https://code.visualstudio.com/
 For the best developer experience, open the workspace directly with VS Code (`code payroll-processor.code-workspace`)
 or open the root of the repository in VS Code (`code .`) and when prompted, open the workspace.
 
-### .NET
+### API
 
-The Azure Functions solution (`PayrollProcessor.sln`) is set up as the default solution
+The API solution (`PayrollProcessor.sln`) is set up as the default solution
 for [Omnisharp](https://github.com/OmniSharp/omnisharp-vscode), and is loaded as soon as the
 VS Code workspace is opened.
 
-If you want to switch to work on the API solution, use the "Omnisharp: Select Project" command from the command palette
-and select `PayrollProcessor.Api.sln`.
+All of the backend .NET code is found in the `/api` folder.
+
+This solution contains 2 applications `PayrollProcessor.Functions.Api` and `PayrollProcess.Web.Api`
+This solution also contains multiple shared libraries and test projects.
+
+There are VS Code tasks (Clean, Build, Test) at the solution and the individual application project level.
+
+#### PayrollProcess.Web.Api
+
+Currently there are no application secrets or app settings to customize for the Web API.
+However, settings for the application can be found in `appsettings.Development.json` and `appsettings.json`.
+
+To run the Web API run the following launch configuration (Debug: Select and Start Debugging)
+
+- API: Run and Attach (Debug)
+
+The application will start and listen for requests on [http://localhost:5000](http://localhost:5000).
+
+#### PayrollProcessor.Functions.Api
+
+- Ensure the [Azure Functions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
+  VS Code extension is installed.
+
+- Run "Azure Functions: Install or Update Azure Functions Core Tools" from the command palette.
+
+- [Update Powershell security policy](https://github.com/Azure/azure-functions-core-tools/issues/1821#issuecomment-586925919)
+
+- Start the Azure Storage Emulator and Azure Cosmos Db Emulator (see: Data Storage below)
+
+- Copy
+
+  `api/PayrollProcessor.Functions.Api/local.settings.json.sample`
+
+  to
+
+  `api/PayrollProcessor.Functions.Api/local.settings.json`
+
+- F5 or run from the VS Code Debug drop down "Function: Run & Attach (Debug)"
+
+- Optional: Run any of the following tasks (Task: Run Task)
+
+  - Function: Test
+  - Function: Build (Debug)
+
+- Optional: Run any of the follow launch configurations (Debug: Select and Start Debugging)
+
+  - Function: Run & Attach (Debug)
+
+The application will listen for requests on [http://localhost:7071](http://localhost:7071).
 
 ### Client
 
@@ -98,40 +141,6 @@ and select `PayrollProcessor.Api.sln`.
 
 - Run the "Client: Serve" VS Code task (this will install packages and start serving the app)
 
-- Optional: Run any of the following tasks
-
-  - Client: Build
-
-### Functions
-
-- Ensure the [Azure Functions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
-  VS Code extension is installed.
-
-- Run "Azure Functions: Install or Update Azure Functions Core Tools" from the command palette.
-
-- [Update Powershell security policy](https://github.com/Azure/azure-functions-core-tools/issues/1821#issuecomment-586925919)
-
-- Start the Azure Storage Emulator (see: Data Storage below)
-
-- Copy
-
-  `functions/PayrollProcessor.Functions/local.settings.json.sample`
-
-  to
-
-  `functions/PayrollProcessor.Functions/local.settings.json`
-
-- F5 or run from the VS Code Debug drop down "Function: Run & Attach (Debug)"
-
-- Optional: Run any of the following tasks (Task: Run Task)
-
-  - Function: Test
-  - Function: Build (Debug)
-
-- Optional: Run any of the follow launch configurations (Debug: Select and Start Debugging)
-
-  - Function: Run & Attach (Debug)
-
 ## Data Storage
 
 The project currently stores data in Azure Table Storage, which can be simulated locally using the [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator).
@@ -141,16 +150,24 @@ The project currently stores data in Azure Table Storage, which can be simulated
 
 The locally stored data can be viewed using the [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/).
 
-### Initialization / Seeding
+This project also uses the [Azure Cosmos Db Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator)
+which can be downloaded at [https://aka.ms/cosmosdb-emulator](https://aka.ms/cosmosdb-emulator)
 
-#### Create Tables / Queues
+> Note: There is a [Linux/MacOS emulator](https://github.com/zeit/cosmosdb-server) available as well
+
+### Data Initialization / Seeding
+
+#### Create Collections / Queues
+
+For performing any of the following operations ensure the following:
+
+- The Azure Storage Emulator & Azure Comsos Db Emulator are running
+- The functions API project (see: `PayrollProcessor.Functions.Api` above) is running
 
 To initialize the data storage structure (a few tables and a queue):
 
-- Turn on the Azure Storage Emulator
-- Run the functions project
 - Make a POST request to `http://localhost:7071/api/resources/`
-- Optional: Use `Create Resources` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
+- Optional: Use `Create Resources` request in `/docs/PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
 
 The creation process will skip any resources that already exist.
 
@@ -158,20 +175,16 @@ The creation process will skip any resources that already exist.
 
 There is also an endpoint to initialize randomly generated data in the data storage:
 
-- Turn on the Azure Storage Emulator
-- Run the functions project
 - Make a POST request to `http://localhost:7071/api/resources/data`
   - There are 2 optional query parameters
     - `employeesCount`: Sets the number of employees created by the request
     - `payrollsMaxCount`: Sets the maximum number of payrolls created for each employee (random value 1-max)
-- Optional: Use `Create Seed Data` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
+- Optional: Use `Create Seed Data` request in `/docs/PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
 
-#### Reset Tables / Queues and Data
+#### Reset Collections / Queues and Data
 
 Finally, there's an endpoint to clear/reset all the data currently in the app.
 This can be useful if you are changing schemas and don't want to write migrations.
 
-- Turn on the Azure Storage Emulator
-- Run the functions project
 - Make a DELETE request to `http://localhost:7071/api/resources`
-- Optional: Use `Delete Resources` request in `PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
+- Optional: Use `Delete Resources` request in `/docs/PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection

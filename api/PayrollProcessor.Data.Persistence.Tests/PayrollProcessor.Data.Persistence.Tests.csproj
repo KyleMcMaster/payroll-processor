@@ -24,4 +24,8 @@
     <ProjectReference Include="..\PayrollProcessor.Data.Persistence\PayrollProcessor.Data.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Employees\" />
+  </ItemGroup>
+
 </Project>

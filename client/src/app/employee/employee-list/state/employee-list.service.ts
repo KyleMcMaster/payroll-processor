@@ -4,12 +4,16 @@ import { ToastrService } from 'ngx-toastr';
 import { of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EnvService } from 'src/app/shared/env.service';
+import {
+  ListResponse,
+  mapListResponseToData,
+} from 'src/app/shared/list-response';
 import { Employee, EmployeeUpdate } from './employee-list.model';
 import { EmployeeListStore } from './employee-list.store';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeListService {
-  private readonly functionsRootUrl: string;
+  private readonly apiRootUrl: string;
 
   constructor(
     private http: HttpClient,
@@ -17,13 +21,13 @@ export class EmployeeListService {
     private store: EmployeeListStore,
     private toastr: ToastrService,
   ) {
-    this.functionsRootUrl = envService.functionsRootUrl;
+    this.apiRootUrl = envService.apiRootUrl;
   }
 
   getEmployees() {
     this.store.setLoading(true);
     return this.http
-      .get<Employee[]>(`${this.functionsRootUrl}/Employees`)
+      .get<ListResponse<Employee>>(`${this.apiRootUrl}/Employees`)
       .pipe(
         catchError((err) => {
           this.store.setError({
@@ -31,9 +35,10 @@ export class EmployeeListService {
           });
           return of([]);
         }),
+        mapListResponseToData(),
       )
       .subscribe({
-        next: (employees) => this.store.set(employees),
+        next: (response) => this.store.set(response),
         complete: () => this.store.setLoading(false),
       });
   }
@@ -44,15 +49,12 @@ export class EmployeeListService {
     const status = employee.status === 'Enabled' ? 'Disabled' : 'Enabled';
 
     const employeeUpdate: EmployeeUpdate = {
-      department: employee.department,
+      ...employee,
       status,
     };
 
     return this.http
-      .put<Employee>(
-        `${this.functionsRootUrl}/Employees/${employee.id}/status`,
-        employeeUpdate,
-      )
+      .put<Employee>(`${this.apiRootUrl}/Employees`, employeeUpdate)
       .pipe(
         catchError((err) => {
           console.log(`Could not update employee ${employee.id}`);

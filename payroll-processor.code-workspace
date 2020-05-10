@@ -13,10 +13,6 @@
       "name": "client"
     },
     {
-      "path": "functions",
-      "name": "functions"
-    },
-    {
       "path": ".",
       "name": "root"
     }
@@ -31,7 +27,6 @@
       "node_modules": true,
       "api": true,
       "client": true,
-      "functions": true,
       "docs": true,
       "**/bin": true,
       "**/obj": true,
@@ -72,7 +67,8 @@
       "stylelint.vscode-stylelint",
       "k--kato.docomment",
       "jchannon.csharpextensions",
-      "vstirbu.vscode-mermaid-preview"
+      "vstirbu.vscode-mermaid-preview",
+      "ms-azuretools.vscode-cosmosdb"
     ]
   }
 }

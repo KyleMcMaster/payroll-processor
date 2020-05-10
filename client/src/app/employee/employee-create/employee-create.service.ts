@@ -11,21 +11,20 @@ import { EmployeeListStore } from '../employee-list/state/employee-list.store';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeCreateService {
-  private readonly functionsRootUrl: string;
+  private readonly apiRootUrl: string;
 
   constructor(
     private http: HttpClient,
     private store: EmployeeListStore,
-    // private router: Router,
     envService: EnvService,
   ) {
-    this.functionsRootUrl = envService.functionsRootUrl;
+    this.apiRootUrl = envService.apiRootUrl;
   }
 
   createEmployee(employee: EmployeeCreate) {
     this.store.setLoading(true);
     return this.http
-      .post<Employee>(`${this.functionsRootUrl}/employees`, employee)
+      .post<Employee>(`${this.apiRootUrl}/employees`, employee)
       .pipe(
         tap((detail) => {
           this.store.upsert(detail.id, detail);

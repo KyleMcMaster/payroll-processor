@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { environment } from '../../environments/environment';
 import { Environment } from '../../environments/environment-types';
 
@@ -16,6 +15,6 @@ export class EnvService {
   }
 
   get apiRootUrl(): string {
-    return `${this.env.apiDomain}/api`;
+    return `${this.env.apiDomain}/api/v1`;
   }
 }

@@ -1,9 +1,9 @@
 export interface Employee {
   id: string;
   department: Department;
-  readonly email: string;
-  readonly employmentStartedOn: string;
-  readonly firstName: string;
+  email: string;
+  employmentStartedOn: string;
+  firstName: string;
   lastName: string;
   phone: string;
   status: Status;
@@ -42,6 +42,14 @@ export interface EmployeeCreate {
 }
 
 export interface EmployeeUpdate {
+  id: string;
   department: Department;
+  email: string;
+  employmentStartedOn: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
   status: Status;
+  title: string;
+  version: string;
 }

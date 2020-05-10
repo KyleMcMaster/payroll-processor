@@ -7,10 +7,10 @@ Get all employees
 ```mermaid
 sequenceDiagram
     autonumber
-    Client->>Employees_Get: XHR Request
-    Employees_Get->>employees Table: query
-    employees Table-->>Employees_Get: entities
-    Employees_Get-->>Client: XHR Response (employees)
+    Client ->> GET /api/employees: XHR Request (params)
+    GET /api/employees ->> Employees (Cosmos): query (params)
+    Employees (Cosmos) -->> GET /api/employees: employee entities
+    GET /api/employees -->> Client: XHR Response (employees)
 ```
 
 Create employee
@@ -18,28 +18,21 @@ Create employee
 ```mermaid
 sequenceDiagram
     autonumber
-    Client->>Employees_Create: XHR Request (employee)
-    Employees_Create->>employees Table: insertion (entity)
-    employees Table-->>Employees_Create: entity
-    Employees_Create-->>Client: XHR Response (employee)
-```
+    Client ->> POST /api/employees: XHR Request (employee)
+    POST /api/employees ->> Employees (Cosmos): (entity) employee
+    Employees (Cosmos) -->> POST /api/employees: entity
 
-Create payroll
-
-```mermaid
-sequenceDiagram
-    autonumber
-    Client->>Payroll_Create: XHR Request (payroll)
-    Payroll_Create->>payrolls Table: query (entity)
-    payrolls Table-->>Payroll_Create: entity
-    Payroll_Create->>payroll updates Queue: message (entity)
     par
-      payroll updates Queue->>PayrollQueue_Update: message (entity)
-      PayrollQueue_Update->>employees Table: query (entity)
-      employees Table-->>PayrollQueue_Update: entity
-      PayrollQueue_Update->>employees Table: update (entity)
-      PayrollQueue_Update->>employeePayrolls Table: update (entity)
+      POST /api/employees -->> Client: XHR Response (employee)
     and
-      Payroll_Create-->>Client: XHR Response (payroll)
+      POST /api/employees ->> employee updates: message (entity)
+      Note over POST /api/employees,employee updates: Storage Queue message
+      employee updates ->> CreatePayrollFromQueue: dequeue
+      CreatePayrollFromQueue ->> Employees (Cosmos): query (id)
+      Employees (Cosmos) ->> CreatePayrollFromQueue: employee entity
+      CreatePayrollFromQueue ->> Departments (Cosmos): (entity) department employee
+      Departments (Cosmos) ->> CreatePayrollFromQueue: (entity) department employee
+      CreatePayrollFromQueue ->> POST /api/notifications: department employee
+      POST /api/notifications ->> Client: SignalR message (department employee)
     end
 ```

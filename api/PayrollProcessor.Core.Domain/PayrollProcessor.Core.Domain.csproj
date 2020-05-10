@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="1.5.0" />
+    <PackageReference Include="LanguageExt.Core" Version="3.4.14" />
+    <PackageReference Include="NewtonSoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>

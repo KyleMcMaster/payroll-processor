@@ -21,10 +21,10 @@
       "level": 19
     }
   ],
-  "maximumLineLength": 120,
-  "maximumBindingNamesPerLine": 8,
-  "maximumDefaultAndBindingNamesPerLine": 8,
-  "maximumNamesPerWrappedLine": 4,
-  "formatOnSave": true,
+  "maxLineLength": 120,
+  "maxBindingNamesPerLine": 8,
+  "maxDefaultAndBindingNamesPerLine": 8,
+  "maxNamesPerWrappedLine": 4,
+  "autoFormat": "onSave",
   "exclude": ["node_modules"]
 }
