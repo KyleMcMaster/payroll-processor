@@ -21,7 +21,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
 
             this.client = client;
 
-            queueClient = clientFactory.Create(AppResources.Queue.EmployeeUpdates);
+            queueClient = clientFactory.Create(AppResources.Queue.EmployeePayrollUpdates);
         }
 
         public TryOptionAsync<EmployeePayroll> Execute(EmployeePayrollUpdateCommand command, CancellationToken token) =>
