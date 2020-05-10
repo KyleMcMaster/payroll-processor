@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EnvService } from '../shared/env.service';
+import { ListResponse, mapListResponseToData } from '../shared/list-response';
 import { Payroll } from './state/payroll-model';
 
 @Injectable({
@@ -21,12 +22,13 @@ export class DataService {
 
   private loadData() {
     this.http
-      .get<Payroll[]>(`${this.apiRootUrl}/payrolls`)
+      .get<ListResponse<Payroll>>(`${this.apiRootUrl}/payrolls`)
       .pipe(
         catchError((err) => {
           console.log('Could not fetch payrolls');
           return throwError(err);
         }),
+        mapListResponseToData(),
       )
       .subscribe((result) => (this.payroll = result));
   }

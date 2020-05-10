@@ -4,6 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EnvService } from 'src/app/shared/env.service';
+import {
+  ListResponse,
+  mapListResponseToData,
+} from 'src/app/shared/list-response';
 import { Employee, EmployeeUpdate } from './employee-list.model';
 import { EmployeeListStore } from './employee-list.store';
 
@@ -23,7 +27,7 @@ export class EmployeeListService {
   getEmployees() {
     this.store.setLoading(true);
     return this.http
-      .get<Employee[]>(`${this.apiRootUrl}/Employees`)
+      .get<ListResponse<Employee>>(`${this.apiRootUrl}/Employees`)
       .pipe(
         catchError((err) => {
           this.store.setError({
@@ -31,9 +35,10 @@ export class EmployeeListService {
           });
           return of([]);
         }),
+        mapListResponseToData(),
       )
       .subscribe({
-        next: (employees) => this.store.set(employees),
+        next: (response) => this.store.set(response),
         complete: () => this.store.setLoading(false),
       });
   }
