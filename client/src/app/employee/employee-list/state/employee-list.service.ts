@@ -49,15 +49,12 @@ export class EmployeeListService {
     const status = employee.status === 'Enabled' ? 'Disabled' : 'Enabled';
 
     const employeeUpdate: EmployeeUpdate = {
-      department: employee.department,
+      ...employee,
       status,
     };
 
     return this.http
-      .put<Employee>(
-        `${this.apiRootUrl}/Employees/${employee.id}/status`,
-        employeeUpdate,
-      )
+      .put<Employee>(`${this.apiRootUrl}/Employees`, employeeUpdate)
       .pipe(
         catchError((err) => {
           console.log(`Could not update employee ${employee.id}`);
