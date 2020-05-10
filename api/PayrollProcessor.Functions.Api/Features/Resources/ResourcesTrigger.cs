@@ -10,6 +10,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using PayrollProcessor.Data.Persistence.Features.Departments;
 using PayrollProcessor.Data.Persistence.Features.Employees;
+using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 using PayrollProcessor.Infrastructure.Seeding.Features.Employees;
 using PayrollProcessor.Infrastructure.Seeding.Features.Generators;
 
@@ -34,6 +35,11 @@ namespace PayrollProcessor.Functions.Api.Features.Resources
             ILogger log)
         {
             log.LogInformation($"Creating all databases, collections, and queues: [{req}]");
+
+            var resourceManager = new ResourceManager();
+
+            await resourceManager.CreateQueue(AppResources.Queue.EmployeeUpdates);
+            await resourceManager.CreateQueue(AppResources.Queue.EmployeePayrollUpdates);
 
             var dbResponse = await client.CreateDatabaseIfNotExistsAsync(Databases.PayrollProcessor.Name);
 
