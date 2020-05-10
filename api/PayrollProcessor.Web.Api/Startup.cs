@@ -1,18 +1,17 @@
-using AutoMapper;
+using LanguageExt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PayrollProcessor.Web.Api.Features.Notifications;
-using PayrollProcessor.Web.Api.Infrastructure.Routing;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using PayrollProcessor.Web.Api.Configuration.Persistence;
-using LanguageExt;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using PayrollProcessor.Core.Domain.Infrastructure.Serialization;
+using PayrollProcessor.Web.Api.Configuration.Persistence;
+using PayrollProcessor.Web.Api.Features.Notifications;
+using PayrollProcessor.Web.Api.Infrastructure.Routing;
 
 namespace PayrollProcessor.Web.Api
 {
@@ -56,6 +55,8 @@ namespace PayrollProcessor.Web.Api
             });
 
             services.AddMvc();
+
+            services.AddHealthChecks();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -78,6 +79,8 @@ namespace PayrollProcessor.Web.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapHealthChecks("");
 
                 endpoints.MapHub<NotificationHub>("/hub/notifications");
             });
