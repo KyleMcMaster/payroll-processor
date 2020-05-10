@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using PayrollProcessor.Core.Domain.Infrastructure.Serialization;
+using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
 using PayrollProcessor.Web.Api.Configuration.Persistence;
 using PayrollProcessor.Web.Api.Features.Notifications;
 using PayrollProcessor.Web.Api.Infrastructure.Routing;
@@ -57,6 +58,8 @@ namespace PayrollProcessor.Web.Api
             services.AddMvc();
 
             services.AddHealthChecks();
+
+            services.AddSingleton<IEntityIdGenerator, EntityIdGenerator>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)

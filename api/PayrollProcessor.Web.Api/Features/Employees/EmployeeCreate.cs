@@ -41,7 +41,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
                     Email = request.Email,
                     EmploymentStartedOn = request.EmploymentStartedOn,
                     FirstName = request.FirstName,
-                    LastName = request.FirstName,
+                    LastName = request.LastName,
                     Phone = request.Phone,
                     Status = request.Status,
                     Title = request.Title
