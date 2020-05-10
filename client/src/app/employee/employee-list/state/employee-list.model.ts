@@ -11,10 +11,6 @@ export interface Employee {
   version: string;
 }
 
-export interface EmployeeResponse {
-  data: Employee[];
-}
-
 export type Status = 'Enabled' | 'Disabled';
 
 export type Department = 'HR' | 'IT' | 'Sales' | 'Finance' | 'UNKNOWN';
