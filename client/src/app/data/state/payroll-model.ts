@@ -12,6 +12,10 @@ export interface Payroll {
   risk: Risk;
 }
 
+export interface PayrollResponse {
+  data: Payroll[];
+}
+
 export function createInitialState(): Payroll {
   return {
     id: '',

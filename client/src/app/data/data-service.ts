@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { EnvService } from '../shared/env.service';
-import { Payroll } from './state/payroll-model';
+import { Payroll, PayrollResponse } from './state/payroll-model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +21,13 @@ export class DataService {
 
   private loadData() {
     this.http
-      .get<Payroll[]>(`${this.apiRootUrl}/payrolls`)
+      .get<PayrollResponse>(`${this.apiRootUrl}/payrolls`)
       .pipe(
         catchError((err) => {
           console.log('Could not fetch payrolls');
           return throwError(err);
         }),
+        map((response: PayrollResponse) => response.data),
       )
       .subscribe((result) => (this.payroll = result));
   }
