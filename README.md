@@ -4,18 +4,14 @@ Sample HRIS application where a list of employees and their payroll information 
 
 ## Build status
 
-### Api
+### Api and Functions
 
-![dotnet core api - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Web.Api%20-%20build/badge.svg)
+![dotnet core - build](https://github.com/KyleMcMaster/payroll-processor/.github/workflows/dotnetcore.yml/badge.svg)
 
 ### Client
 
 ![.github/workflows/npm.yml](https://github.com/KyleMcMaster/payroll-processor/workflows/.github/workflows/npm.yml/badge.svg)
 [![Styled with Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
-
-### Functions
-
-![dotnet core functions - build](https://github.com/KyleMcMaster/payroll-processor/workflows/dotnet%20core%20PayrollProcessor.Functions.Apis%20-%20build/badge.svg)
 
 ## Motivation
 
