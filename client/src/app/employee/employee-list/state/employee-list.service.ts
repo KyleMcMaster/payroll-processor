@@ -9,7 +9,7 @@ import { EmployeeListStore } from './employee-list.store';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeListService {
-  private readonly functionsRootUrl: string;
+  private readonly apiRootUrl: string;
 
   constructor(
     private http: HttpClient,
@@ -17,13 +17,13 @@ export class EmployeeListService {
     private store: EmployeeListStore,
     private toastr: ToastrService,
   ) {
-    this.functionsRootUrl = envService.functionsRootUrl;
+    this.apiRootUrl = envService.apiRootUrl;
   }
 
   getEmployees() {
     this.store.setLoading(true);
     return this.http
-      .get<Employee[]>(`${this.functionsRootUrl}/Employees`)
+      .get<Employee[]>(`${this.apiRootUrl}/Employees`)
       .pipe(
         catchError((err) => {
           this.store.setError({
@@ -50,7 +50,7 @@ export class EmployeeListService {
 
     return this.http
       .put<Employee>(
-        `${this.functionsRootUrl}/Employees/${employee.id}/status`,
+        `${this.apiRootUrl}/Employees/${employee.id}/status`,
         employeeUpdate,
       )
       .pipe(

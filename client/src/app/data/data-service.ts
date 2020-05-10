@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
 import { EnvService } from '../shared/env.service';
-
 import { Payroll } from './state/payroll-model';
 
 @Injectable({
@@ -13,17 +11,17 @@ import { Payroll } from './state/payroll-model';
 export class DataService {
   private payroll: Payroll[] = [];
 
-  private readonly apiUrl: string;
+  private readonly apiRootUrl: string;
 
   constructor(private http: HttpClient, envService: EnvService) {
-    this.apiUrl = envService.functionsRootUrl;
+    this.apiRootUrl = envService.apiRootUrl;
 
     this.loadData();
   }
 
   private loadData() {
     this.http
-      .get<Payroll[]>(`${this.apiUrl}/payrolls`)
+      .get<Payroll[]>(`${this.apiRootUrl}/payrolls`)
       .pipe(
         catchError((err) => {
           console.log('Could not fetch payrolls');
@@ -36,19 +34,4 @@ export class DataService {
   getPayroll(): Payroll[] {
     return this.payroll;
   }
-
-  // removeEmployee(id: string) {
-  //   const employee = this.employees.find((e) => e.id === id);
-
-  //   if (!employee) {
-  //     return;
-  //   }
-
-  //   employee.status = 'DISABLED';
-
-  //   this.payroll
-  //     .filter((p) => p.employeeId === id)
-  //     .filter((payroll) => !!this.payroll.find((p) => p.id === payroll.id))
-  //     .forEach((payroll) => (payroll.employeeStatus = 'DISABLED'));
-  // }
 }
