@@ -10,6 +10,7 @@ using PayrollProcessor.Core.Domain.Intrastructure.Operations.Factories;
 using PayrollProcessor.Data.Persistence.Features.Employees;
 using System;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
+using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -21,7 +22,9 @@ namespace PayrollProcessor.Functions.Api
         {
             JsonConvert.DefaultSettings = () => DefaultJsonSerializerSettings.JsonSerializerSettings;
 
-            builder.Services.AddHttpClient<ApiClient>();
+            builder.Services.AddHttpClient<IApiClient, ApiClient>();
+            builder.Services.AddSingleton<IEntityIdGenerator, EntityIdGenerator>();
+
             builder.Services.AddSingleton(serviceProvider =>
             {
                 string serviceEndpoint = EnvironmentSettings.Get(AppResources.CosmosDb.ServiceEndpoint)

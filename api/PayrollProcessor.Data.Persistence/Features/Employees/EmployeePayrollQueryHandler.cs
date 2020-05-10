@@ -34,6 +34,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                         employeePayrollId.ToString(),
                         new PartitionKey(employeeId.ToString()),
                         cancellationToken: token);
+
                     return EmployeePayrollRecord.Map.ToEmployeePayroll(record);
                 }
                 catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

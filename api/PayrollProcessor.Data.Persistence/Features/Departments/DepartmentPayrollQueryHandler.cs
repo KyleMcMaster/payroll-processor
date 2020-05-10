@@ -10,26 +10,26 @@ using static LanguageExt.Prelude;
 
 namespace PayrollProcessor.Data.Persistence.Features.Departments
 {
-    public class DepartmentEmployeeQueryHandler : IQueryHandler<DepartmentEmployeeQuery, DepartmentEmployee>
+    public class DepartmentPayrollQueryHandler : IQueryHandler<DepartmentPayrollQuery, DepartmentPayroll>
     {
         private readonly CosmosClient client;
 
-        public DepartmentEmployeeQueryHandler(CosmosClient client)
+        public DepartmentPayrollQueryHandler(CosmosClient client)
         {
             Guard.Against.Null(client, nameof(client));
 
             this.client = client;
         }
 
-        public LanguageExt.TryOptionAsync<DepartmentEmployee> Execute(DepartmentEmployeeQuery query, CancellationToken token)
+        public LanguageExt.TryOptionAsync<DepartmentPayroll> Execute(DepartmentPayrollQuery query, CancellationToken token)
         {
             var dataQuery = client.GetDepartmentsContainer()
-                .GetItemLinqQueryable<DepartmentEmployeeRecord>(
+                .GetItemLinqQueryable<DepartmentPayrollRecord>(
                     requestOptions: new QueryRequestOptions
                     {
                         PartitionKey = new PartitionKey(query.Department.ToLowerInvariant())
                     })
-                .Where(e => e.EmployeeId == query.EmployeeId);
+                .Where(e => e.EmployeePayrollId == query.EmployeePayrollId);
 
             return async () =>
             {
@@ -39,7 +39,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
                 {
                     foreach (var result in await iterator.ReadNextAsync(token))
                     {
-                        return DepartmentEmployeeRecord.Map.ToDepartmentEmployee(result);
+                        return DepartmentPayrollRecord.Map.ToDepartmentPayroll(result);
                     }
                 }
 

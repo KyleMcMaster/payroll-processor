@@ -39,7 +39,7 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
         }
 
         [FunctionName(nameof(EmployeeUpdatesQueue))]
-        public Task EmployeeUpdatesQueue(
+        public async Task EmployeeUpdatesQueue(
             [QueueTrigger(AppResources.Queue.EmployeeUpdates)] CloudQueueMessage queueMessage,
             ILogger log)
         {
@@ -47,12 +47,21 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
 
             string eventName = QueueMessageHandler.GetEventName(queueMessage);
 
-            return eventName switch
+            switch (eventName)
             {
-                nameof(EmployeeCreation) => HandleEmployeeCreation(queueMessage, log),
-                nameof(EmployeeUpdate) => HandleEmployeeUpdate(queueMessage, log),
-                _ => Task.CompletedTask,
-            };
+                case nameof(EmployeeCreation):
+                    await HandleEmployeeCreation(queueMessage, log);
+
+                    return;
+
+                case nameof(EmployeeUpdate):
+                    await HandleEmployeeUpdate(queueMessage, log);
+
+                    return;
+
+                default:
+                    return;
+            }
         }
 
         private Task HandleEmployeeCreation(CloudQueueMessage queueMessage, ILogger log)
@@ -70,12 +79,13 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
 
         private Task HandleEmployeeUpdate(CloudQueueMessage queueMessage, ILogger log)
         {
-            var (department, employeeId) = QueueMessageHandler.FromQueueMessage<EmployeeUpdate>(queueMessage);
+            var message = QueueMessageHandler.FromQueueMessage<EmployeeUpdate>(queueMessage);
 
-            return queryDispatcher.Dispatch(new EmployeeQuery(employeeId))
+            return queryDispatcher.Dispatch(new EmployeeQuery(message.EmployeeId))
                 .SelectMany(
-                    employee => queryDispatcher.Dispatch(new DepartmentEmployeeQuery(department, employeeId)),
-                    (employee, departmentEmployee) => commandDispatcher.Dispatch(new DepartmentEmployeeUpdateCommand(employee, departmentEmployee)))
+                    employee => queryDispatcher.Dispatch(new DepartmentEmployeeQuery(employee.Department, employee.Id)),
+                    (employee, departmentEmployee) => new { employee, departmentEmployee })
+                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentEmployeeUpdateCommand(aggregate.employee, aggregate.departmentEmployee)))
                 .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee))
                 .Match(
                     _ => log.LogInformation(""),

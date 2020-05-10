@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Cosmos
         public static IOrderedQueryable<TRecord> EmployeesQueryable<TRecord>(this CosmosClient client, string partitionKey) =>
             client.GetEmployeesContainer().GetItemLinqQueryable<TRecord>(requestOptions: new QueryRequestOptions
             {
-                PartitionKey = new PartitionKey(partitionKey)
+                PartitionKey = new PartitionKey(partitionKey.ToLowerInvariant())
             });
 
         public static Container GetDepartmentsContainer(this CosmosClient client) =>
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Cosmos
         public static IOrderedQueryable<TRecord> DepartmentQueryable<TRecord>(this CosmosClient client, string partitionKey) =>
             client.GetDepartmentsContainer().GetItemLinqQueryable<TRecord>(requestOptions: new QueryRequestOptions
             {
-                PartitionKey = new PartitionKey(partitionKey)
+                PartitionKey = new PartitionKey(partitionKey.ToLowerInvariant())
             });
     }
 }

@@ -39,7 +39,7 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
         }
 
         [FunctionName(nameof(EmployeePayrollUpdatesQueue))]
-        public Task EmployeePayrollUpdatesQueue(
+        public async Task EmployeePayrollUpdatesQueue(
             [QueueTrigger(AppResources.Queue.EmployeePayrollUpdates)] CloudQueueMessage queueMessage,
             ILogger log)
         {
@@ -47,12 +47,21 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
 
             string eventName = QueueMessageHandler.GetEventName(queueMessage);
 
-            return eventName switch
+            switch (eventName)
             {
-                nameof(EmployeePayrollCreation) => HandleEmployeePayrollCreation(queueMessage, log),
-                nameof(EmployeePayrollUpdate) => HandleEmployeePayrollUpdate(queueMessage, log),
-                _ => Task.CompletedTask,
-            };
+                case nameof(EmployeePayrollCreation):
+                    await HandleEmployeePayrollCreation(queueMessage, log);
+
+                    return;
+
+                case nameof(EmployeePayrollUpdate):
+                    await HandleEmployeePayrollUpdate(queueMessage, log);
+
+                    return;
+
+                default:
+                    return;
+            }
         }
 
         private Task HandleEmployeePayrollCreation(CloudQueueMessage queueMessage, ILogger log)
@@ -80,7 +89,10 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
                 .SelectMany(
                     employee => queryDispatcher.Dispatch(new EmployeePayrollQuery(employeeId, employeePayrollId)),
                     (employee, employeePayroll) => new { employee, employeePayroll })
-                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentPayrollCreateCommand(aggregate.employee, idGenerator.Generate(), aggregate.employeePayroll)))
+                .SelectMany(
+                    aggregate => queryDispatcher.Dispatch(new DepartmentPayrollQuery(aggregate.employee.Department, aggregate.employeePayroll.Id)),
+                    (a, b) => new { a.employee, a.employeePayroll, departmentEmployee = b })
+                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentPayrollUpdateCommand(aggregate.employee, aggregate.employeePayroll, aggregate.departmentEmployee)))
                 .Bind(departmentPayroll => apiClient.SendNotification(nameof(EmployeePayrollUpdatesQueue), departmentPayroll))
                 .Match(
                     _ => log.LogInformation(""),
