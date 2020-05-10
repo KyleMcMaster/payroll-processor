@@ -11,7 +11,7 @@ export interface Employee {
   version: string;
 }
 
-export type Status = 'ACTIVE' | 'DISABLED';
+export type Status = 'Enabled' | 'Disabled';
 
 export type Department = 'HR' | 'IT' | 'Sales' | 'Finance' | 'UNKNOWN';
 
@@ -24,7 +24,7 @@ export function createInitialState(): Employee {
     firstName: '',
     lastName: '',
     phone: '',
-    status: 'ACTIVE',
+    status: 'Enabled',
     title: '',
     version: '',
   };
@@ -39,4 +39,9 @@ export interface EmployeeCreate {
   phone: string;
   status: Status;
   title: string;
+}
+
+export interface EmployeeUpdate {
+  department: Department;
+  status: Status;
 }
