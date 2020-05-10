@@ -33,7 +33,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
                 .Dispatch(new EmployeeDetailQuery(employeeId))
                 .Match<EmployeeDetail, ActionResult<EmployeeDetail>>(
                     e => e,
-                    () => NotFound(),
+                    () => NotFound($"Employee [{employeeId}]"),
                     ex => new APIErrorResult(ex.Message));
     }
 }

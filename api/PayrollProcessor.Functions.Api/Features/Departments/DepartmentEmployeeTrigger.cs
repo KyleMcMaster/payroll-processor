@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage.Queue;
 using PayrollProcessor.Functions.Api.Infrastructure;
 using System.Threading.Tasks;
-using PayrollProcessor.Functions.Api.Features.Employees.QueueMessages;
 using Ardalis.GuardClauses;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
@@ -15,14 +14,14 @@ using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 
 namespace PayrollProcessor.Functions.Api.Features.Departments
 {
-    public class DepartmentsTrigger
+    public class DepartmentEmployeeTrigger
     {
         private readonly IApiClient apiClient;
         private readonly IQueryDispatcher queryDispatcher;
         private readonly ICommandDispatcher commandDispatcher;
         private readonly IEntityIdGenerator idGenerator;
 
-        public DepartmentsTrigger(
+        public DepartmentEmployeeTrigger(
             IApiClient apiClient,
             IQueryDispatcher queryDispatcher,
             ICommandDispatcher commandDispatcher,
@@ -39,44 +38,49 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
             this.idGenerator = idGenerator;
         }
 
-        [FunctionName(nameof(CreateEmployeeFromQueue))]
-        public async Task CreateEmployeeFromQueue(
-            [QueueTrigger(AppResources.Queue.EmployeeUpdates)] CloudQueueMessage message,
+        [FunctionName(nameof(EmployeeUpdatesQueue))]
+        public Task EmployeeUpdatesQueue(
+            [QueueTrigger(AppResources.Queue.EmployeeUpdates)] CloudQueueMessage queueMessage,
             ILogger log)
         {
-            log.LogInformation($"Processing {AppResources.Queue.EmployeeUpdates} queue: [{message}]");
+            log.LogInformation($"Processing {AppResources.Queue.EmployeeUpdates} queue: [{queueMessage}]");
 
-            var (employeeId, source) = QueueMessageHandler.FromQueueMessage<EmployeeCreation>(message);
+            string eventName = QueueMessageHandler.GetEventName(queueMessage);
 
-            await queryDispatcher.Dispatch(new EmployeeQuery(employeeId))
+            return eventName switch
+            {
+                nameof(EmployeeCreation) => HandleEmployeeCreation(queueMessage, log),
+                nameof(EmployeeUpdate) => HandleEmployeeUpdate(queueMessage, log),
+                _ => Task.CompletedTask,
+            };
+        }
+
+        private Task HandleEmployeeCreation(CloudQueueMessage queueMessage, ILogger log)
+        {
+            var message = QueueMessageHandler.FromQueueMessage<EmployeeCreation>(queueMessage);
+
+            return queryDispatcher.Dispatch(new EmployeeQuery(message.EmployeeId))
                 .Bind(employee => commandDispatcher.Dispatch(new DepartmentEmployeeCreateCommand(employee, idGenerator.Generate())))
-                .Bind(departmentEmployee => apiClient.SendNotification(nameof(CreateEmployeeFromQueue), departmentEmployee))
+                .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee))
                 .Match(
                     _ => log.LogInformation(""),
                     () => log.LogError(""),
                     e => log.LogError(e, ""));
         }
 
-        [FunctionName(nameof(CreatePayrollFromQueue))]
-        public async Task CreatePayrollFromQueue(
-            [QueueTrigger(AppResources.Queue.EmployeePayrollUpdates)] CloudQueueMessage message,
-            ILogger log)
+        private Task HandleEmployeeUpdate(CloudQueueMessage queueMessage, ILogger log)
         {
-            log.LogInformation($"Processing {AppResources.Queue.EmployeeUpdates} queue: [{message}]");
+            var (department, employeeId) = QueueMessageHandler.FromQueueMessage<EmployeeUpdate>(queueMessage);
 
-            var (employeeId, employeePayrollId, source) = QueueMessageHandler.FromQueueMessage<EmployeePayrollCreation>(message);
-
-            await queryDispatcher.Dispatch(new EmployeeQuery(employeeId))
+            return queryDispatcher.Dispatch(new EmployeeQuery(employeeId))
                 .SelectMany(
-                    employee => queryDispatcher.Dispatch(new EmployeePayrollQuery(employeeId, employeePayrollId)),
-                    (employee, employeePayroll) => new { employee, employeePayroll })
-                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentPayrollCreateCommand(aggregate.employee, idGenerator.Generate(), aggregate.employeePayroll)))
-                .Bind(departmentPayroll => apiClient.SendNotification(nameof(CreatePayrollFromQueue), departmentPayroll))
+                    employee => queryDispatcher.Dispatch(new DepartmentEmployeeQuery(department, employeeId)),
+                    (employee, departmentEmployee) => commandDispatcher.Dispatch(new DepartmentEmployeeUpdateCommand(employee, departmentEmployee)))
+                .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee))
                 .Match(
                     _ => log.LogInformation(""),
                     () => log.LogError(""),
-                    ex => log.LogError(ex, "")
-                );
+                    e => log.LogError(e, ""));
         }
     }
 }

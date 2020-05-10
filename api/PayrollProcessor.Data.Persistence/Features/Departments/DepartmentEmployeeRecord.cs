@@ -13,6 +13,8 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";
 
+        public DepartmentEmployeeRecord() => Type = nameof(DepartmentEmployeeRecord);
+
         public static class Map
         {
             public static DepartmentEmployee ToDepartmentEmployee(DepartmentEmployeeRecord entity) =>
@@ -22,7 +24,21 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
                     EmployeeId = entity.EmployeeId,
                     Department = entity.Department,
                     FirstName = entity.FirstName,
-                    LastName = entity.LastName
+                    LastName = entity.LastName,
+                    Version = entity.ETag
+                };
+
+            public static DepartmentEmployeeRecord From(DepartmentEmployee employee) =>
+                new DepartmentEmployeeRecord
+                {
+                    Id = employee.Id,
+                    PartitionKey = employee.Department.ToLowerInvariant(),
+                    Department = employee.Department,
+                    Email = employee.Email,
+                    EmployeeId = employee.Id,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    ETag = employee.Version
                 };
 
             public static DepartmentEmployeeRecord CreateNewFrom(Employee employee, Guid recordId) =>
@@ -35,8 +51,18 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
                     EmployeeId = employee.Id,
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
-                    Type = nameof(DepartmentEmployeeRecord)
                 };
+
+            public static DepartmentEmployeeRecord Merge(Employee employee, DepartmentEmployee departmentEmployee)
+            {
+                var recordToUpdate = From(departmentEmployee);
+
+                recordToUpdate.Email = employee.Email;
+                recordToUpdate.FirstName = employee.FirstName;
+                recordToUpdate.LastName = employee.LastName;
+
+                return recordToUpdate;
+            }
         }
     }
 }

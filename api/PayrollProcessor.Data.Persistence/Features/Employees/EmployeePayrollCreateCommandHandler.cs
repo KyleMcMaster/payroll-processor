@@ -6,8 +6,8 @@ using LanguageExt;
 using Microsoft.Azure.Cosmos;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
+using PayrollProcessor.Data.Persistence.Features.Employees.QueueMessages;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
-using PayrollProcessor.Functions.Api.Features.Employees.QueueMessages;
 
 namespace PayrollProcessor.Data.Persistence.Features.Employees
 {
@@ -39,7 +39,6 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                 {
                     EmployeeId = employee.Id,
                     EmployeePayrollId = newPayrollId,
-                    Source = nameof(EmployeesCreateCommandHandler)
                 });
 
                 return EmployeePayrollRecord.Map.ToEmployeePayroll(response);

@@ -1,9 +1,7 @@
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
-using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
@@ -53,7 +51,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
                 .Dispatch(command)
                 .Match<Employee, ActionResult<Employee>>(
                     employee => employee,
-                    () => UnprocessableEntity($"Could not create employee"),
+                    () => UnprocessableEntity($"Could not create employee [{request.Email}]"),
                     ex => new APIErrorResult(ex.Message));
         }
     }

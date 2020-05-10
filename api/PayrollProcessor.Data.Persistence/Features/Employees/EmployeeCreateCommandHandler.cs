@@ -36,8 +36,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
 
                 await QueueMessageBuilder.ToQueueMessage(queueClient, new EmployeeCreation
                 {
-                    EmployeeId = command.NewId,
-                    Source = nameof(EmployeesCreateCommandHandler)
+                    EmployeeId = command.NewId
                 });
 
                 return EmployeeRecord.Map.ToEmployee(response);

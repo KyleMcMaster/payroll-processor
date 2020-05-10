@@ -96,6 +96,24 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                     Title = employee.Title
                 };
             }
+
+            public static EmployeeRecord Merge(EmployeeUpdateCommand command)
+            {
+                var recordToUpdate = From(command.EntityToUpdate);
+
+                recordToUpdate.Email = command.Email;
+                recordToUpdate.EmailLower = command.Email.ToLowerInvariant();
+                recordToUpdate.EmploymentStartedOn = command.EmploymentStartedOn;
+                recordToUpdate.FirstName = command.FirstName;
+                recordToUpdate.FirstNameLower = command.FirstName.ToLowerInvariant();
+                recordToUpdate.LastName = command.LastName;
+                recordToUpdate.LastNameLower = command.LastName.ToLowerInvariant();
+                recordToUpdate.Phone = command.Phone;
+                recordToUpdate.Status = command.Status;
+                recordToUpdate.Title = command.Title;
+
+                return recordToUpdate;
+            }
         }
     }
 }

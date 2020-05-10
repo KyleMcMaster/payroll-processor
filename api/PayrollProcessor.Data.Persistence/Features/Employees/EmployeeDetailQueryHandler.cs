@@ -31,11 +31,11 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                     PartitionKey = new PartitionKey(query.EmployeeId.ToString())
                 });
 
-            EmployeeRecord? employeeEntity = null;
-            var payrollEntities = new List<EmployeePayrollRecord>();
-
             return async () =>
             {
+                EmployeeRecord? employeeEntity = null;
+                var payrollEntities = new List<EmployeePayrollRecord>();
+
                 while (iterator.HasMoreResults)
                 {
                     var response = await iterator.ReadNextAsync(token);

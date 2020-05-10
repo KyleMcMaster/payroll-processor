@@ -9,7 +9,12 @@ namespace PayrollProcessor.Data.Persistence.Infrastructure.Clients
 {
     public interface IMessage
     {
-        string Source { get; set; }
+        string EventName { get; set; }
+    }
+
+    public class DefaultMessage
+    {
+        public string EventName { get; set; } = "";
     }
 
     public static class QueueMessageBuilder

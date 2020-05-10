@@ -16,6 +16,8 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
         public string EmployeeFirstName { get; set; } = "";
         public string EmployeeLastName { get; set; } = "";
 
+        public DepartmentPayrollRecord() => Type = nameof(DepartmentPayrollRecord);
+
         public static class Map
         {
             public static DepartmentPayroll ToDepartmentPayroll(DepartmentPayrollRecord entity) =>
@@ -32,6 +34,22 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
                     Version = entity.ETag
                 };
 
+            public static DepartmentPayrollRecord From(DepartmentPayroll payroll) =>
+                new DepartmentPayrollRecord
+                {
+                    Id = payroll.Id,
+                    PartitionKey = payroll.EmployeeDepartment.ToLowerInvariant(),
+                    CheckDate = payroll.CheckDate,
+                    EmployeeDepartment = payroll.EmployeeDepartment,
+                    EmployeeFirstName = payroll.EmployeeFirstName,
+                    EmployeeId = payroll.EmployeeId,
+                    EmployeeLastName = payroll.EmployeeLastName,
+                    EmployeePayrollId = payroll.EmployeePayrollId,
+                    GrossPayroll = payroll.GrossPayroll,
+                    PayrollPeriod = payroll.PayrollPeriod,
+                    ETag = payroll.Version
+                };
+
             public static DepartmentPayrollRecord CreateNewFrom(Employee employee, Guid recordId, EmployeePayroll employeePayroll) =>
                 new DepartmentPayrollRecord
                 {
@@ -39,7 +57,6 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
                     PartitionKey = employee.Department.ToLowerInvariant(),
                     EmployeeDepartment = employee.Department,
                     CheckDate = employeePayroll.CheckDate,
-                    Type = nameof(DepartmentPayrollRecord),
                     EmployeeId = employeePayroll.EmployeeId,
                     EmployeePayrollId = employeePayroll.Id,
                     GrossPayroll = employeePayroll.GrossPayroll,
@@ -47,6 +64,19 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
                     EmployeeLastName = employee.LastName,
                     PayrollPeriod = employeePayroll.PayrollPeriod
                 };
+
+            public static DepartmentPayrollRecord Merge(Employee employee, EmployeePayroll employeePayroll, DepartmentPayroll departmentPayroll)
+            {
+                var recordToUpdate = From(departmentPayroll);
+
+                recordToUpdate.CheckDate = employeePayroll.CheckDate;
+                recordToUpdate.EmployeeFirstName = employee.FirstName;
+                recordToUpdate.EmployeeLastName = employee.LastName;
+                recordToUpdate.GrossPayroll = employeePayroll.GrossPayroll;
+                recordToUpdate.PayrollPeriod = employeePayroll.PayrollPeriod;
+
+                return recordToUpdate;
+            }
         }
     }
 }

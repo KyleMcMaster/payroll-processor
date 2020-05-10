@@ -28,14 +28,18 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
 
             return async () =>
             {
-                var record = await container.ReadItemAsync<EmployeePayrollRecord>(
-                    employeePayrollId.ToString(),
-                    new PartitionKey(employeeId.ToString()),
-                    cancellationToken: token);
-
-                return record is null
-                    ? None
-                    : Some(EmployeePayrollRecord.Map.ToEmployeePayroll(record));
+                try
+                {
+                    var record = await container.ReadItemAsync<EmployeePayrollRecord>(
+                        employeePayrollId.ToString(),
+                        new PartitionKey(employeeId.ToString()),
+                        cancellationToken: token);
+                    return EmployeePayrollRecord.Map.ToEmployeePayroll(record);
+                }
+                catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return None;
+                }
             };
         }
     }

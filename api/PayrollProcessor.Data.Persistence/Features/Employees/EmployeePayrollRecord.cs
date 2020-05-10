@@ -47,6 +47,17 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                     GrossPayroll = payroll.GrossPayroll,
                     PayrollPeriod = payroll.PayrollPeriod,
                 };
+
+            public static EmployeePayrollRecord Merge(EmployeePayrollUpdateCommand command)
+            {
+                var recordToUpdate = From(command.EntityToUpdate);
+
+                recordToUpdate.CheckDate = command.CheckDate;
+                recordToUpdate.GrossPayroll = command.GrossPayroll;
+                recordToUpdate.PayrollPeriod = command.PayrollPeriod;
+
+                return recordToUpdate;
+            }
         }
     }
 }

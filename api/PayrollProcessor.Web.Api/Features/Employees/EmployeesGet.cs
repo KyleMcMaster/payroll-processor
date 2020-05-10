@@ -7,7 +7,6 @@ using PayrollProcessor.Web.Api.Infrastructure.Responses;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Threading;
 
 namespace PayrollProcessor.Web.Api.Features.Employees
 {
@@ -34,7 +33,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
                 .Dispatch(new EmployeesQuery(request.Count, request.Email, request.FirstName, request.LastName))
                 .Match<IEnumerable<Employee>, ActionResult<EmployeesResponse>>(
                     e => new EmployeesResponse(e),
-                    () => NotFound(),
+                    () => NotFound("Employees"),
                     ex => BadRequest(ex.Message));
     }
 
