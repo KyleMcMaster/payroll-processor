@@ -1,5 +1,5 @@
 # build and test PayrollProcessor.sln
-name: dotnet core - build
+name: dotnet core - build & test
 
 on:
   push:
