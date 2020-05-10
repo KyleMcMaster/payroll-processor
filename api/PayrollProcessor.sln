@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayrollProcessor.Functions.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Tests", "PayrollProcessor.Tests\PayrollProcessor.Tests.csproj", "{84C26AF9-A586-474B-A4D4-6CEBB85F266C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Core.Domain.Tests", "PayrollProcessor.Data.Core.Tests\PayrollProcessor.Core.Domain.Tests.csproj", "{127D44E7-8346-4C89-8B40-CF4635FD55A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollProcessor.Core.Domain.Tests", "PayrollProcessor.Core.Domain.Tests\PayrollProcessor.Core.Domain.Tests.csproj", "{E45503C8-D55D-4FDD-AF0F-B01458A15828}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,10 +69,10 @@ Global
 		{84C26AF9-A586-474B-A4D4-6CEBB85F266C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84C26AF9-A586-474B-A4D4-6CEBB85F266C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84C26AF9-A586-474B-A4D4-6CEBB85F266C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{127D44E7-8346-4C89-8B40-CF4635FD55A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{127D44E7-8346-4C89-8B40-CF4635FD55A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{127D44E7-8346-4C89-8B40-CF4635FD55A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{127D44E7-8346-4C89-8B40-CF4635FD55A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E45503C8-D55D-4FDD-AF0F-B01458A15828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E45503C8-D55D-4FDD-AF0F-B01458A15828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E45503C8-D55D-4FDD-AF0F-B01458A15828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E45503C8-D55D-4FDD-AF0F-B01458A15828}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,7 +84,6 @@ Global
 		{52AF1EB7-A608-480F-AB05-9F7E761F6CB8} = {D252B6E1-0E49-45DF-96D0-A23B29A44A0B}
 		{640B9DD8-6E8B-4801-AA2B-6F0030A8744C} = {C3B323A1-AF4A-495E-A40C-5F5DC4274DEE}
 		{84C26AF9-A586-474B-A4D4-6CEBB85F266C} = {D252B6E1-0E49-45DF-96D0-A23B29A44A0B}
-		{127D44E7-8346-4C89-8B40-CF4635FD55A1} = {D252B6E1-0E49-45DF-96D0-A23B29A44A0B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B5ECF452-E22F-425B-B824-395440BB9450}
