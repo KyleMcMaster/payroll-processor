@@ -30,8 +30,8 @@ Things I would like to explore:
 
 - MVP
 
-  - Initial Employee CRUD functionality
-  - Initial Payroll CRUD functionality
+  - Employee CRUD functionality
+  - Payroll CRUD functionality
   - Basic charting and analytics of payroll data
 
 - TODOs
