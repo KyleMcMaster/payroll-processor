@@ -27,7 +27,7 @@ export class EmployeeListService {
   getEmployees() {
     this.store.setLoading(true);
     return this.http
-      .get<ListResponse<Employee>>(`${this.apiRootUrl}/Employees`)
+      .get<ListResponse<Employee>>(`${this.apiRootUrl}/employees`)
       .pipe(
         catchError((err) => {
           this.store.setError({
@@ -54,7 +54,7 @@ export class EmployeeListService {
     };
 
     return this.http
-      .put<Employee>(`${this.apiRootUrl}/Employees`, employeeUpdate)
+      .put<Employee>(`${this.apiRootUrl}/employees`, employeeUpdate)
       .pipe(
         catchError((err) => {
           console.log(`Could not update employee ${employee.id}`);

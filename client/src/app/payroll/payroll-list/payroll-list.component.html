@@ -2,21 +2,18 @@
   <thead>
     <tr>
       <th scope="col">Name</th>
-      <th scope="col">Payroll Period</th>
+      <th scope="col">Department</th>
       <th scope="col">Check Date</th>
       <th scope="col">Amount</th>
       <!-- <th scope="col">Risk</th> -->
     </tr>
   </thead>
   <tbody>
-    <tr
-      [ngClass]="{
-        'table-secondary': payroll.employeeStatus === 'Disabled'
-      }"
-      *ngFor="let payroll of getPayroll()"
-    >
-      <th scope="row"> {{ payroll.employeeName }} </th>
-      <td>{{ payroll.payrollPeriod }}</td>
+    <tr *ngFor="let payroll of payrolls | async">
+      <th scope="row">{{
+        payroll.employeeFirstName + ' ' + payroll.employeeLastName
+      }}</th>
+      <td>{{ payroll.employeeDepartment }}</td>
       <td>{{ payroll.checkDate | date }}</td>
       <td>{{ payroll.grossPayroll | currency }}</td>
     </tr>

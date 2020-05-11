@@ -1,1 +1,39 @@
-<div class="table-margin"><app-payroll-list></app-payroll-list></div>
+<div class="container">
+  <div class="row">
+    <div class="col-2 d-flex">
+      <span>
+        <h4>Departments:</h4>
+        <ul
+          ngbNav
+          #nav="ngbNav"
+          [(activeId)]="department"
+          class="nav-pills"
+          orientation="vertical"
+        >
+          <li ngbNavItem="Human Resources">
+            <a ngbNavLink>Human Resources</a>
+          </li>
+          <li ngbNavItem="IT">
+            <a ngbNavLink>IT</a>
+          </li>
+          <li ngbNavItem="Sales">
+            <a ngbNavLink>Sales</a>
+          </li>
+          <li ngbNavItem="Building Services">
+            <a ngbNavLink>Building Services</a>
+          </li>
+          <li ngbNavItem="Marketing">
+            <a ngbNavLink>Marketing</a>
+          </li>
+          <li ngbNavItem="Warehouse">
+            <a ngbNavLink>Warehouse</a>
+          </li>
+        </ul>
+      </span>
+      <div [ngbNavOutlet]="nav" class="ml-4"></div>
+    </div>
+    <div class="col-10">
+      <app-payroll-list department="{{ department }}"></app-payroll-list>
+    </div>
+  </div>
+</div>

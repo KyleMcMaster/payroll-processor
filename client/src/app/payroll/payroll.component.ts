@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payroll.component.scss'],
 })
 export class PayrollComponent implements OnInit {
+  department = 'IT';
+
   constructor() {}
 
   ngOnInit() {}
