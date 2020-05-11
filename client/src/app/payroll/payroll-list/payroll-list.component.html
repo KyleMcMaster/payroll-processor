@@ -2,18 +2,18 @@
   <thead>
     <tr>
       <th scope="col">Name</th>
-      <th scope="col">Department</th>
+      <th scope="col">Payroll Period</th>
       <th scope="col">Check Date</th>
-      <th scope="col">Amount</th>
+      <th scope="col">Gross Amount</th>
       <!-- <th scope="col">Risk</th> -->
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let payroll of payrolls | async">
-      <th scope="row">{{
-        payroll.employeeFirstName + ' ' + payroll.employeeLastName
-      }}</th>
-      <td>{{ payroll.employeeDepartment }}</td>
+      <th scope="row">
+        {{ payroll.employeeFirstName + ' ' + payroll.employeeLastName }}
+      </th>
+      <td>{{ payroll.payrollPeriod }}</td>
       <td>{{ payroll.checkDate | date }}</td>
       <td>{{ payroll.grossPayroll | currency }}</td>
     </tr>

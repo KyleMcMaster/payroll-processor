@@ -7,6 +7,7 @@ export interface PayrollList {
   employeeFirstName: string;
   employeeLastName: string;
   grossPayroll: number;
+  payrollPeriod: string;
   version: string;
 }
 
@@ -18,6 +19,7 @@ export function createInitialState(): PayrollList {
     employeeFirstName: '',
     employeeLastName: '',
     grossPayroll: 0.0,
+    payrollPeriod: '',
     version: '',
   };
 }
