@@ -11,7 +11,7 @@
   <tbody>
     <tr *ngFor="let payroll of payrolls | async">
       <th scope="row">
-        {{ payroll.employeeFirstName + ' ' + payroll.employeeLastName }}
+        {{ payroll.employeeFirstName }} {{ payroll.employeeLastName }}
       </th>
       <td>{{ payroll.payrollPeriod }}</td>
       <td>{{ payroll.checkDate | date }}</td>

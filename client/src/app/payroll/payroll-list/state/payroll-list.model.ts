@@ -2,7 +2,7 @@ import { Department } from 'src/app/employee/employee-list/state/employee-list.m
 
 export interface PayrollList {
   id: string;
-  checkDate: Date;
+  checkDate: string;
   employeeDepartment: Department;
   employeeFirstName: string;
   employeeLastName: string;
@@ -14,7 +14,7 @@ export interface PayrollList {
 export function createInitialState(): PayrollList {
   return {
     id: '',
-    checkDate: new Date(),
+    checkDate: '',
     employeeDepartment: 'UNKNOWN',
     employeeFirstName: '',
     employeeLastName: '',

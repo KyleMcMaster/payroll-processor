@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EnvService } from 'src/app/shared/env.service';
 import {
@@ -16,8 +16,8 @@ export class PayrollListService {
 
   constructor(
     envService: EnvService,
-    private http: HttpClient,
-    protected store: PayrollListStore,
+    private readonly http: HttpClient,
+    private readonly store: PayrollListStore,
   ) {
     this.apiRootUrl = envService.apiRootUrl;
   }
@@ -36,13 +36,13 @@ export class PayrollListService {
         },
       )
       .pipe(
+        mapListResponseToData(),
         catchError((err) => {
           this.store.setError({
             message: 'Could not load payrolls',
           });
-          return of([]);
+          return EMPTY;
         }),
-        mapListResponseToData(),
       )
       .subscribe({
         next: (response) => this.store.set(response),
