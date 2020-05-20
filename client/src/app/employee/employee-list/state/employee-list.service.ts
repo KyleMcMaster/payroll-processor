@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { of, throwError } from 'rxjs';
@@ -26,8 +26,14 @@ export class EmployeeListService {
 
   getEmployees() {
     this.store.setLoading(true);
+
+    let params = new HttpParams();
+    params = params.append('Count', '10');
+
     return this.http
-      .get<ListResponse<Employee>>(`${this.apiRootUrl}/employees`)
+      .get<ListResponse<Employee>>(`${this.apiRootUrl}/employees`, {
+        params,
+      })
       .pipe(
         catchError((err) => {
           this.store.setError({

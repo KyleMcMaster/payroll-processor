@@ -13,7 +13,14 @@ export interface Employee {
 
 export type Status = 'Enabled' | 'Disabled';
 
-export type Department = 'HR' | 'IT' | 'Sales' | 'Finance' | 'UNKNOWN';
+export type Department =
+  | 'Building Services'
+  | 'Human Resources'
+  | 'IT'
+  | 'Marketing'
+  | 'Sales'
+  | 'Warehouse'
+  | 'UNKNOWN';
 
 export function createInitialState(): Employee {
   return {

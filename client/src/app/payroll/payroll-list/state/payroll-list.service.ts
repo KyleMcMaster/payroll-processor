@@ -27,6 +27,7 @@ export class PayrollListService {
 
     let params = new HttpParams();
     params = params.append('Department', department);
+    params = params.append('Count', '10');
 
     return this.http
       .get<ListResponse<PayrollList>>(

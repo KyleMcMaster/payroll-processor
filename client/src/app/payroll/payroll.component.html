@@ -1,4 +1,16 @@
 <div class="container">
+  <div class="pr-3 row justify-content-end">
+    <fa-icon
+      *ngIf="isReadonly"
+      [icon]="faLock"
+      (click)="toggleReadonly()"
+    ></fa-icon>
+    <fa-icon
+      *ngIf="!isReadonly"
+      [icon]="faUnlock"
+      (click)="toggleReadonly()"
+    ></fa-icon>
+  </div>
   <div class="row">
     <div class="col-2 d-flex">
       <span>
@@ -10,20 +22,20 @@
           class="nav-pills"
           orientation="vertical"
         >
+          <li ngbNavItem="Building Services">
+            <a ngbNavLink>Building Services</a>
+          </li>
           <li ngbNavItem="Human Resources">
             <a ngbNavLink>Human Resources</a>
           </li>
           <li ngbNavItem="IT">
             <a ngbNavLink>IT</a>
           </li>
-          <li ngbNavItem="Sales">
-            <a ngbNavLink>Sales</a>
-          </li>
-          <li ngbNavItem="Building Services">
-            <a ngbNavLink>Building Services</a>
-          </li>
           <li ngbNavItem="Marketing">
             <a ngbNavLink>Marketing</a>
+          </li>
+          <li ngbNavItem="Sales">
+            <a ngbNavLink>Sales</a>
           </li>
           <li ngbNavItem="Warehouse">
             <a ngbNavLink>Warehouse</a>
@@ -34,6 +46,7 @@
     </div>
     <div class="col-10">
       <app-payroll-list [department]="department"></app-payroll-list>
+      <app-payroll-create *ngIf="!isReadonly"></app-payroll-create>
     </div>
   </div>
 </div>

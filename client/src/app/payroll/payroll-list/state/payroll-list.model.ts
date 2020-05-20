@@ -23,3 +23,10 @@ export function createInitialState(): PayrollList {
     version: '',
   };
 }
+
+export interface PayrollCreate {
+  checkDate: string;
+  employeeId: string;
+  grossPayroll: number;
+  payrollPeriod: string;
+}

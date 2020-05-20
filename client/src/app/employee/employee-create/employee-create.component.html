@@ -9,7 +9,7 @@
             type="text"
             class="form-control"
             placeholder="First Name"
-            aria-label="Users First Name"
+            aria-label="Employees First Name"
           />
         </div>
         <div class="mb-1 col-4">
@@ -18,7 +18,7 @@
             formControlName="lastName"
             class="form-control"
             placeholder="Last Name"
-            aria-label="Users Last Name"
+            aria-label="Employees Last Name"
           />
         </div>
         <div class="mb-1 col-4">
@@ -26,8 +26,8 @@
             type="email"
             formControlName="email"
             class="form-control"
-            placeholder="User Email"
-            aria-label="Users Email Address"
+            placeholder="Employees Email"
+            aria-label="Employees Email Address"
           />
         </div>
       </div>
@@ -38,7 +38,7 @@
             formControlName="phone"
             class="form-control"
             placeholder="Phone"
-            aria-label="Users Phone Number"
+            aria-label="Employees Phone Number"
           />
         </div>
         <div class="mb-1 col-3">
@@ -47,8 +47,8 @@
             <option
               *ngFor="let department of departments"
               [ngValue]="department"
-              >{{ department }}</option
-            >
+              >{{ department }}
+            </option>
           </select>
         </div>
         <div class="mb-1 col-3">
@@ -57,7 +57,7 @@
             formControlName="title"
             class="form-control"
             placeholder="Title"
-            aria-label="Users Title"
+            aria-label="Employees Title"
           />
         </div>
         <div class="mb-1 col-3">
@@ -66,7 +66,7 @@
             formControlName="employmentStartedOn"
             class="form-control"
             placeholder="04/26/2020"
-            aria-label="Users Start Date Of Employment"
+            aria-label="Employees Start Date Of Employment"
           />
         </div>
       </div>

@@ -22,7 +22,14 @@ export class EmployeeCreateComponent implements OnInit {
     title: new FormControl(''),
   });
 
-  departments: Department[] = ['Finance', 'HR', 'IT', 'Sales'];
+  departments: Department[] = [
+    'Building Services',
+    'Human Resources',
+    'IT',
+    'Marketing',
+    'Sales',
+    'Warehouse',
+  ];
 
   constructor(private employeeCreateService: EmployeeCreateService) {}
 
