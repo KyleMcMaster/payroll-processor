@@ -1,11 +1,44 @@
-<ng-container *ngIf="employee | async; let employee">
+<ng-container *ngIf="employee | async; let employee" class="border-info">
   <div class="row">
-    <div class="col4">
+    <div class="col-3">
+      <h5>Employee Details</h5>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-3">
       <label>Name: </label>
-      <aside>
-        {{ employee.firstName }}
-        {{ employee.lastName }}
-      </aside>
+      <span class="d-block">
+        {{ employee.firstName }} {{ employee.lastName }}
+      </span>
+    </div>
+    <div class="col-3">
+      <label>Email: </label>
+      <span class="d-block">
+        {{ employee.email }}
+      </span>
+    </div>
+    <div class="col-2">
+      <span class="badge badge-success">{{ employee.status }}</span>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-3">
+      <label>Title: </label>
+      <span class="d-block">
+        {{ employee.title }}
+      </span>
+    </div>
+    <div class="col-3">
+      <label>Department: </label>
+      <span class="d-block">
+        {{ employee.department }}
+      </span>
+    </div>
+    <div class="col-2">
+      <label>Start Date: </label>
+      <span class="d-block">
+        {{ employee.employmentStartedOn | date }}
+      </span>
     </div>
   </div>
 </ng-container>
