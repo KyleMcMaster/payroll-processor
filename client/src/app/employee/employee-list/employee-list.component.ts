@@ -1,9 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  faPlus,
+  faSkull,
+  faSmileBeam,
+} from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
-import { Employee } from './state/employee-list.model';
-import { EmployeeListQuery } from './state/employee-list.query';
-import { EmployeeListService } from './state/employee-list.service';
+import { EmployeeList } from './state/employee-list.model';
 
 @Component({
   selector: 'app-employee-list',
@@ -13,21 +22,21 @@ import { EmployeeListService } from './state/employee-list.service';
 export class EmployeeListComponent implements OnInit, OnDestroy {
   readonly faSkull = faSkull;
   readonly faSmileBeam = faSmileBeam;
-  readonly employees: Observable<Employee[]>;
+  readonly faPlus = faPlus;
 
-  constructor(
-    private service: EmployeeListService,
-    private query: EmployeeListQuery,
-  ) {
-    this.employees = this.query.selectAll();
-    this.service.getEmployees();
-  }
+  @Input()
+  employees: Observable<EmployeeList[]>;
+
+  @Output()
+  selected = new EventEmitter<EmployeeList>();
+
+  constructor() {}
 
   ngOnInit() {}
 
   ngOnDestroy() {}
 
-  onToggleEmployeeStatus(employee: Employee) {
-    this.service.updateEmployeeStatus(employee);
+  setSelected(employee: EmployeeList) {
+    this.selected.emit(employee);
   }
 }

@@ -1,0 +1,11 @@
+<ng-container *ngIf="employee | async; let employee">
+  <div class="row">
+    <div class="col4">
+      <label>Name: </label>
+      <aside>
+        {{ employee.firstName }}
+        {{ employee.lastName }}
+      </aside>
+    </div>
+  </div>
+</ng-container>

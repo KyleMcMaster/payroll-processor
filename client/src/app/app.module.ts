@@ -14,6 +14,7 @@ import { EmployeeListComponent } from './employee/employee-list/employee-list.co
 import { EmployeeComponent } from './employee/employee.component';
 import { PayrollListComponent } from './payroll/payroll-list/payroll-list.component';
 import { PayrollComponent } from './payroll/payroll.component';
+import { EmployeeDetailComponent } from './employee/employee-detail/employee-detail.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { PayrollComponent } from './payroll/payroll.component';
     EmployeeListComponent,
     PayrollComponent,
     PayrollListComponent,
+    EmployeeDetailComponent,
   ],
   imports: [
     AppRoutingModule,

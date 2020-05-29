@@ -3,10 +3,8 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { EnvService } from 'src/app/shared/env.service';
-import {
-  Employee,
-  EmployeeCreate,
-} from '../employee-list/state/employee-list.model';
+import { Employee } from '../employee-detail/state/employee-detail.model';
+import { EmployeeCreate } from '../employee-list/state/employee-list.model';
 import { EmployeeListStore } from '../employee-list/state/employee-list.store';
 
 @Injectable({ providedIn: 'root' })
