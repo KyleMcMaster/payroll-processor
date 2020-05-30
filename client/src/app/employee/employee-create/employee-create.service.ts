@@ -25,6 +25,7 @@ export class EmployeeCreateService {
       .post<Employee>(`${this.apiRootUrl}/employees`, employee)
       .pipe(
         tap((detail) => {
+          console.log(detail);
           this.store.upsert(detail.id, detail);
         }),
         catchError((err) => {

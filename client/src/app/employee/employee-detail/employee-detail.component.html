@@ -1,44 +1,62 @@
 <ng-container *ngIf="employee | async; let employee" class="border-info">
-  <div class="row">
-    <div class="col-3">
+  <div class="row mt-2 mb-2">
+    <div class="col-2">
       <h5>Employee Details</h5>
     </div>
   </div>
   <div class="row mb-3">
-    <div class="col-3">
-      <label>Name: </label>
-      <span class="d-block">
-        {{ employee.firstName }} {{ employee.lastName }}
-      </span>
-    </div>
-    <div class="col-3">
-      <label>Email: </label>
-      <span class="d-block">
-        {{ employee.email }}
-      </span>
+    <div class="col-2">
+      <label>First Name: </label>
+      <input
+        class="d-block form-control"
+        type="text"
+        [value]="employee.firstName"
+      />
     </div>
     <div class="col-2">
-      <span class="badge badge-success">{{ employee.status }}</span>
+      <label>Last Name: </label>
+      <input
+        class="d-block form-control"
+        type="text"
+        [value]="employee.lastName"
+      />
     </div>
   </div>
   <div class="row mb-3">
-    <div class="col-3">
-      <label>Title: </label>
-      <span class="d-block">
-        {{ employee.title }}
-      </span>
+    <div class="col-2">
+      <label>Email: </label>
+      <input
+        class="d-block form-control"
+        type="email"
+        readonly=""
+        [value]="employee.email"
+      />
     </div>
-    <div class="col-3">
+    <div class="col-2">
+      <label>Title: </label>
+      <input
+        class="d-block form-control"
+        type="text"
+        [value]="employee.title"
+      />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-2">
       <label>Department: </label>
-      <span class="d-block">
-        {{ employee.department }}
-      </span>
+      <input
+        class="d-block form-control"
+        type="text"
+        [value]="employee.department"
+      />
     </div>
     <div class="col-2">
       <label>Start Date: </label>
-      <span class="d-block">
-        {{ employee.employmentStartedOn | date }}
-      </span>
+      <input
+        class="d-block form-control"
+        type="text"
+        [value]="employee.employmentStartedOn | date"
+      />
     </div>
   </div>
 </ng-container>

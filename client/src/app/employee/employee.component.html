@@ -1,8 +1,8 @@
-<div class="ml-4">
-  <div class="row">
-    <div class="col-2 border-success">
+<div class="ml-3 mr-3">
+  <div class="row full-height">
+    <div class="col-2 background-dark border-light">
       <div class="list-group list-group-action">
-        <div class="row">
+        <div class="row border-info border-bold">
           <span
             class="list-group-item list-group-item-action"
             (click)="this.setCreate()"
@@ -16,7 +16,7 @@
         [employees]="this.employees"
       ></app-employee-list>
     </div>
-    <div class="col-8">
+    <div class="col-10 border-info">
       <app-employee-create *ngIf="uiState === 'create'"></app-employee-create>
       <app-employee-detail
         *ngIf="uiState === 'detail'"
