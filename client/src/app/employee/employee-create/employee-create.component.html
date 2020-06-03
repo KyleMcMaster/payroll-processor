@@ -1,6 +1,6 @@
 <section class="mt-2">
   <h4>Enter new employee details:</h4>
-  <form [formGroup]="filterForm">
+  <form [formGroup]="filterForm" (submit)="create()">
     <div class="row">
       <div class="mb-1 col-3">
         <input
@@ -73,7 +73,7 @@
         />
       </div>
       <div class="mb-1 col-4">
-        <button class="btn btn-outline-info table-margin" (click)="create()"
+        <button class="btn btn-outline-info table-margin" type="submit"
           >Create
         </button>
       </div>
