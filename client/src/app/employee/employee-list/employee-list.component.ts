@@ -11,7 +11,6 @@ import {
   faSkull,
   faSmileBeam,
 } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
 import { EmployeeList } from './state/employee-list.model';
 
 @Component({
@@ -25,7 +24,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   readonly faPlus = faPlus;
 
   @Input()
-  employees: Observable<EmployeeList[]>;
+  employees: EmployeeList[];
 
   @Output()
   selected = new EventEmitter<EmployeeList>();

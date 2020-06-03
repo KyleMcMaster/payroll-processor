@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Employee } from './state/employee-detail.model';
 
 @Component({
@@ -9,7 +8,7 @@ import { Employee } from './state/employee-detail.model';
 })
 export class EmployeeDetailComponent implements OnInit {
   @Input()
-  employee: Observable<Employee>;
+  employee: Employee;
 
   constructor() {}
 

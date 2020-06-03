@@ -1,7 +1,7 @@
 <div class="list-group list-group-action">
   <div
     class="row"
-    *ngFor="let employee of employees | async"
+    *ngFor="let employee of employees"
     [ngClass]="{
       'border-warning': employee.status === 'Disabled',
       'border-success': employee.status === 'Enabled'

@@ -13,14 +13,14 @@
       </div>
       <app-employee-list
         (selected)="setActive($event)"
-        [employees]="this.employees"
+        [employees]="this.employees | async"
       ></app-employee-list>
     </div>
     <div class="col-10 border-info">
       <app-employee-create *ngIf="uiState === 'create'"></app-employee-create>
       <app-employee-detail
         *ngIf="uiState === 'detail'"
-        [employee]="this.employee"
+        [employee]="this.employee | async"
       ></app-employee-detail>
     </div>
   </div>
