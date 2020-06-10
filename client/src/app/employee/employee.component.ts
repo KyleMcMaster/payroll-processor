@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Employee } from './employee-detail/state/employee-detail.model';
 import { EmployeeDetailQuery } from './employee-detail/state/employee-detail.query';
 import { EmployeeDetailService } from './employee-detail/state/employee-detail.service';
-import { EmployeeList } from './employee-list/state/employee-list.model';
+import { EmployeeListItem } from './employee-list/state/employee-list.model';
 import { EmployeeListQuery } from './employee-list/state/employee-list.query';
 import { EmployeeListService } from './employee-list/state/employee-list.service';
 
@@ -16,7 +16,7 @@ import { EmployeeListService } from './employee-list/state/employee-list.service
 export class EmployeeComponent {
   readonly faLock = faLock;
   readonly faUnlock = faUnlock;
-  employees: Observable<EmployeeList[]>;
+  employees: Observable<EmployeeListItem[]>;
   employee: Observable<Employee>;
   uiState = '';
 
@@ -38,7 +38,7 @@ export class EmployeeComponent {
     this.uiState = 'create';
   }
 
-  setActive(employee: EmployeeList) {
+  setActive(employee: EmployeeListItem) {
     this.employeeDetailService.getEmployee(employee.id);
     this.uiState = 'detail';
   }

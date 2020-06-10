@@ -1,4 +1,4 @@
-export interface EmployeeList {
+export interface EmployeeListItem {
   id: string;
   department: Department;
   firstName: string;
@@ -10,7 +10,7 @@ export type Status = 'Enabled' | 'Disabled';
 
 export type Department = 'HR' | 'IT' | 'Sales' | 'Finance' | 'UNKNOWN';
 
-export function createInitialState(): EmployeeList {
+export function createInitialState(): EmployeeListItem {
   return {
     id: '',
     department: 'UNKNOWN',

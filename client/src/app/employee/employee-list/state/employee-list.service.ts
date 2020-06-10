@@ -4,11 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EnvService } from 'src/app/shared/env.service';
-import {
-  ListResponse,
-  mapListResponseToData,
-} from 'src/app/shared/list-response';
-import { EmployeeList } from './employee-list.model';
+import { ListResponse, mapListResponseToData } from 'src/app/shared/list-response';
+import { EmployeeListItem } from './employee-list.model';
 import { EmployeeListStore } from './employee-list.store';
 
 @Injectable({ providedIn: 'root' })
@@ -27,7 +24,7 @@ export class EmployeeListService {
   getEmployees() {
     this.store.setLoading(true);
     return this.http
-      .get<ListResponse<EmployeeList>>(`${this.apiRootUrl}/Employees`)
+      .get<ListResponse<EmployeeListItem>>(`${this.apiRootUrl}/Employees`)
       .pipe(
         catchError((err) => {
           this.store.setError({

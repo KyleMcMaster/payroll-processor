@@ -1,17 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  faPlus,
-  faSkull,
-  faSmileBeam,
-} from '@fortawesome/free-solid-svg-icons';
-import { EmployeeList } from './state/employee-list.model';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { faPlus, faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
+import { EmployeeListItem } from './state/employee-list.model';
 
 @Component({
   selector: 'app-employee-list',
@@ -24,18 +13,18 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   readonly faPlus = faPlus;
 
   @Input()
-  employees: EmployeeList[];
+  employees: EmployeeListItem[];
 
   @Output()
-  selected = new EventEmitter<EmployeeList>();
+  selected = new EventEmitter<EmployeeListItem>();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 
-  setSelected(employee: EmployeeList) {
+  setSelected(employee: EmployeeListItem) {
     this.selected.emit(employee);
   }
 }
