@@ -1,14 +1,16 @@
 <div class="ml-3 mr-3">
   <div class="row full-height">
     <div class="col-2 background-dark border-light">
-      <div class="list-group list-group-action">
-        <div class="row border-info border-bold">
-          <span
-            class="list-group-item list-group-item-action"
-            (click)="this.setCreate()"
-          >
-            Create Employee
-          </span>
+      <div class="row" (click)="this.setCreate()">
+        <div class="list-group-item list-group-item-action">
+          <div class="row">
+            <div class="col-10">
+              <span class="">
+                Create Employee
+              </span>
+            </div>
+            <div class="col-2"><fa-icon [icon]="faPlus"> </fa-icon></div>
+          </div>
         </div>
       </div>
       <app-employee-list

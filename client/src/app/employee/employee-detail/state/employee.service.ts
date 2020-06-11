@@ -4,17 +4,17 @@ import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EnvService } from 'src/app/shared/env.service';
-import { Employee, EmployeeUpdate } from './employee-detail.model';
-import { EmployeeDetailStore } from './employee-detail.store';
+import { Employee, EmployeeUpdate } from './employee.model';
+import { EmployeeStore } from './employee.store';
 
 @Injectable({ providedIn: 'root' })
-export class EmployeeDetailService {
+export class EmployeeService {
   readonly apiRootUrl: string;
 
   constructor(
     envService: EnvService,
     private http: HttpClient,
-    private store: EmployeeDetailStore,
+    private store: EmployeeStore,
     private toastr: ToastrService,
   ) {
     this.apiRootUrl = envService.apiRootUrl;

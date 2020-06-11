@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
-import { Employee } from './employee-detail/state/employee-detail.model';
-import { EmployeeDetailQuery } from './employee-detail/state/employee-detail.query';
-import { EmployeeDetailService } from './employee-detail/state/employee-detail.service';
+import { Employee } from './employee-detail/state/employee.model';
+import { EmployeeQuery } from './employee-detail/state/employee.query';
+import { EmployeeService } from './employee-detail/state/employee.service';
 import { EmployeeListItem } from './employee-list/state/employee-list.model';
 import { EmployeeListQuery } from './employee-list/state/employee-list.query';
 import { EmployeeListService } from './employee-list/state/employee-list.service';
@@ -14,22 +14,18 @@ import { EmployeeListService } from './employee-list/state/employee-list.service
   styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent {
-  readonly faLock = faLock;
-  readonly faUnlock = faUnlock;
+  readonly faPlus = faPlus;
   employees: Observable<EmployeeListItem[]>;
   employee: Observable<Employee>;
   uiState = '';
 
   constructor(
-    private employeeDetailQuery: EmployeeDetailQuery,
-    private employeeDetailService: EmployeeDetailService,
+    private employeeQuery: EmployeeQuery,
+    private employeeService: EmployeeService,
     private employeeListService: EmployeeListService,
     private employeeListQuery: EmployeeListQuery,
   ) {
-    this.employee = this.employeeDetailQuery.select(
-      (state) => state as Employee,
-    );
-
+    this.employee = this.employeeQuery.select((state) => state as Employee);
     this.employees = this.employeeListQuery.selectAll();
     this.employeeListService.getEmployees();
   }
@@ -39,7 +35,7 @@ export class EmployeeComponent {
   }
 
   setActive(employee: EmployeeListItem) {
-    this.employeeDetailService.getEmployee(employee.id);
+    this.employeeService.getEmployee(employee.id);
     this.uiState = 'detail';
   }
 }

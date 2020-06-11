@@ -4,7 +4,7 @@
   </div>
 </div>
 <div class="row mb-3">
-  <div class="col-2">
+  <div class="col-3">
     <label>First Name: </label>
     <input
       class="d-block form-control"
@@ -12,7 +12,7 @@
       [value]="employee.firstName"
     />
   </div>
-  <div class="col-2">
+  <div class="col-3">
     <label>Last Name: </label>
     <input
       class="d-block form-control"
@@ -22,7 +22,7 @@
   </div>
 </div>
 <div class="row mb-3">
-  <div class="col-2">
+  <div class="col-3">
     <label>Email: </label>
     <input
       class="d-block form-control"
@@ -31,13 +31,13 @@
       [value]="employee.email"
     />
   </div>
-  <div class="col-2">
-    <label>Title: </label>
-    <input class="d-block form-control" type="text" [value]="employee.title" />
+  <div class="col-3">
+    <label>Phone: </label>
+    <input class="d-block form-control" type="text" [value]="employee.phone" />
   </div>
 </div>
 <div class="row mb-3">
-  <div class="col-2">
+  <div class="col-3">
     <label>Department: </label>
     <input
       class="d-block form-control"
@@ -45,7 +45,13 @@
       [value]="employee.department"
     />
   </div>
-  <div class="col-2">
+  <div class="col-3">
+    <label>Title: </label>
+    <input class="d-block form-control" type="text" [value]="employee.title" />
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-3">
     <label>Start Date: </label>
     <input
       class="d-block form-control"
