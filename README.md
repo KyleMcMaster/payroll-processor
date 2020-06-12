@@ -15,15 +15,17 @@ Sample HRIS application where a list of employees and their payroll information 
 
 ## Motivation
 
-This project was created to explore a variety of technologies and patterns I use daily in one place to get a better understanding of those technologies.
+This project was created to explore a variety of technologies, patterns, and frameworks in a sandbox style environment.
+The fictional domain of the application is designed be restrictive enough to mimic a real world application while
+also allowing creative and technical freedom for the developers involved.
 
-Things I would like to explore:
+Areas of interest:
 
 - Functional Programming
 - Automated Tests
 - Basics of Angular, TypeScript, Rxjs, and Bootstrap
 - Synergy that exists between Azure Functions and .Net Core Web Apis
-  - Implementations of comparable endpoints in both projects to evaluate the tooling and ecosystems
+- Event Sourcing and CQRS
 - Having fun!
 
 ## Roadmap
@@ -32,11 +34,10 @@ Things I would like to explore:
 
   - Initial Employee CRUD functionality
   - Initial Payroll CRUD functionality
-  - Basic charting and analytics of payroll data
 
 - TODOs
 
-  - Advanced analytics like payroll totals by department, risk, and time
+  - Analytics like payroll totals by department, risk, and time
   - Integrate Cosmos Db change feed
   - Handle poison queue messages
   - Add helpful notifications from SignalR messages
