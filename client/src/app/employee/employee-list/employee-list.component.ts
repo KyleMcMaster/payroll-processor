@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
 import { EmployeeListItem } from './state/employee-list.model';
 
@@ -7,7 +7,7 @@ import { EmployeeListItem } from './state/employee-list.model';
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss'],
 })
-export class EmployeeListComponent implements OnInit, OnDestroy {
+export class EmployeeListComponent {
   readonly faSkull = faSkull;
   readonly faSmileBeam = faSmileBeam;
 
@@ -17,11 +17,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   @Output()
   selected = new EventEmitter<EmployeeListItem>();
 
-  constructor() { }
-
-  ngOnInit() { }
-
-  ngOnDestroy() { }
+  constructor() {}
 
   setSelected(employee: EmployeeListItem) {
     this.selected.emit(employee);
