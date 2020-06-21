@@ -23,20 +23,11 @@ export class EmployeeService {
   getEmployee(id: string) {
     this.store.setLoading(true);
 
-    this.http
-      .get<Employee>(`${this.apiRootUrl}/Employees/${id}`)
-      .pipe(
-        catchError((err) => {
-          this.toastr.error(`Could not get employee ${id}`);
-          return throwError(err);
-        }),
-      )
-      .subscribe({
-        next: (detail) => {
-          this.store.update((state) => detail);
-        },
-        complete: () => this.store.setLoading(false),
-      });
+    this.http.get<Employee>(`${this.apiRootUrl}/Employees/${id}`).subscribe({
+      error: () => this.toastr.error(`Could not get employee ${id}`),
+      next: (detail) => this.store.update(detail),
+      complete: () => this.store.setLoading(false),
+    });
   }
 
   updateEmployeeStatus(employee: Employee) {
@@ -60,7 +51,7 @@ export class EmployeeService {
       .subscribe({
         next: (detail) => {
           this.toastr.show('Employee sucessfully updated!');
-          this.store.update((state) => detail);
+          this.store.update(detail);
         },
         complete: () => this.store.setLoading(false),
       });

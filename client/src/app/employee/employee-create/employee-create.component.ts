@@ -4,7 +4,7 @@ import {
   Department,
   EmployeeCreate,
 } from '../employee-list/state/employee-list.model';
-import { EmployeeCreateService } from './employee-create.service';
+import { EmployeeListService } from '../employee-list/state/employee-list.service';
 
 @Component({
   selector: 'app-employee-create',
@@ -24,7 +24,7 @@ export class EmployeeCreateComponent {
 
   departments: Department[] = ['Finance', 'HR', 'IT', 'Sales'];
 
-  constructor(private employeeCreateService: EmployeeCreateService) {}
+  constructor(private employeeListService: EmployeeListService) {}
 
   create() {
     const employee: EmployeeCreate = {
@@ -38,6 +38,6 @@ export class EmployeeCreateComponent {
       title: this.filterForm.get('title').value,
     };
 
-    this.employeeCreateService.createEmployee(employee);
+    this.employeeListService.createEmployee(employee);
   }
 }
