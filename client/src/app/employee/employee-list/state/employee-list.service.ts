@@ -25,9 +25,9 @@ export class EmployeeListService {
     this.apiRootUrl = envService.apiRootUrl;
   }
 
-  getEmployees() {
+  getEmployees(): void {
     this.store.setLoading(true);
-    return this.http
+    this.http
       .get<ListResponse<EmployeeListItem>>(`${this.apiRootUrl}/Employees`)
       .pipe(
         catchError((err) => {
@@ -44,9 +44,9 @@ export class EmployeeListService {
       });
   }
 
-  createEmployee(employee: EmployeeCreate) {
+  createEmployee(employee: EmployeeCreate): void {
     this.store.setLoading(true);
-    return this.http
+    this.http
       .post<Employee>(`${this.apiRootUrl}/employees`, employee)
       .subscribe({
         error: () => this.toastr.error(`Could not create employee`),
