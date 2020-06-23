@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EnvService } from 'src/app/shared/env.service';
 import {
   ListResponse,
   mapListResponseToData,
 } from 'src/app/shared/list-response';
-import { Employee, EmployeeUpdate } from './employee-list.model';
+import { Employee } from '../../employee-detail/state/employee.model';
+import { EmployeeCreate, EmployeeListItem } from './employee-list.model';
 import { EmployeeListStore } from './employee-list.store';
 
 @Injectable({ providedIn: 'root' })
@@ -24,10 +25,10 @@ export class EmployeeListService {
     this.apiRootUrl = envService.apiRootUrl;
   }
 
-  getEmployees() {
+  getEmployees(): void {
     this.store.setLoading(true);
-    return this.http
-      .get<ListResponse<Employee>>(`${this.apiRootUrl}/Employees`)
+    this.http
+      .get<ListResponse<EmployeeListItem>>(`${this.apiRootUrl}/Employees`)
       .pipe(
         catchError((err) => {
           this.store.setError({
@@ -43,29 +44,13 @@ export class EmployeeListService {
       });
   }
 
-  updateEmployeeStatus(employee: Employee) {
+  createEmployee(employee: EmployeeCreate): void {
     this.store.setLoading(true);
-
-    const status = employee.status === 'Enabled' ? 'Disabled' : 'Enabled';
-
-    const employeeUpdate: EmployeeUpdate = {
-      ...employee,
-      status,
-    };
-
-    return this.http
-      .put<Employee>(`${this.apiRootUrl}/Employees`, employeeUpdate)
-      .pipe(
-        catchError((err) => {
-          console.log(`Could not update employee ${employee.id}`);
-          return throwError(err);
-        }),
-      )
+    this.http
+      .post<Employee>(`${this.apiRootUrl}/employees`, employee)
       .subscribe({
-        next: (detail) => {
-          this.toastr.show('Employee sucessfully updated!');
-          this.store.upsert(detail.id, detail);
-        },
+        error: () => this.toastr.error(`Could not create employee`),
+        next: (detail) => this.store.upsert(detail.id, detail),
         complete: () => this.store.setLoading(false),
       });
   }

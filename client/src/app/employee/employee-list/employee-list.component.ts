@@ -1,33 +1,39 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { Employee } from './state/employee-list.model';
-import { EmployeeListQuery } from './state/employee-list.query';
-import { EmployeeListService } from './state/employee-list.service';
+import { EmployeeListItem } from './state/employee-list.model';
 
 @Component({
   selector: 'app-employee-list',
-  templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.scss'],
+  template: `
+    <div class="row" *ngFor="let employee of employees">
+      <div
+        class="list-group-item list-group-item-action"
+        (click)="selected.emit(employee)"
+      >
+        <div class="row">
+          <div class="col-10">
+            <span> {{ employee.firstName }} {{ employee.lastName }} </span>
+          </div>
+          <div class="col-2">
+            <fa-icon *ngIf="employee.status === 'Enabled'" [icon]="faSmileBeam">
+            </fa-icon>
+            <fa-icon *ngIf="employee.status === 'Disabled'" [icon]="faSkull">
+            </fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
 })
-export class EmployeeListComponent implements OnInit, OnDestroy {
+export class EmployeeListComponent {
   readonly faSkull = faSkull;
   readonly faSmileBeam = faSmileBeam;
-  readonly employees: Observable<Employee[]>;
 
-  constructor(
-    private service: EmployeeListService,
-    private query: EmployeeListQuery,
-  ) {
-    this.employees = this.query.selectAll();
-    this.service.getEmployees();
-  }
+  @Input()
+  employees: EmployeeListItem[];
 
-  ngOnInit() {}
+  @Output()
+  selected = new EventEmitter<EmployeeListItem>();
 
-  ngOnDestroy() {}
-
-  onToggleEmployeeStatus(employee: Employee) {
-    this.service.updateEmployeeStatus(employee);
-  }
+  constructor() {}
 }

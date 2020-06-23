@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
   Department,
   EmployeeCreate,
 } from '../employee-list/state/employee-list.model';
-import { EmployeeCreateService } from './employee-create.service';
+import { EmployeeListService } from '../employee-list/state/employee-list.service';
 
 @Component({
   selector: 'app-employee-create',
   templateUrl: './employee-create.component.html',
   styleUrls: ['./employee-create.component.scss'],
 })
-export class EmployeeCreateComponent implements OnInit {
+export class EmployeeCreateComponent {
   filterForm = new FormGroup({
     department: new FormControl(''),
     email: new FormControl(''),
@@ -24,9 +24,7 @@ export class EmployeeCreateComponent implements OnInit {
 
   departments: Department[] = ['Finance', 'HR', 'IT', 'Sales'];
 
-  constructor(private employeeCreateService: EmployeeCreateService) {}
-
-  ngOnInit(): void {}
+  constructor(private employeeListService: EmployeeListService) {}
 
   create() {
     const employee: EmployeeCreate = {
@@ -40,6 +38,6 @@ export class EmployeeCreateComponent implements OnInit {
       title: this.filterForm.get('title').value,
     };
 
-    this.employeeCreateService.createEmployee(employee);
+    this.employeeListService.createEmployee(employee);
   }
 }

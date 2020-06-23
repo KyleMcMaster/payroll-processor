@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-
-import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { EmployeeQuery } from './employee-detail/state/employee.query';
+import { EmployeeService } from './employee-detail/state/employee.service';
+import { EmployeeListItem } from './employee-list/state/employee-list.model';
+import { EmployeeListQuery } from './employee-list/state/employee-list.query';
+import { EmployeeListService } from './employee-list/state/employee-list.service';
 
 @Component({
   selector: 'app-employee',
@@ -8,13 +12,26 @@ import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent {
-  readonly faLock = faLock;
-  readonly faUnlock = faUnlock;
-  isReadonly = true;
+  readonly faPlus = faPlus;
+  readonly employees = this.employeeListQuery.selectAll();
+  readonly employee = this.employeeQuery.select();
+  uiState = '';
 
-  constructor() {}
+  constructor(
+    private employeeQuery: EmployeeQuery,
+    private employeeService: EmployeeService,
+    private employeeListService: EmployeeListService,
+    private employeeListQuery: EmployeeListQuery,
+  ) {
+    this.employeeListService.getEmployees();
+  }
 
-  toggleReadonly() {
-    this.isReadonly = !this.isReadonly;
+  onCreate() {
+    this.uiState = 'create';
+  }
+
+  onSelectEmployee(employee: EmployeeListItem) {
+    this.employeeService.getEmployee(employee.id);
+    this.uiState = 'detail';
   }
 }

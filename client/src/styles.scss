@@ -12,5 +12,45 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #000;
+  background-color: --app-background;
+}
+
+.border-light {
+  border-color: --light !important;
+  border: 1px solid;
+  border-radius: 0.25rem;
+}
+
+.border-success {
+  border-color: --success !important;
+  border: 1px solid;
+  border-radius: 0.25rem;
+}
+
+.border-info {
+  border-color: --info !important;
+  border: 1px solid;
+  border-radius: 0.25rem;
+}
+
+.border-warning {
+  border-color: --warning !important;
+  border: 1px solid;
+  border-radius: 0.25rem;
+}
+
+.full-height {
+  height: calc(100vh - 75px);
+}
+
+.background-dark {
+  background-color: #303030 !important;
+}
+
+.background-info {
+  background-color: #3498db !important;
+}
+
+.text-center {
+  text-align: center;
 }
