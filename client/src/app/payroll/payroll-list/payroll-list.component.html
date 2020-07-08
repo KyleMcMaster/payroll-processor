@@ -9,13 +9,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr
-      [ngClass]="{
-        'table-secondary': payroll.employeeStatus === 'Disabled'
-      }"
-      *ngFor="let payroll of getPayroll()"
-    >
-      <th scope="row"> {{ payroll.employeeName }} </th>
+    <tr *ngFor="let payroll of payrolls | async">
+      <th scope="row">
+        {{ payroll.employeeFirstName }} {{ payroll.employeeLastName }}
+      </th>
       <td>{{ payroll.payrollPeriod }}</td>
       <td>{{ payroll.checkDate | date }}</td>
       <td>{{ payroll.grossPayroll | currency }}</td>

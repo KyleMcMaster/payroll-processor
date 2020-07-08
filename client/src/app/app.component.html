@@ -4,14 +4,14 @@
       <a class="navbar-brand" href="#">{{ title }}</a>
       <div class="collapse navbar-collapse">
         <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="navbar-nav">
-          <li [ngbNavItem]="'employees'">
+          <li ngbNavItem="employees">
             <a ngbNavLink>Employees</a>
             <ng-template ngbNavContent>
               <app-employee></app-employee>
             </ng-template>
           </li>
-          <li [ngbNavItem]="2">
-            <a ngbNavLink>Payroll</a>
+          <li ngbNavItem="payrolls">
+            <a ngbNavLink>Payrolls</a>
             <ng-template ngbNavContent>
               <app-payroll></app-payroll>
             </ng-template>
