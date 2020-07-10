@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { EnvService } from 'src/app/shared/env.service';
+
 import { Employee, EmployeeUpdate } from './employee.model';
 import { EmployeeStore } from './employee.store';
+
+import { ToastrService } from 'ngx-toastr';
+import { EnvService } from 'src/app/shared/env.service';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
@@ -30,7 +32,7 @@ export class EmployeeService {
     });
   }
 
-  updateEmployeeStatus(employee: Employee) {
+  updateEmployeeStatus(employee: Employee): void {
     this.store.setLoading(true);
 
     const status = employee.status === 'Enabled' ? 'Disabled' : 'Enabled';
@@ -40,7 +42,7 @@ export class EmployeeService {
       status,
     };
 
-    return this.http
+    this.http
       .put<Employee>(`${this.apiRootUrl}/Employees`, employeeUpdate)
       .pipe(
         catchError((err) => {
