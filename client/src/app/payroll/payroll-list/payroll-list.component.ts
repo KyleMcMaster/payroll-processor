@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
 import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
-
 import { PayrollListQuery } from './state/payroll-list.query';
 import { PayrollListService } from './state/payroll-list.service';
 
@@ -18,9 +16,8 @@ export class PayrollListComponent implements OnInit {
 
   @Input()
   set department(department: string) {
-    const employeeDepartment = department && department.trim();
-    this.service.getPayrolls(employeeDepartment);
-    this.employeeDepartment = employeeDepartment;
+    this.employeeDepartment = department?.trim() ?? '';
+    this.service.getPayrolls(this.employeeDepartment);
   }
 
   get department(): string {

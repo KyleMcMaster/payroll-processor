@@ -14,6 +14,7 @@ import { EmployeeListComponent } from './employee/employee-list/employee-list.co
 import { EmployeeComponent } from './employee/employee.component';
 import { PayrollListComponent } from './payroll/payroll-list/payroll-list.component';
 import { PayrollComponent } from './payroll/payroll.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PayrollComponent } from './payroll/payroll.component';
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
+    SharedModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right',

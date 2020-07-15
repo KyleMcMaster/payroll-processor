@@ -20,7 +20,7 @@
         <div class="list-group-item list-group-item-action">
           <div class="row">
             <div class="col-12">
-              <span>{{ department.replace('_', ' ') }}</span>
+              <span>{{ department | unslugify }}</span>
             </div>
           </div>
         </div>
