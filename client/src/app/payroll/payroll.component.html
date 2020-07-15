@@ -27,7 +27,11 @@
       </div>
     </div>
     <div class="col-10">
-      <app-payroll-list [department]="department"></app-payroll-list>
+      <div class="row">
+        <div class="col-8">
+          <app-payroll-list [department]="department"></app-payroll-list>
+        </div>
+      </div>
       <!-- <app-payroll-create *ngIf="!isReadonly"></app-payroll-create> -->
     </div>
   </div>
