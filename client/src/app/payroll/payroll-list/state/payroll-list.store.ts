@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 
-import { createInitialState, PayrollList } from './payroll-list.model';
+import { createInitialState, PayrollListItem } from './payroll-list.model';
 
-export interface PayrollListState extends EntityState<PayrollList> {}
+export interface PayrollListState extends EntityState<PayrollListItem> {}
 
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'payrolls' })

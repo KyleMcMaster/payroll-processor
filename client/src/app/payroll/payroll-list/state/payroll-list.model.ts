@@ -1,4 +1,4 @@
-export interface PayrollList {
+export interface PayrollListItem {
   id: string;
   checkDate: string;
   employeeDepartment: Department;
@@ -18,7 +18,7 @@ export type Department =
   | 'Warehouse'
   | 'UNKNOWN';
 
-export function createInitialState(): PayrollList {
+export function createInitialState(): PayrollListItem {
   return {
     id: '',
     checkDate: '',

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { PayrollList } from './payroll-list.model';
+import { PayrollListItem } from './payroll-list.model';
 import { PayrollListStore } from './payroll-list.store';
 
 import { ToastrService } from 'ngx-toastr';
@@ -29,7 +29,7 @@ export class PayrollListService {
     params = params.append('Count', '10');
 
     this.http
-      .get<ListResponse<PayrollList>>(
+      .get<ListResponse<PayrollListItem>>(
         `${this.apiRootUrl}/departments/payrolls`,
         {
           params,

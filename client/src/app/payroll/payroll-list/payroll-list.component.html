@@ -5,11 +5,10 @@
       <th scope="col">Payroll Period</th>
       <th scope="col">Check Date</th>
       <th scope="col">Amount</th>
-      <!-- <th scope="col">Risk</th> -->
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let payroll of payrolls | async">
+    <tr *ngFor="let payroll of payrolls">
       <th scope="row">
         {{ payroll.employeeFirstName }} {{ payroll.employeeLastName }}
       </th>
