@@ -5,17 +5,13 @@
       <th scope="col">Payroll Period</th>
       <th scope="col">Check Date</th>
       <th scope="col">Amount</th>
-      <!-- <th scope="col">Risk</th> -->
     </tr>
   </thead>
   <tbody>
-    <tr
-      [ngClass]="{
-        'table-secondary': payroll.employeeStatus === 'Disabled'
-      }"
-      *ngFor="let payroll of getPayroll()"
-    >
-      <th scope="row"> {{ payroll.employeeName }} </th>
+    <tr *ngFor="let payroll of payrolls">
+      <th scope="row">
+        {{ payroll.employeeFirstName }} {{ payroll.employeeLastName }}
+      </th>
       <td>{{ payroll.payrollPeriod }}</td>
       <td>{{ payroll.checkDate | date }}</td>
       <td>{{ payroll.grossPayroll | currency }}</td>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 import { EmployeeQuery } from './employee-detail/state/employee.query';
 import { EmployeeService } from './employee-detail/state/employee.service';
 import { EmployeeListItem } from './employee-list/state/employee-list.model';

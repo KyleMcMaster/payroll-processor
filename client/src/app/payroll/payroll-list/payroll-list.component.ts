@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
-import { DataService } from 'src/app/data/data-service';
-import { Payroll } from 'src/app/data/state/payroll-model';
+import { Component, Input } from '@angular/core';
+
+import { PayrollListItem } from './state/payroll-list.model';
 
 @Component({
   selector: 'app-payroll-list',
@@ -9,12 +8,8 @@ import { Payroll } from 'src/app/data/state/payroll-model';
   styleUrls: ['./payroll-list.component.scss'],
 })
 export class PayrollListComponent {
-  readonly faSkull = faSkull;
-  readonly faSmileBeam = faSmileBeam;
+  @Input()
+  payrolls: PayrollListItem[];
 
-  constructor(private dataService: DataService) {}
-
-  getPayroll(): Payroll[] {
-    return this.dataService.getPayroll();
-  }
+  constructor() {}
 }

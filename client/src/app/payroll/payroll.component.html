@@ -1,1 +1,29 @@
-<div class="table-margin"><app-payroll-list></app-payroll-list></div>
+<div class="ml-3 mr-3">
+  <div class="row full-height">
+    <div class="col-2 background-dark border-light">
+      <div class="row">
+        <div class="list-group-item list-group-item-action col-12">
+          <span>
+            Departments
+          </span>
+        </div>
+      </div>
+      <div
+        class="row"
+        *ngFor="let department of departments"
+        (click)="onSelectDepartment(department)"
+      >
+        <div class="list-group-item list-group-item-action col-12">
+          <span>{{ department | unslugify }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-8">
+          <app-payroll-list [payrolls]="payrolls | async"></app-payroll-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
