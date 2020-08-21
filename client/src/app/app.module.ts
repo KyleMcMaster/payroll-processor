@@ -18,6 +18,7 @@ import { SharedModule } from '@shared/shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EmployeePayrollListComponent } from './employee/employee-payroll-list/employee-payroll-list.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AppComponent } from './app.component';
     PayrollComponent,
     PayrollListComponent,
     EmployeeDetailComponent,
+    EmployeePayrollListComponent,
   ],
   imports: [
     AppRoutingModule,
