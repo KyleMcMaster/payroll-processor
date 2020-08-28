@@ -11,6 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { EmployeeCreateComponent } from '@employee/employee-create/employee-create.component';
 import { EmployeeDetailComponent } from '@employee/employee-detail/employee-detail.component';
 import { EmployeeListComponent } from '@employee/employee-list/employee-list.component';
+import { EmployeePayrollListComponent } from '@employee/employee-payroll-list/employee-payroll-list.component';
 import { EmployeeComponent } from '@employee/employee.component';
 import { PayrollListComponent } from '@payroll/payroll-list/payroll-list.component';
 import { PayrollComponent } from '@payroll/payroll.component';
@@ -28,6 +29,7 @@ import { AppComponent } from './app.component';
     PayrollComponent,
     PayrollListComponent,
     EmployeeDetailComponent,
+    EmployeePayrollListComponent,
   ],
   imports: [
     AppRoutingModule,

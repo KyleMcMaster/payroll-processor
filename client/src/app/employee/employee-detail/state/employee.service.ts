@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Employee, EmployeeUpdate } from './employee.model';
+import { ToastrService } from 'ngx-toastr';
+
+import { EmployeeDetail, EmployeeUpdate } from './employee.model';
 import { EmployeeStore } from './employee.store';
 
-import { ToastrService } from 'ngx-toastr';
 import { EnvService } from 'src/app/shared/env.service';
 
 @Injectable({ providedIn: 'root' })
@@ -25,14 +26,16 @@ export class EmployeeService {
   getEmployee(id: string) {
     this.store.setLoading(true);
 
-    this.http.get<Employee>(`${this.apiRootUrl}/Employees/${id}`).subscribe({
-      error: () => this.toastr.error(`Could not get employee ${id}`),
-      next: (detail) => this.store.update(detail),
-      complete: () => this.store.setLoading(false),
-    });
+    this.http
+      .get<EmployeeDetail>(`${this.apiRootUrl}/Employees/${id}`)
+      .subscribe({
+        error: () => this.toastr.error(`Could not get employee ${id}`),
+        next: (detail) => this.store.update(detail),
+        complete: () => this.store.setLoading(false),
+      });
   }
 
-  updateEmployeeStatus(employee: Employee): void {
+  updateEmployeeStatus(employee: EmployeeDetail): void {
     this.store.setLoading(true);
 
     const status = employee.status === 'Enabled' ? 'Disabled' : 'Enabled';
@@ -43,7 +46,7 @@ export class EmployeeService {
     };
 
     this.http
-      .put<Employee>(`${this.apiRootUrl}/Employees`, employeeUpdate)
+      .put<EmployeeDetail>(`${this.apiRootUrl}/Employees`, employeeUpdate)
       .pipe(
         catchError((err) => {
           console.log(`Could not update employee ${employee.id}`);

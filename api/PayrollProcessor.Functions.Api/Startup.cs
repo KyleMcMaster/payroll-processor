@@ -64,7 +64,6 @@ namespace PayrollProcessor.Functions.Api
                     }))
                     .AsImplementedInterfaces()
                     .WithScopedLifetime());
-
         }
     }
 }
