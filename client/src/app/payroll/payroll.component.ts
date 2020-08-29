@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+
 import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
-import { PayrollListQuery } from './payroll-list/state/payroll-list.query';
-import { PayrollListService } from './payroll-list/state/payroll-list.service';
+
+import { PayrollListQuery } from '@payroll/payroll-list/state/payroll-list.query';
+import { PayrollListService } from '@payroll/payroll-list/state/payroll-list.service';
 
 @Component({
   selector: 'app-payroll',

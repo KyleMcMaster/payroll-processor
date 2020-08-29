@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import * as signalR from '@microsoft/signalr';
-
-import { EnvService } from './env.service';
+import { EnvService } from '@shared/env.service';
 
 @Injectable({
   providedIn: 'root',

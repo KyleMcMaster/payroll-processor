@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import {
-  Department,
-  EmployeeCreate,
-} from '../employee-list/state/employee-list.model';
-import { EmployeeListService } from '../employee-list/state/employee-list.service';
+
+import { Department, EmployeeCreate } from '@employee/employee-list/state/employee-list.model';
+import { EmployeeListService } from '@employee/employee-list/state/employee-list.service';
 
 @Component({
   selector: 'app-employee-create',

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { EmployeeDetail } from './state/employee.model';
+import { EmployeeDetail } from '@employee/employee-detail/state/employee.model';
 
 @Component({
   selector: 'app-employee-detail',
