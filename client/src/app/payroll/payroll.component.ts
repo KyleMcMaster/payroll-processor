@@ -16,7 +16,7 @@ export class PayrollComponent {
   readonly payrolls = this.query.selectAll();
   selectedDepartment = 'Building_Services';
 
-  readonly departments: Array<string> = [
+  readonly departments: string[] = [
     'Building_Services',
     'Human_Resources',
     'IT',

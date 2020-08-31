@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { Department, EmployeeCreate } from '@employee/employee-list/state/employee-list.model';
+import { EmployeeCreate } from '@employee/employee-list/state/employee-list.model';
 import { EmployeeListService } from '@employee/employee-list/state/employee-list.service';
 
 @Component({
@@ -20,7 +20,14 @@ export class EmployeeCreateComponent {
     title: new FormControl(''),
   });
 
-  departments: Department[] = ['Finance', 'HR', 'IT', 'Sales'];
+  readonly departments: string[] = [
+    'Building_Services',
+    'Human_Resources',
+    'IT',
+    'Marketing',
+    'Sales',
+    'Warehouse',
+  ];
 
   constructor(private employeeListService: EmployeeListService) {}
 

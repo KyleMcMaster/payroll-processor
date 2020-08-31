@@ -1,22 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 import { ToastrService } from 'ngx-toastr';
 
-import { EmployeeDetail, EmployeeUpdate } from '@employee/employee-detail/state/employee.model';
-import { EmployeeStore } from '@employee/employee-detail/state/employee.store';
+import { EmployeeDetail, EmployeeUpdate } from '@employee/employee-detail/state/employee-detail.model';
+import { EmployeeDetailStore } from '@employee/employee-detail/state/employee-detail.store';
 import { EnvService } from '@shared/env.service';
 
 @Injectable({ providedIn: 'root' })
-export class EmployeeService {
+export class EmployeeDetailService {
   readonly apiRootUrl: string;
 
   constructor(
     envService: EnvService,
     private http: HttpClient,
-    private store: EmployeeStore,
+    private store: EmployeeDetailStore,
     private toastr: ToastrService,
   ) {
     this.apiRootUrl = envService.apiRootUrl;
@@ -34,7 +32,7 @@ export class EmployeeService {
       });
   }
 
-  updateEmployeeStatus(employee: EmployeeDetail): void {
+  update(employee: EmployeeDetail): void {
     this.store.setLoading(true);
 
     const status = employee.status === 'Enabled' ? 'Disabled' : 'Enabled';
@@ -46,13 +44,9 @@ export class EmployeeService {
 
     this.http
       .put<EmployeeDetail>(`${this.apiRootUrl}/Employees`, employeeUpdate)
-      .pipe(
-        catchError((err) => {
-          console.log(`Could not update employee ${employee.id}`);
-          return throwError(err);
-        }),
-      )
       .subscribe({
+        error: () =>
+          this.toastr.error(`Could not update employee ${employee.id}`),
         next: (detail) => {
           this.toastr.show('Employee sucessfully updated!');
           this.store.update(detail);

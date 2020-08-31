@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { EmployeeQuery } from '@employee/employee-detail/state/employee.query';
-import { EmployeeService } from '@employee/employee-detail/state/employee.service';
+import { EmployeeDetailQuery } from '@employee/employee-detail/state/employee-detail.query';
+import { EmployeeDetailService } from '@employee/employee-detail/state/employee-detail.service';
 import { EmployeeListItem } from '@employee/employee-list/state/employee-list.model';
 import { EmployeeListQuery } from '@employee/employee-list/state/employee-list.query';
 import { EmployeeListService } from '@employee/employee-list/state/employee-list.service';
@@ -20,8 +20,8 @@ export class EmployeeComponent {
   uiState = '';
 
   constructor(
-    private employeeQuery: EmployeeQuery,
-    private employeeService: EmployeeService,
+    private employeeQuery: EmployeeDetailQuery,
+    private employeeService: EmployeeDetailService,
     private employeeListService: EmployeeListService,
     private employeeListQuery: EmployeeListQuery,
   ) {

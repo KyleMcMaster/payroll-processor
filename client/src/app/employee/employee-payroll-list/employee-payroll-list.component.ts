@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { EmployeePayroll } from '@employee/employee-detail/state/employee.model';
+import { EmployeePayroll } from '@employee/employee-detail/state/employee-detail.model';
 
 @Component({
   selector: 'app-employee-payroll-list',
