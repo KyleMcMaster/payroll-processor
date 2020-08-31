@@ -71,12 +71,19 @@
         [value]="employee.employmentStartedOn | date"
       />
     </div>
-    <div class="col-3 mt-4 pt-2">
-      <select class="" [value]="employee.status">
-        <option>Disabled</option>
-        <option>Enabled</option>
-      </select>
-      <button class="btn btn-outline-info" type="submit">Update</button>
+    <div class="col-3">
+      <label>Status: </label>
+      <div class="row">
+        <div class="col-6">
+          <select class="custom-select" [value]="employee.status">
+            <option>Disabled</option>
+            <option>Enabled</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-outline-info" type="submit">Save</button>
+        </div>
+      </div>
     </div>
   </div>
 </form>
