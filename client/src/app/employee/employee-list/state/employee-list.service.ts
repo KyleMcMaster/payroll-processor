@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { EnvService } from 'src/app/shared/env.service';
-import {
-  ListResponse,
-  mapListResponseToData,
-} from 'src/app/shared/list-response';
-import { Employee } from '../../employee-detail/state/employee.model';
-import { EmployeeCreate, EmployeeListItem } from './employee-list.model';
-import { EmployeeListStore } from './employee-list.store';
+
+import { ToastrService } from 'ngx-toastr';
+
+import { EmployeeDetail } from '@employee/employee-detail/state/employee.model';
+import { EmployeeCreate, EmployeeListItem } from '@employee/employee-list/state/employee-list.model';
+import { EmployeeListStore } from '@employee/employee-list/state/employee-list.store';
+import { EnvService } from '@shared/env.service';
+import { ListResponse, mapListResponseToData } from '@shared/list-response';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeListService {
@@ -47,7 +46,7 @@ export class EmployeeListService {
   createEmployee(employee: EmployeeCreate): void {
     this.store.setLoading(true);
     this.http
-      .post<Employee>(`${this.apiRootUrl}/employees`, employee)
+      .post<EmployeeDetail>(`${this.apiRootUrl}/employees`, employee)
       .subscribe({
         error: () => this.toastr.error(`Could not create employee`),
         next: (detail) => this.store.upsert(detail.id, detail),

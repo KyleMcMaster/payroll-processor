@@ -16,15 +16,5 @@ namespace PayrollProcessor.Infrastructure.Seeding.Features.Employees
 
         public IEnumerable<EmployeeDetail> BuildAll(int employeesCount, int payrollsMaxCount) =>
             employeeSeed.BuildMany(employeesCount, payrollsMaxCount);
-
-        private IEnumerable<DepartmentPayroll> Build(EmployeeDetail employee, IEnumerable<EmployeePayroll> payrolls) =>
-            payrolls.Select(p => new DepartmentPayroll(Guid.NewGuid())
-            {
-                CheckDate = p.CheckDate,
-                EmployeeDepartment = employee.Department,
-                EmployeeId = employee.Id,
-                GrossPayroll = p.GrossPayroll,
-                PayrollPeriod = p.PayrollPeriod
-            });
     }
 }

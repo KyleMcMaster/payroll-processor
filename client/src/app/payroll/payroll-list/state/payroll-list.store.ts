@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 
-import { createInitialState, PayrollListItem } from './payroll-list.model';
+import { createInitialState, PayrollListItem } from '@payroll/payroll-list/state/payroll-list.model';
 
 export interface PayrollListState extends EntityState<PayrollListItem> {}
 

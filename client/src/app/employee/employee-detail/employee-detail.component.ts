@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Employee } from './state/employee.model';
+
+import { EmployeeDetail } from '@employee/employee-detail/state/employee.model';
 
 @Component({
   selector: 'app-employee-detail',
@@ -8,7 +9,7 @@ import { Employee } from './state/employee.model';
 })
 export class EmployeeDetailComponent {
   @Input()
-  employee: Employee;
+  employee: EmployeeDetail;
 
   constructor() {}
 }
