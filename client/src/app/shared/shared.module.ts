@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { UnslugifyPipe } from './unslugify.pipe';
+
+import { UnslugifyPipe } from '@shared/unslugify.pipe';
 
 @NgModule({
   declarations: [UnslugifyPipe],

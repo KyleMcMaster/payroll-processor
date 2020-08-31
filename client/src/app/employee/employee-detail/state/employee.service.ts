@@ -5,10 +5,9 @@ import { catchError } from 'rxjs/operators';
 
 import { ToastrService } from 'ngx-toastr';
 
-import { EmployeeDetail, EmployeeUpdate } from './employee.model';
-import { EmployeeStore } from './employee.store';
-
-import { EnvService } from 'src/app/shared/env.service';
+import { EmployeeDetail, EmployeeUpdate } from '@employee/employee-detail/state/employee.model';
+import { EmployeeStore } from '@employee/employee-detail/state/employee.store';
+import { EnvService } from '@shared/env.service';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {

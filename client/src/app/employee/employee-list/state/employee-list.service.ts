@@ -6,12 +6,10 @@ import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 import { EmployeeDetail } from '@employee/employee-detail/state/employee.model';
-
-import { EmployeeCreate, EmployeeListItem } from './employee-list.model';
-import { EmployeeListStore } from './employee-list.store';
-
-import { EnvService } from 'src/app/shared/env.service';
-import { ListResponse, mapListResponseToData } from 'src/app/shared/list-response';
+import { EmployeeCreate, EmployeeListItem } from '@employee/employee-list/state/employee-list.model';
+import { EmployeeListStore } from '@employee/employee-list/state/employee-list.store';
+import { EnvService } from '@shared/env.service';
+import { ListResponse, mapListResponseToData } from '@shared/list-response';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeListService {
