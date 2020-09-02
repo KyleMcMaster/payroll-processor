@@ -32,21 +32,14 @@ export class EmployeeDetailService {
       });
   }
 
-  update(employee: EmployeeDetail): void {
+  update(employeeUpdate: EmployeeUpdate): void {
     this.store.setLoading(true);
-
-    const status = employee.status === 'Enabled' ? 'Disabled' : 'Enabled';
-
-    const employeeUpdate: EmployeeUpdate = {
-      ...employee,
-      status,
-    };
 
     this.http
       .put<EmployeeDetail>(`${this.apiRootUrl}/Employees`, employeeUpdate)
       .subscribe({
         error: () =>
-          this.toastr.error(`Could not update employee ${employee.id}`),
+          this.toastr.error(`Could not update employee ${employeeUpdate.id}`),
         next: (detail) => {
           this.toastr.show('Employee sucessfully updated!');
           this.store.update(detail);
