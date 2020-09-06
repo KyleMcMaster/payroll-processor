@@ -1,13 +1,17 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-
-import { EmployeeDetail, EmployeeUpdate } from '@employee/employee-detail/state/employee-detail.model';
+import {
+  EmployeeDetail,
+  EmployeeUpdate,
+} from '@employee/employee-detail/state/employee-detail.model';
 import { EmployeeDetailService } from '@employee/employee-detail/state/employee-detail.service';
 
 @Component({
   selector: 'app-employee-detail',
   templateUrl: './employee-detail.component.html',
   styleUrls: ['./employee-detail.component.scss'],
+  providers: [DatePipe],
 })
 export class EmployeeDetailComponent {
   readonly departments: string[] = [
@@ -20,6 +24,7 @@ export class EmployeeDetailComponent {
   ];
 
   readonly filterForm = new FormGroup({
+    id: new FormControl(''),
     department: new FormControl(''),
     email: new FormControl(''),
     employmentStartedOn: new FormControl(''),
@@ -28,33 +33,39 @@ export class EmployeeDetailComponent {
     phone: new FormControl(''),
     status: new FormControl(''),
     title: new FormControl(''),
+    version: new FormControl(''),
   });
 
-  private _employee: EmployeeDetail;
-
   @Input()
-  get employee(): EmployeeDetail {
-    return this._employee;
-  }
   set employee(employee: EmployeeDetail) {
-    this._employee = employee;
-    this.filterForm.patchValue({ ...employee });
+    this.filterForm.patchValue({
+      ...employee,
+      employmentStartedOn: this.datePipe.transform(
+        employee.employmentStartedOn,
+        'yyyy-MM-dd',
+      ),
+    });
   }
 
-  constructor(private employeeDetailService: EmployeeDetailService) {}
+  constructor(
+    private datePipe: DatePipe,
+    private service: EmployeeDetailService,
+  ) {}
 
   update() {
     const employee: EmployeeUpdate = {
-      ...this._employee,
+      id: this.filterForm.get('id').value,
       department: this.filterForm.get('department').value,
       employmentStartedOn: this.filterForm.get('employmentStartedOn').value,
+      email: this.filterForm.get('email').value,
       firstName: this.filterForm.get('firstName').value,
       lastName: this.filterForm.get('lastName').value,
       phone: this.filterForm.get('phone').value,
       status: this.filterForm.get('status').value,
       title: this.filterForm.get('title').value,
+      version: this.filterForm.get('').value,
     };
 
-    this.employeeDetailService.update(employee);
+    this.service.update(employee);
   }
 }

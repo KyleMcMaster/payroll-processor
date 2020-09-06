@@ -49,9 +49,9 @@
       <label>Department: </label>
       <select class="custom-select" formControlName="department">
         <option disabled>Choose a department</option>
-        <option *ngFor="let department of departments" [ngValue]="department">{{
-          department
-        }}</option>
+        <option *ngFor="let department of departments" [ngValue]="department"
+          >{{ department }}
+        </option>
       </select>
     </div>
     <div class="col-3">

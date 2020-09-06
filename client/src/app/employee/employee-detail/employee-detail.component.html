@@ -40,7 +40,7 @@
     <div class="col-3">
       <label>Department: </label>
       <select class="custom-select" formControlName="department">
-        <option *ngFor="let department of departments" [ngValue]="department">
+        <option *ngFor="let department of departments">
           {{ department | unslugify }}
         </option>
       </select>
@@ -56,7 +56,7 @@
       <input
         class="d-block form-control"
         formControlName="employmentStartedOn"
-        type="text"
+        type="date"
       />
     </div>
     <div class="col-3">

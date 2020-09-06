@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
 import { EmployeeDetailQuery } from '@employee/employee-detail/state/employee-detail.query';
 import { EmployeeDetailService } from '@employee/employee-detail/state/employee-detail.service';
 import { EmployeeListItem } from '@employee/employee-list/state/employee-list.model';
 import { EmployeeListQuery } from '@employee/employee-list/state/employee-list.query';
 import { EmployeeListService } from '@employee/employee-list/state/employee-list.service';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-employee',
@@ -15,17 +13,17 @@ import { EmployeeListService } from '@employee/employee-list/state/employee-list
 })
 export class EmployeeComponent {
   readonly faPlus = faPlus;
-  readonly employees = this.employeeListQuery.selectAll();
-  readonly employee = this.employeeQuery.select();
+  readonly employee = this.detailQuery.select();
+  readonly employees = this.listQuery.selectAll();
   uiState = '';
 
   constructor(
-    private employeeQuery: EmployeeDetailQuery,
-    private employeeService: EmployeeDetailService,
-    private employeeListService: EmployeeListService,
-    private employeeListQuery: EmployeeListQuery,
+    private detailQuery: EmployeeDetailQuery,
+    private detailService: EmployeeDetailService,
+    private listService: EmployeeListService,
+    private listQuery: EmployeeListQuery,
   ) {
-    this.employeeListService.getEmployees();
+    this.listService.getEmployees();
   }
 
   onCreate() {
@@ -33,7 +31,7 @@ export class EmployeeComponent {
   }
 
   onSelectEmployee(employee: EmployeeListItem) {
-    this.employeeService.getEmployee(employee.id);
+    this.detailService.getEmployee(employee.id);
     this.uiState = 'detail';
   }
 }
