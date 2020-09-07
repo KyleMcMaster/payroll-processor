@@ -17,7 +17,7 @@ import { EmployeeDetailService } from '@employee/employee-detail/state/employee-
 export class EmployeeDetailComponent {
   readonly departments = departments;
 
-  readonly filterForm = new FormGroup({
+  filterForm = new FormGroup({
     department: new FormControl({ value: '', disabled: true }),
     email: new FormControl(''),
     employmentStartedOn: new FormControl(''),

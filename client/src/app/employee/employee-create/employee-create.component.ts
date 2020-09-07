@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-
+import { departments } from '@department/department.model';
 import { EmployeeCreate } from '@employee/employee-list/state/employee-list.model';
 import { EmployeeListService } from '@employee/employee-list/state/employee-list.service';
 
@@ -10,6 +10,8 @@ import { EmployeeListService } from '@employee/employee-list/state/employee-list
   styleUrls: ['./employee-create.component.scss'],
 })
 export class EmployeeCreateComponent {
+  readonly departments = departments;
+
   filterForm = new FormGroup({
     department: new FormControl(''),
     email: new FormControl(''),
@@ -19,15 +21,6 @@ export class EmployeeCreateComponent {
     phone: new FormControl(''),
     title: new FormControl(''),
   });
-
-  readonly departments: string[] = [
-    'Building_Services',
-    'Human_Resources',
-    'IT',
-    'Marketing',
-    'Sales',
-    'Warehouse',
-  ];
 
   constructor(private employeeListService: EmployeeListService) {}
 
