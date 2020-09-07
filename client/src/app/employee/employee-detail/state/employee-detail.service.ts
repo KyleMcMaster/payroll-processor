@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { ToastrService } from 'ngx-toastr';
-
-import { EmployeeDetail, EmployeeUpdate } from '@employee/employee-detail/state/employee-detail.model';
+import {
+  EmployeeDetail,
+  EmployeeUpdate,
+} from '@employee/employee-detail/state/employee-detail.model';
 import { EmployeeDetailStore } from '@employee/employee-detail/state/employee-detail.store';
+import { EmployeeListService } from '@employee/employee-list/state/employee-list.service';
 import { EnvService } from '@shared/env.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeDetailService {
@@ -14,6 +16,7 @@ export class EmployeeDetailService {
   constructor(
     envService: EnvService,
     private http: HttpClient,
+    private listService: EmployeeListService,
     private store: EmployeeDetailStore,
     private toastr: ToastrService,
   ) {
@@ -41,8 +44,9 @@ export class EmployeeDetailService {
         error: () =>
           this.toastr.error(`Could not update employee ${employeeUpdate.id}`),
         next: (detail) => {
-          this.toastr.show('Employee sucessfully updated!');
           this.store.update(detail);
+          this.listService.getEmployees();
+          this.toastr.show('Employee sucessfully updated!');
         },
         complete: () => this.store.setLoading(false),
       });

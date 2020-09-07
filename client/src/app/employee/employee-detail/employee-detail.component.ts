@@ -24,8 +24,7 @@ export class EmployeeDetailComponent {
   ];
 
   readonly filterForm = new FormGroup({
-    id: new FormControl(''),
-    department: new FormControl(''),
+    department: new FormControl({ value: '', disabled: true }),
     email: new FormControl(''),
     employmentStartedOn: new FormControl(''),
     firstName: new FormControl(''),
@@ -33,13 +32,19 @@ export class EmployeeDetailComponent {
     phone: new FormControl(''),
     status: new FormControl(''),
     title: new FormControl(''),
-    version: new FormControl(''),
   });
 
+  private _employee: EmployeeDetail;
+
   @Input()
+  get employee(): EmployeeDetail {
+    return this._employee;
+  }
   set employee(employee: EmployeeDetail) {
+    this._employee = employee;
+
     this.filterForm.patchValue({
-      ...employee,
+      ...this._employee,
       employmentStartedOn: this.datePipe.transform(
         employee.employmentStartedOn,
         'yyyy-MM-dd',
@@ -54,16 +59,14 @@ export class EmployeeDetailComponent {
 
   update() {
     const employee: EmployeeUpdate = {
-      id: this.filterForm.get('id').value,
-      department: this.filterForm.get('department').value,
-      employmentStartedOn: this.filterForm.get('employmentStartedOn').value,
+      ...this._employee,
       email: this.filterForm.get('email').value,
+      employmentStartedOn: this.filterForm.get('employmentStartedOn').value,
       firstName: this.filterForm.get('firstName').value,
       lastName: this.filterForm.get('lastName').value,
       phone: this.filterForm.get('phone').value,
       status: this.filterForm.get('status').value,
       title: this.filterForm.get('title').value,
-      version: this.filterForm.get('').value,
     };
 
     this.service.update(employee);
