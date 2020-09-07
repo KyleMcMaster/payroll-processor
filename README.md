@@ -37,7 +37,7 @@ Areas of interest:
 - [x] Create
 - [x] Read
 - [x] Update
-- [ ] Delete (soft)
+- [x] Delete (disable)
 
 #### Payrolls
 
