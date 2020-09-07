@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { departments } from '@department/department.model';
 import {
   EmployeeDetail,
   EmployeeUpdate,
@@ -14,14 +15,7 @@ import { EmployeeDetailService } from '@employee/employee-detail/state/employee-
   providers: [DatePipe],
 })
 export class EmployeeDetailComponent {
-  readonly departments: string[] = [
-    'Building_Services',
-    'Human_Resources',
-    'IT',
-    'Marketing',
-    'Sales',
-    'Warehouse',
-  ];
+  readonly departments = departments;
 
   readonly filterForm = new FormGroup({
     department: new FormControl({ value: '', disabled: true }),

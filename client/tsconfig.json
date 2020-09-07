@@ -21,6 +21,7 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom"],
     "paths": {
+      "@department/*": ["src/app/department/*"],
       "@employee/*": ["src/app/employee/*"],
       "@payroll/*": ["src/app/payroll/*"],
       "@shared/*": ["src/app/shared/*"]
