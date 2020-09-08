@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
@@ -43,11 +44,13 @@ namespace PayrollProcessor.Web.Api.Features.Employees
                 .Dispatch(new EmployeeQuery(request.EmployeeId))
                 .Bind(employee =>
                 {
+                    string payrollPeriod = (ISOWeek.GetWeekOfYear(request.CheckDate.DateTime) / 2).ToString().PadLeft(2, '0');
+
                     var newPayroll = new EmployeePayrollNew
                     {
                         CheckDate = request.CheckDate,
                         GrossPayroll = request.GrossPayroll,
-                        PayrollPeriod = request.PayrollPeriod
+                        PayrollPeriod = payrollPeriod
                     };
 
                     var newPayrollId = generator.Generate();
@@ -67,6 +70,5 @@ namespace PayrollProcessor.Web.Api.Features.Employees
         public Guid EmployeeId { get; set; }
         public DateTimeOffset CheckDate { get; set; }
         public decimal GrossPayroll { get; set; }
-        public string PayrollPeriod { get; set; } = "";
     }
 }
