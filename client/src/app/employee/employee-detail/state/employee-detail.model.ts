@@ -58,6 +58,4 @@ export interface EmployeePayrollCreate {
   checkDate: string;
   employeeId: string;
   grossPayroll: number;
-  payrollPeriod: number;
-  version: string;
 }

@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   EmployeeDetail,
+  EmployeePayroll,
+  EmployeePayrollCreate,
   EmployeeUpdate,
 } from '@employee/employee-detail/state/employee-detail.model';
 import { EmployeeDetailStore } from '@employee/employee-detail/state/employee-detail.store';
@@ -27,7 +29,7 @@ export class EmployeeDetailService {
     this.store.setLoading(true);
 
     this.http
-      .get<EmployeeDetail>(`${this.apiRootUrl}/Employees/${id}`)
+      .get<EmployeeDetail>(`${this.apiRootUrl}/employees/${id}`)
       .subscribe({
         error: () => this.toastr.error(`Could not get employee ${id}`),
         next: (detail) => this.store.update(detail),
@@ -39,7 +41,7 @@ export class EmployeeDetailService {
     this.store.setLoading(true);
 
     this.http
-      .put<EmployeeDetail>(`${this.apiRootUrl}/Employees`, employeeUpdate)
+      .put<EmployeeDetail>(`${this.apiRootUrl}/employees`, employeeUpdate)
       .subscribe({
         error: () =>
           this.toastr.error(`Could not update employee ${employeeUpdate.id}`),
@@ -47,6 +49,24 @@ export class EmployeeDetailService {
           this.store.update(detail);
           this.listService.getEmployees();
           this.toastr.show('Employee sucessfully updated!');
+        },
+        complete: () => this.store.setLoading(false),
+      });
+  }
+
+  createPayroll(employeePayrollCreate: EmployeePayrollCreate): void {
+    this.store.setLoading(true);
+
+    this.http
+      .post<EmployeePayroll>(
+        `${this.apiRootUrl}/employees/payrolls`,
+        employeePayrollCreate,
+      )
+      .subscribe({
+        error: () => this.toastr.error(`Could not create employee payroll`),
+        next: (payroll) => {
+          this.getEmployee(payroll.employeeId);
+          this.toastr.show('Payroll sucessfully created!');
         },
         complete: () => this.store.setLoading(false),
       });
