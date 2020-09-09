@@ -41,7 +41,7 @@ Areas of interest:
 
 #### Payrolls
 
-- [ ] Create
+- [x] Create
 - [x] Read
 - [ ] Update
 - [ ] Delete
