@@ -75,14 +75,11 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                 };
             }
 
-            public static EmployeeRecord From(EmployeeNew employee)
-            {
-                var partitionId = Guid.NewGuid();
-
-                return new EmployeeRecord
+            public static EmployeeRecord From(Guid newId, EmployeeNew employee) =>
+                new EmployeeRecord
                 {
-                    Id = partitionId,
-                    PartitionKey = partitionId.ToString(),
+                    Id = newId,
+                    PartitionKey = newId.ToString(),
                     Department = employee.Department,
                     EmploymentStartedOn = employee.EmploymentStartedOn,
                     FirstName = employee.FirstName,
@@ -95,7 +92,6 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
                     Status = employee.Status,
                     Title = employee.Title
                 };
-            }
 
             public static EmployeeRecord Merge(EmployeeUpdateCommand command)
             {

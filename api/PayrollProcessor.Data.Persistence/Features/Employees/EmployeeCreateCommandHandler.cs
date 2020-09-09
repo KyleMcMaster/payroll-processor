@@ -26,7 +26,7 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
 
         public TryOptionAsync<Employee> Execute(EmployeeCreateCommand command, CancellationToken token)
         {
-            var record = EmployeeRecord.Map.From(command.Employee);
+            var record = EmployeeRecord.Map.From(command.NewId, command.Employee);
 
             return async () =>
             {
