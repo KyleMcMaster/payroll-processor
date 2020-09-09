@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace PayrollProcessor.Web.Api.Features.Notifications
 {
-    [Route("api/[controller]")]
+    [Route("notification")]
     [ApiController]
     public class NotificationController : ControllerBase
     {
