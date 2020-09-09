@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
@@ -31,7 +32,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
             OperationId = "Employees.Create",
             Tags = new[] { "Employees" })
         ]
-        public override Task<ActionResult<Employee>> HandleAsync([FromBody] EmployeeCreateRequest request)
+        public override Task<ActionResult<Employee>> HandleAsync([FromBody] EmployeeCreateRequest request, CancellationToken token)
         {
             var command = new EmployeeCreateCommand(
                 generator.Generate(),

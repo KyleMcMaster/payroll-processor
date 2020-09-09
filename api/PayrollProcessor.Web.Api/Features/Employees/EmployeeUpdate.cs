@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
@@ -31,8 +32,8 @@ namespace PayrollProcessor.Web.Api.Features.Employees
             OperationId = "Employee.Update",
             Tags = new[] { "Employees" })
         ]
-        public override Task<ActionResult<Employee>> HandleAsync(EmployeeUpdateRequest request) =>
-            queryDispatcher.Dispatch(new EmployeeQuery(request.Id))
+        public override Task<ActionResult<Employee>> HandleAsync(EmployeeUpdateRequest request, CancellationToken token) =>
+            queryDispatcher.Dispatch(new EmployeeQuery(request.Id), token)
                 .Bind(employee =>
                 {
                     var command = new EmployeeUpdateCommand(
