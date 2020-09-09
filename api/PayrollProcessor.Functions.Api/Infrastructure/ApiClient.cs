@@ -34,7 +34,7 @@ namespace PayrollProcessor.Functions.Api.Infrastructure
 
             return async () =>
             {
-                var response = await client.PostAsJsonAsync("/api/notification", notification);
+                var response = await client.PostAsJsonAsync("/api/v1/notification", notification);
 
                 response.EnsureSuccessStatusCode();
 
