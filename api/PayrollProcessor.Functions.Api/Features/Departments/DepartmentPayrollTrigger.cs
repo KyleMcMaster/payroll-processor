@@ -1,6 +1,6 @@
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.Azure.Storage.Queue;
 using PayrollProcessor.Functions.Api.Infrastructure;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
