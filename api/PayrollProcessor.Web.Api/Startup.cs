@@ -34,7 +34,9 @@ namespace PayrollProcessor.Web.Api
                         .AllowAnyHeader()
                         .AllowCredentials()));
 
-            services.AddControllers(options => options.UseGlobalRoutePrefix("api/v{version:apiVersion}"));
+            services
+                .AddControllers(options => options.UseGlobalRoutePrefix("api/v{version:apiVersion}"))
+                .AddNewtonsoftJson();
 
             services.AddApiVersioning(options =>
             {
