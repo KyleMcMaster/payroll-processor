@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.GuardClauses" Version="1.5.0" />
-    <PackageReference Include="LanguageExt.Core" Version="3.4.14" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="3.0.0" />
+    <PackageReference Include="LanguageExt.Core" Version="3.4.15" />
     <PackageReference Include="NewtonSoft.Json" Version="12.0.3" />
   </ItemGroup>
 

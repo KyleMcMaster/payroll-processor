@@ -96,7 +96,7 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "Api: Test",
+      "label": "API: Test",
       "detail": "Runs tests against the Payroll Processor API project",
       "command": "dotnet",
       "args": [

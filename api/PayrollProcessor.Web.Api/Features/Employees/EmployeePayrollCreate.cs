@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Globalization;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
@@ -39,9 +40,9 @@ namespace PayrollProcessor.Web.Api.Features.Employees
             OperationId = "EmployeePayroll.Create",
             Tags = new[] { "Employees", "Payrolls" })
         ]
-        public override Task<ActionResult<EmployeePayroll>> HandleAsync([FromBody] EmployeePayrollCreateRequest request) =>
+        public override Task<ActionResult<EmployeePayroll>> HandleAsync([FromBody] EmployeePayrollCreateRequest request, CancellationToken token) =>
             queryDispatcher
-                .Dispatch(new EmployeeQuery(request.EmployeeId))
+                .Dispatch(new EmployeeQuery(request.EmployeeId), token)
                 .Bind(employee =>
                 {
                     string payrollPeriod = (ISOWeek.GetWeekOfYear(request.CheckDate.DateTime) / 2).ToString().PadLeft(2, '0');

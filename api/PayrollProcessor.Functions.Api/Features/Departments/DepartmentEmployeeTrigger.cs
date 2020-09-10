@@ -1,6 +1,6 @@
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.Azure.Storage.Queue;
 using PayrollProcessor.Functions.Api.Infrastructure;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
@@ -11,6 +11,8 @@ using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
+using LanguageExt;
+using System;
 
 namespace PayrollProcessor.Functions.Api.Features.Departments
 {
@@ -60,37 +62,48 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
                     return;
 
                 default:
+                    log.LogWarning("Queue message with {eventName} cannot be handled", eventName);
+
                     return;
             }
         }
 
-        private Task HandleEmployeeCreation(CloudQueueMessage queueMessage, ILogger log)
-        {
-            var message = QueueMessageHandler.FromQueueMessage<EmployeeCreation>(queueMessage);
+        private Task HandleEmployeeCreation(CloudQueueMessage queueMessage, ILogger log) =>
+            queueMessage
+                .Apply(QueueMessageHandler.FromQueueMessage<EmployeeCreation>)
+                .Apply(message => queryDispatcher.Dispatch(new EmployeeQuery(message.EmployeeId))
+                    .DoIfNoneOrFail(
+                        () => log.LogError("Could not find Employee {employeeId}", message.EmployeeId),
+                        ex => log.LogError(ex, "Could not query for Employee {employeeId}", message.EmployeeId))
+                    .Bind(
+                        employee => commandDispatcher.Dispatch(new DepartmentEmployeeCreateCommand(employee, idGenerator.Generate()))
+                            .DoIfFail(ex => log.LogError(ex, "Could not create Department Employee for {@employee}", employee))
+                            .Do(de => log.LogInformation("{@departmentEmployee} created for {employeeId}", de, message.EmployeeId)))
+                    .Bind(departmentEmployee =>
+                        apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee)
+                            .DoIfFail(ex => log.LogError(ex, "Could not send API notification for {@departmentEmployee} creation", departmentEmployee))
+                            .Do(_ => log.LogInformation($"API notification sent")))
+                    .Try());
 
-            return queryDispatcher.Dispatch(new EmployeeQuery(message.EmployeeId))
-                .Bind(employee => commandDispatcher.Dispatch(new DepartmentEmployeeCreateCommand(employee, idGenerator.Generate())))
-                .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee))
-                .Match(
-                    _ => log.LogInformation(""),
-                    () => log.LogError(""),
-                    e => log.LogError(e, ""));
-        }
+        private Task HandleEmployeeUpdate(CloudQueueMessage queueMessage, ILogger log) =>
+            queueMessage
+                .Apply(QueueMessageHandler.FromQueueMessage<EmployeeUpdate>)
+                .Apply(message => queryDispatcher.Dispatch(new EmployeeQuery(message.EmployeeId))
+                    .DoIfNoneOrFail(
+                        () => log.LogError("Could not find {employeeId}", message.EmployeeId),
+                        ex => log.LogError(ex, "Could not query for employee {employeeId}", message.EmployeeId)
+                    )
+                    .SelectMany(
+                        employee => queryDispatcher.Dispatch(new DepartmentEmployeeQuery(employee.Department, employee.Id))
+                            .DoIfNoneOrFail(
+                                () => log.LogError("Could not find Department Employee for {employeeId} in {department}", employee.Id, employee.Department),
+                                ex => log.LogError(ex, "Could not query for Department Employee for {employeeId} in {department}", employee.Id, employee.Department)),
+                        (employee, departmentEmployee) => new { employee, departmentEmployee })
+                    .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentEmployeeUpdateCommand(aggregate.employee, aggregate.departmentEmployee))
+                        .DoIfFail(ex => log.LogError(ex, "Could not update Department Employee {departmentEmployeeId} from Employee {employeeId}", aggregate.departmentEmployee.Id, aggregate.employee.Id)))
+                    .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee)
+                        .DoIfFail(ex => log.LogError(ex, "Could not send API Notification")))
+                    .Try());
 
-        private Task HandleEmployeeUpdate(CloudQueueMessage queueMessage, ILogger log)
-        {
-            var message = QueueMessageHandler.FromQueueMessage<EmployeeUpdate>(queueMessage);
-
-            return queryDispatcher.Dispatch(new EmployeeQuery(message.EmployeeId))
-                .SelectMany(
-                    employee => queryDispatcher.Dispatch(new DepartmentEmployeeQuery(employee.Department, employee.Id)),
-                    (employee, departmentEmployee) => new { employee, departmentEmployee })
-                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentEmployeeUpdateCommand(aggregate.employee, aggregate.departmentEmployee)))
-                .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee))
-                .Match(
-                    _ => log.LogInformation(""),
-                    () => log.LogError(""),
-                    e => log.LogError(e, ""));
-        }
     }
 }

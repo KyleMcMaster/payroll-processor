@@ -7,6 +7,7 @@ using PayrollProcessor.Web.Api.Infrastructure.Responses;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Threading;
 
 namespace PayrollProcessor.Web.Api.Features.Employees
 {
@@ -28,9 +29,9 @@ namespace PayrollProcessor.Web.Api.Features.Employees
             OperationId = "Employees.GetAll",
             Tags = new[] { "Employees" })
         ]
-        public override Task<ActionResult<EmployeesResponse>> HandleAsync([FromQuery] EmployeesGetRequest request) =>
+        public override Task<ActionResult<EmployeesResponse>> HandleAsync([FromQuery] EmployeesGetRequest request, CancellationToken token) =>
              dispatcher
-                .Dispatch(new EmployeesQuery(request.Count, request.Email, request.FirstName, request.LastName))
+                .Dispatch(new EmployeesQuery(request.Count, request.Email, request.FirstName, request.LastName), token)
                 .Match<IEnumerable<Employee>, ActionResult<EmployeesResponse>>(
                     e => new EmployeesResponse(e),
                     () => NotFound("Employees"),

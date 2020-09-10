@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
@@ -28,9 +29,9 @@ namespace PayrollProcessor.Web.Api.Features.Employees
             OperationId = "Employee.Get",
             Tags = new[] { "Employees" })
         ]
-        public override Task<ActionResult<EmployeeDetail>> HandleAsync([FromRoute] Guid employeeId) =>
+        public override Task<ActionResult<EmployeeDetail>> HandleAsync([FromRoute] Guid employeeId, CancellationToken token) =>
             dispatcher
-                .Dispatch(new EmployeeDetailQuery(employeeId))
+                .Dispatch(new EmployeeDetailQuery(employeeId), token)
                 .Match<EmployeeDetail, ActionResult<EmployeeDetail>>(
                     e => e,
                     () => NotFound($"Employee [{employeeId}]"),
