@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 
 import { ToastrService } from 'ngx-toastr';
 
-import { EmployeeDetail } from '@employee/employee-detail/state/employee.model';
+import { EmployeeDetail } from '@employee/employee-detail/state/employee-detail.model';
 import { EmployeeCreate, EmployeeListItem } from '@employee/employee-list/state/employee-list.model';
 import { EmployeeListStore } from '@employee/employee-list/state/employee-list.store';
 import { EnvService } from '@shared/env.service';
@@ -49,7 +49,10 @@ export class EmployeeListService {
       .post<EmployeeDetail>(`${this.apiRootUrl}/employees`, employee)
       .subscribe({
         error: () => this.toastr.error(`Could not create employee`),
-        next: (detail) => this.store.upsert(detail.id, detail),
+        next: (detail) => {
+          this.toastr.show('Employee sucessfully created!');
+          this.store.upsert(detail.id, detail);
+        },
         complete: () => this.store.setLoading(false),
       });
   }

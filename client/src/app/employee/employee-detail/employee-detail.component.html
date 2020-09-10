@@ -1,69 +1,89 @@
-<div class="row mt-2 mb-2">
-  <div class="col-2">
-    <h5>Employee Details</h5>
+<form [formGroup]="filterForm" (submit)="update()">
+  <div class="row mt-2 mb-2">
+    <div class="col-2">
+      <h5>Employee Details</h5>
+    </div>
   </div>
-</div>
-<div class="row mb-3">
-  <div class="col-3">
-    <label>First Name: </label>
-    <input
-      class="d-block form-control"
-      type="text"
-      [value]="employee.firstName"
-    />
+  <div class="row mb-3">
+    <div class="col-3">
+      <label>First Name: </label>
+      <input
+        class="d-block form-control"
+        formControlName="firstName"
+        type="text"
+      />
+    </div>
+    <div class="col-3">
+      <label>Last Name: </label>
+      <input
+        class="d-block form-control"
+        formControlName="lastName"
+        type="text"
+      />
+    </div>
   </div>
-  <div class="col-3">
-    <label>Last Name: </label>
-    <input
-      class="d-block form-control"
-      type="text"
-      [value]="employee.lastName"
-    />
+  <div class="row mb-3">
+    <div class="col-3">
+      <label>Email: </label>
+      <input
+        class="d-block form-control"
+        formControlName="email"
+        type="email"
+      />
+    </div>
+    <div class="col-3">
+      <label>Phone: </label>
+      <input class="d-block form-control" formControlName="phone" type="text" />
+    </div>
   </div>
-</div>
-<div class="row mb-3">
-  <div class="col-3">
-    <label>Email: </label>
-    <input
-      class="d-block form-control"
-      type="email"
-      readonly=""
-      [value]="employee.email"
-    />
+  <div class="row mb-3">
+    <div class="col-3">
+      <label>Department: </label>
+      <select class="custom-select" formControlName="department">
+        <option *ngFor="let department of departments" [ngValue]="department">
+          {{ department | unslugify }}
+        </option>
+      </select>
+    </div>
+    <div class="col-3">
+      <label>Title: </label>
+      <input class="d-block form-control" formControlName="title" type="text" />
+    </div>
   </div>
-  <div class="col-3">
-    <label>Phone: </label>
-    <input class="d-block form-control" type="text" [value]="employee.phone" />
+  <div class="row mb-3">
+    <div class="col-3">
+      <label>Start Date: </label>
+      <input
+        class="d-block form-control"
+        formControlName="employmentStartedOn"
+        type="date"
+      />
+    </div>
+    <div class="col-3">
+      <label>Status: </label>
+      <div class="row">
+        <div class="col-6">
+          <select class="custom-select" formControlName="status">
+            <option>Disabled</option>
+            <option>Enabled</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-outline-info" type="submit">Save</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div class="row mb-3">
-  <div class="col-3">
-    <label>Department: </label>
-    <input
-      class="d-block form-control"
-      type="text"
-      [value]="employee.department"
-    />
-  </div>
-  <div class="col-3">
-    <label>Title: </label>
-    <input class="d-block form-control" type="text" [value]="employee.title" />
-  </div>
-</div>
-<div class="row mb-3">
-  <div class="col-3">
-    <label>Start Date: </label>
-    <input
-      class="d-block form-control"
-      type="text"
-      [value]="employee.employmentStartedOn | date"
-    />
-  </div>
-</div>
+</form>
 <div class="row">
-  <div class="col-6 pt-3">
+  <div class="col-3 pt-3">
     <app-employee-payroll-list
       [payrolls]="employee.payrolls"
     ></app-employee-payroll-list>
+  </div>
+  <div class="col-3 pt-3">
+    <app-employee-payroll-create
+      [employee]="employee"
+    ></app-employee-payroll-create>
   </div>
 </div>

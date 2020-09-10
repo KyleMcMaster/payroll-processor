@@ -1,0 +1,26 @@
+<form [formGroup]="filterForm" (submit)="create()">
+  <h5>Create Payroll</h5>
+  <div class="row">
+    <div class="col-6">
+      <label>Check Date</label>
+    </div>
+    <div class="col-4">
+      <label>Gross Payroll</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <input
+        class="d-block form-control"
+        formControlName="checkDate"
+        type="date"
+      />
+    </div>
+    <div class="col-4">
+      <input class="form-control" formControlName="grossPayroll" type="text" />
+    </div>
+    <div class="col-2">
+      <button class="btn btn-outline-info" type="submit">Save</button>
+    </div>
+  </div>
+</form>

@@ -30,17 +30,29 @@ Areas of interest:
 
 ## Roadmap
 
-- MVP
+### MVP
 
-  - Initial Employee CRUD functionality
-  - Initial Payroll CRUD functionality
+#### Employees
 
-- TODOs
+- [x] Create
+- [x] Read
+- [x] Update
+- [x] Delete (disable)
 
-  - Analytics like payroll totals by department, risk, and time
-  - Integrate Cosmos Db change feed
-  - Handle poison queue messages
-  - Add helpful notifications from SignalR messages
+#### Payrolls
+
+- [x] Create
+- [x] Read
+- [ ] Update
+- [ ] Delete
+
+### Future Enhancements
+
+- Analytics like payroll totals by department, risk, and time
+- Integrate Cosmos Db change feed
+- Handle poison queue messages
+- Add helpful notifications from SignalR messages
+- Configure Tye app orchestrations
 
 ## Contributors ✨
 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-
+import { departments } from '@department/department.model';
 import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
-
 import { PayrollListQuery } from '@payroll/payroll-list/state/payroll-list.query';
 import { PayrollListService } from '@payroll/payroll-list/state/payroll-list.service';
 
@@ -16,14 +15,7 @@ export class PayrollComponent {
   readonly payrolls = this.query.selectAll();
   selectedDepartment = 'Building_Services';
 
-  readonly departments: Array<string> = [
-    'Building_Services',
-    'Human_Resources',
-    'IT',
-    'Marketing',
-    'Sales',
-    'Warehouse',
-  ];
+  readonly departments = departments;
 
   constructor(
     private query: PayrollListQuery,
