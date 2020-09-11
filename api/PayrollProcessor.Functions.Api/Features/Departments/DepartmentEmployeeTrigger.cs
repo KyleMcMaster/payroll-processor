@@ -12,7 +12,6 @@ using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 using LanguageExt;
-using System;
 
 namespace PayrollProcessor.Functions.Api.Features.Departments
 {
@@ -78,12 +77,12 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
                     .Bind(
                         employee => commandDispatcher.Dispatch(new DepartmentEmployeeCreateCommand(employee, idGenerator.Generate()))
                             .DoIfFail(ex => log.LogError(ex, "Could not create Department Employee for {@employee}", employee))
-                            .Do(de => log.LogInformation("{@departmentEmployee} created for {employeeId}", de, message.EmployeeId)))
-                    .Bind(departmentEmployee =>
-                        apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee)
-                            .DoIfFail(ex => log.LogError(ex, "Could not send API notification for {@departmentEmployee} creation", departmentEmployee))
-                            .Do(_ => log.LogInformation($"API notification sent")))
-                    .Try());
+                            .Do(de => log.LogInformation("{@departmentEmployee} created for {employeeId}", de, message.EmployeeId))))
+                .Bind(departmentEmployee =>
+                    apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee)
+                        .DoIfFail(ex => log.LogError(ex, "Could not send API notification for {@departmentEmployee} creation", departmentEmployee))
+                        .Do(_ => log.LogInformation($"API notification sent")))
+                .Try();
 
         private Task HandleEmployeeUpdate(CloudQueueMessage queueMessage, ILogger log) =>
             queueMessage
@@ -94,16 +93,24 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
                         ex => log.LogError(ex, "Could not query for employee {employeeId}", message.EmployeeId)
                     )
                     .SelectMany(
-                        employee => queryDispatcher.Dispatch(new DepartmentEmployeeQuery(employee.Department, employee.Id))
-                            .DoIfNoneOrFail(
-                                () => log.LogError("Could not find Department Employee for {employeeId} in {department}", employee.Id, employee.Department),
-                                ex => log.LogError(ex, "Could not query for Department Employee for {employeeId} in {department}", employee.Id, employee.Department)),
-                        (employee, departmentEmployee) => new { employee, departmentEmployee })
-                    .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentEmployeeUpdateCommand(aggregate.employee, aggregate.departmentEmployee))
-                        .DoIfFail(ex => log.LogError(ex, "Could not update Department Employee {departmentEmployeeId} from Employee {employeeId}", aggregate.departmentEmployee.Id, aggregate.employee.Id)))
-                    .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee)
-                        .DoIfFail(ex => log.LogError(ex, "Could not send API Notification")))
-                    .Try());
+                        employee =>
+                        {
+                            var query = new DepartmentEmployeeQuery(employee.Department, employee.Id);
+
+                            return queryDispatcher
+                                .Dispatch(query)
+                                .DoIfNoneOrFail(
+                                    () => log.LogError("Could not find Department Employee for {@query}", query),
+                                    ex => log.LogError(ex, "Could not query for Department Employee for {@query}", query));
+                        },
+                        (employee, departmentEmployee) => new { employee, departmentEmployee }))
+                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentEmployeeUpdateCommand(aggregate.employee, aggregate.departmentEmployee))
+                    .DoIfFail(ex => log.LogError(ex, "Could not update Department Employee {departmentEmployeeId} from Employee {employeeId}", aggregate.departmentEmployee.Id, aggregate.employee.Id))
+                    .Do(de => log.LogInformation("{@departmentEmployee} updated", de)))
+                .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee)
+                    .DoIfFail(ex => log.LogError(ex, "Could not send API Notification"))
+                    .Do(_ => log.LogInformation($"API notification sent")))
+                .Try();
 
     }
 }
