@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { EmployeeDetail, EmployeePayrollCreate } from '@employee/employee-detail/state/employee-detail.model';
@@ -9,7 +9,7 @@ import { EmployeeDetailService } from '@employee/employee-detail/state/employee-
   templateUrl: './employee-payroll-create.component.html',
   styleUrls: ['./employee-payroll-create.component.scss'],
 })
-export class EmployeePayrollCreateComponent implements OnChanges {
+export class EmployeePayrollCreateComponent {
   filterForm = new FormGroup({
     checkDate: new FormControl(''),
     employeeId: new FormControl(''),
@@ -20,14 +20,12 @@ export class EmployeePayrollCreateComponent implements OnChanges {
   set employee(employee: EmployeeDetail) {
     this.filterForm.patchValue({
       employeeId: employee.id,
+      checkDate: '',
+      grossPayroll: '',
     });
   }
 
   constructor(private detailService: EmployeeDetailService) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.filterForm.reset();
-  }
 
   create(): void {
     const payroll: EmployeePayrollCreate = {
