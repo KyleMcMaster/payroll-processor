@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   readonly links = [
     { path: 'employees', title: 'Employees' },
     { path: 'payrolls', title: 'Payrolls' },
+    { path: 'admin', title: 'Admin' },
   ];
 
   constructor(
