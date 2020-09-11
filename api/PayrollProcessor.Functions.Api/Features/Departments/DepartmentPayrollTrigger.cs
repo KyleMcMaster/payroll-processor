@@ -11,6 +11,7 @@ using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 using PayrollProcessor.Data.Persistence.Features.Employees.QueueMessages;
+using LanguageExt;
 
 namespace PayrollProcessor.Functions.Api.Features.Departments
 {
@@ -60,45 +61,67 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
                     return;
 
                 default:
+                    log.LogWarning("Queue message with {eventName} cannot be handled", eventName);
+
                     return;
             }
         }
 
-        private Task HandleEmployeePayrollCreation(CloudQueueMessage queueMessage, ILogger log)
-        {
-            var (employeeId, employeePayrollId) = QueueMessageHandler.FromQueueMessage<EmployeePayrollCreation>(queueMessage);
+        private Task HandleEmployeePayrollCreation(CloudQueueMessage queueMessage, ILogger log) =>
+            queueMessage
+                .Apply(QueueMessageHandler.FromQueueMessage<EmployeePayrollCreation>)
+                .Apply(message => queryDispatcher.Dispatch(new EmployeeQuery(message.EmployeeId))
+                    .DoIfNoneOrFail(
+                        () => log.LogError("Could not find Employee {employeeId}", message.EmployeeId),
+                        ex => log.LogError(ex, "Could not query for Employee {employeeId}", message.EmployeeId)
+                    )
+                    .SelectMany(
+                        employee => queryDispatcher.Dispatch(new EmployeePayrollQuery(employee.Id, message.EmployeePayrollId))
+                            .DoIfNoneOrFail(
+                                () => log.LogError("Could not find Employee Payroll for {employeeId} and {employeePayrollId}", employee.Id, message.EmployeePayrollId),
+                                ex => log.LogError(ex, "Could not query for Employee Payroll for {employeeId} and {employeePayrollId}", employee.Id, message.EmployeePayrollId)),
+                        (employee, employeePayroll) => new { employee, employeePayroll })
+                )
+                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentPayrollCreateCommand(aggregate.employee, idGenerator.Generate(), aggregate.employeePayroll))
+                    .DoIfFail(ex => log.LogError(ex, "Could not create Department Payroll for {@employee} and {@payroll}", aggregate.employee, aggregate.employeePayroll))
+                    .Do(dp => log.LogInformation("{@departmentPayroll} created for {employeeId} {employeePayrollId}", dp, aggregate.employee.Id, aggregate.employeePayroll.Id)))
+                .Bind(departmentPayroll => apiClient.SendNotification(nameof(EmployeePayrollUpdatesQueue), departmentPayroll)
+                    .DoIfFail(ex => log.LogError(ex, "Could not send API notification for {@departmentPayroll} creation", departmentPayroll))
+                    .Do(_ => log.LogInformation($"API notification sent")))
+                .Try();
 
-            return queryDispatcher.Dispatch(new EmployeeQuery(employeeId))
+        private Task HandleEmployeePayrollUpdate(CloudQueueMessage queueMessage, ILogger log) =>
+            queueMessage
+                .Apply(QueueMessageHandler.FromQueueMessage<EmployeePayrollUpdate>)
+                .Apply(message => queryDispatcher.Dispatch(new EmployeeQuery(message.EmployeeId))
+                    .DoIfNoneOrFail(
+                        () => log.LogError("Could not find Employee {employeeId}", message.EmployeeId),
+                        ex => log.LogError(ex, "Could not query for Employee {employeeId}", message.EmployeeId)
+                    )
+                    .SelectMany(
+                        employee => queryDispatcher.Dispatch(new EmployeePayrollQuery(message.EmployeeId, message.EmployeePayrollId))
+                            .DoIfNoneOrFail(
+                                () => log.LogError("Could not find Employee Payroll for {employeeId} and {employeePayrollId}", employee.Id, message.EmployeePayrollId),
+                                ex => log.LogError(ex, "Could not query for Employee Payroll for {employeeId} and {employeePayrollId}", employee.Id, message.EmployeePayrollId)),
+                        (employee, employeePayroll) => new { employee, employeePayroll }))
                 .SelectMany(
-                    employee => queryDispatcher.Dispatch(new EmployeePayrollQuery(employeeId, employeePayrollId)),
-                    (employee, employeePayroll) => new { employee, employeePayroll })
-                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentPayrollCreateCommand(aggregate.employee, idGenerator.Generate(), aggregate.employeePayroll)))
-                .Bind(departmentPayroll => apiClient.SendNotification(nameof(EmployeePayrollUpdatesQueue), departmentPayroll))
-                .Match(
-                    _ => log.LogInformation(""),
-                    () => log.LogError(""),
-                    ex => log.LogError(ex, "")
-                );
-        }
+                    aggregate =>
+                    {
+                        var query = new DepartmentPayrollQuery(aggregate.employee.Department, aggregate.employeePayroll.Id);
 
-        private Task HandleEmployeePayrollUpdate(CloudQueueMessage queueMessage, ILogger log)
-        {
-            var (employeeId, employeePayrollId) = QueueMessageHandler.FromQueueMessage<EmployeePayrollUpdate>(queueMessage);
-
-            return queryDispatcher.Dispatch(new EmployeeQuery(employeeId))
-                .SelectMany(
-                    employee => queryDispatcher.Dispatch(new EmployeePayrollQuery(employeeId, employeePayrollId)),
-                    (employee, employeePayroll) => new { employee, employeePayroll })
-                .SelectMany(
-                    aggregate => queryDispatcher.Dispatch(new DepartmentPayrollQuery(aggregate.employee.Department, aggregate.employeePayroll.Id)),
+                        return queryDispatcher
+                            .Dispatch(query)
+                            .DoIfNoneOrFail(
+                                () => log.LogError("Could not find Department Payroll for {@query}", query),
+                                ex => log.LogError(ex, "Could not query for Department Payroll for {@query}", query));
+                    },
                     (a, b) => new { a.employee, a.employeePayroll, departmentEmployee = b })
-                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentPayrollUpdateCommand(aggregate.employee, aggregate.employeePayroll, aggregate.departmentEmployee)))
-                .Bind(departmentPayroll => apiClient.SendNotification(nameof(EmployeePayrollUpdatesQueue), departmentPayroll))
-                .Match(
-                    _ => log.LogInformation(""),
-                    () => log.LogError(""),
-                    ex => log.LogError(ex, "")
-                );
-        }
+                .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentPayrollUpdateCommand(aggregate.employee, aggregate.employeePayroll, aggregate.departmentEmployee))
+                    .DoIfFail(ex => log.LogError(ex, "Could not update Department Payroll for {@employee} and {@payroll}", aggregate.employee, aggregate.employeePayroll))
+                    .Do(dp => log.LogInformation("{@departmentPayroll} updated", dp)))
+                .Bind(departmentPayroll => apiClient.SendNotification(nameof(EmployeePayrollUpdatesQueue), departmentPayroll)
+                    .DoIfFail(ex => log.LogError(ex, "Could not send API notification for {@departmentPayroll} update", departmentPayroll))
+                    .Do(_ => log.LogInformation($"API notification sent")))
+                .Try();
     }
 }
