@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { EmployeeDetail, EmployeePayrollCreate } from '@employee/employee-detail/state/employee-detail.model';
 import { EmployeeDetailService } from '@employee/employee-detail/state/employee-detail.service';
-import { ClockService } from '@shared/clock.service';
 
 @Component({
   selector: 'app-employee-payroll-create',
@@ -12,24 +11,21 @@ import { ClockService } from '@shared/clock.service';
 })
 export class EmployeePayrollCreateComponent {
   filterForm = new FormGroup({
-    checkDate: new FormControl(this.clock.now().getDate()),
+    checkDate: new FormControl(''),
     employeeId: new FormControl(''),
-    grossPayroll: new FormControl(0),
+    grossPayroll: new FormControl(''),
   });
 
   @Input()
   set employee(employee: EmployeeDetail) {
     this.filterForm.patchValue({
       employeeId: employee.id,
-      checkDate: this.clock.now(),
-      grossPayroll: 0,
+      checkDate: '',
+      grossPayroll: '',
     });
   }
 
-  constructor(
-    private detailService: EmployeeDetailService,
-    private clock: ClockService,
-  ) {}
+  constructor(private detailService: EmployeeDetailService) {}
 
   create(): void {
     const payroll: EmployeePayrollCreate = {
