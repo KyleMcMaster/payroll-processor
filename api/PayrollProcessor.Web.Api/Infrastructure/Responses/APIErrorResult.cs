@@ -1,5 +1,4 @@
 using System;
-using Ardalis.ApiEndpoints;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Microsoft.AspNetCore.Mvc
@@ -14,6 +13,8 @@ namespace Microsoft.AspNetCore.Mvc
                 : errorMessage;
 
             Value = new { Id = Guid.NewGuid(), Message = message };
+
+            StatusCode = 500;
         }
     }
 }
