@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
@@ -78,10 +79,15 @@ namespace PayrollProcessor.Functions.Api.Features.Resources
             int employeesCount = int.Parse(employeesCountQuery.FirstOrDefault() ?? "5");
             int payrollsMaxCount = int.Parse(payrollsMaxCountQuery.FirstOrDefault() ?? "10");
 
+            var timer = Stopwatch.StartNew();
+
             var domainSeed = new DomainSeed(new EmployeeSeed());
 
             var employeesContainer = client.GetContainer(Databases.PayrollProcessor.Name, Databases.PayrollProcessor.Containers.Employees);
             var departmentsContainer = client.GetContainer(Databases.PayrollProcessor.Name, Databases.PayrollProcessor.Containers.Departments);
+
+            int totalEmployees = 0;
+            int totalPayrolls = 0;
 
             foreach (var employee in domainSeed.BuildAll(employeesCount, payrollsMaxCount))
             {
@@ -98,10 +104,16 @@ namespace PayrollProcessor.Functions.Api.Features.Resources
 
                     await departmentsContainer.CreateItemAsync(departmentPayrollRecord);
                     await employeesContainer.CreateItemAsync(employeePayrollRecord);
+
+                    totalPayrolls++;
                 }
+
+                totalEmployees++;
             }
 
-            return new OkResult();
+            timer.Stop();
+
+            return new JsonResult(new { totalEmployees, totalPayrolls, totalMilliseconds = timer.Elapsed.TotalMilliseconds });
         }
     }
 }

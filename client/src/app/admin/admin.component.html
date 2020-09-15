@@ -1,0 +1,70 @@
+<div class="ml-3 mr-3">
+  <div class="row full-height">
+    <div class="col-4 background-dark border-light">
+      <div class="row mt-3">
+        <div class="col d-flex justify-content-between">
+          Stats
+          <fa-icon
+            class="btn"
+            [icon]="faSyncAlt"
+            (click)="onRefreshStats()"
+          ></fa-icon>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">Total Employees</div>
+        <div class="col-6">{{ (stats | async).totalEmployees }}</div>
+      </div>
+      <div class="row">
+        <div class="col-6">Total Payrolls</div>
+        <div class="col-6">{{ (stats | async).totalPayrolls }}</div>
+      </div>
+    </div>
+    <div class="col-8 border-info pt-3">
+      <form [formGroup]="form" (submit)="onCreate()">
+        <div class="row mb-5">
+          <div class="col-6">
+            <label>Total Employees:</label>
+            <input
+              formControlName="totalEmployees"
+              type="number"
+              class="form-control"
+              placeholder="10"
+              required
+            />
+          </div>
+          <div class="col-6">
+            <label>May Payrolls per Employee:</label>
+            <input
+              type="number"
+              formControlName="maxPayrolls"
+              class="form-control"
+              placeholder="5"
+              required
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col d-flex justify-content-between">
+            <button class="btn btn-primary" type="submit">Create</button>
+            <button
+              class="btn btn-outline-info"
+              type="reset"
+              (click)="onReset()"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </form>
+      <ngx-spinner
+        name="resources"
+        bdColor="rgba(0, 0, 0, 0.8)"
+        size="medium"
+        color="#fff"
+        type="ball-spin"
+        [fullScreen]="false"
+      ></ngx-spinner>
+    </div>
+  </div>
+</div>

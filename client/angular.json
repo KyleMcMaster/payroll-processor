@@ -6,8 +6,8 @@
     "payroll-processor-client": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
+        "@datorama/akita:component": {
+          "styleext": "scss"
         }
       },
       "root": "",
@@ -129,6 +129,7 @@
   },
   "defaultProject": "payroll-processor-client",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "defaultCollection": "@datorama/akita"
   }
 }

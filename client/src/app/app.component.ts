@@ -9,8 +9,7 @@ import { NotificationService } from '@shared/notification.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'payroll-processor';
-  active = 'employees';
+  readonly title = 'payroll-processor';
 
   readonly fragment = this.route.fragment;
 
