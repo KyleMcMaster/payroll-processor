@@ -33,23 +33,20 @@ namespace PayrollProcessor.Web.Api.Features.Employees
             Tags = new[] { "Employees" })
         ]
         public override Task<ActionResult<Employee>> HandleAsync(EmployeeUpdateRequest request, CancellationToken token) =>
-            queryDispatcher.Dispatch(new EmployeeQuery(request.Id), token)
-                .Bind(employee =>
-                {
-                    var command = new EmployeeUpdateCommand(
-                        request.Email,
-                        request.EmploymentStartedOn,
-                        request.FirstName,
-                        request.LastName,
-                        request.Phone,
-                        request.Status,
-                        request.Title,
-                        request.Version,
-                        employee
-                    );
-
-                    return commandDispatcher.Dispatch(command);
-                })
+            queryDispatcher
+                .Dispatch(new EmployeeQuery(request.Id), token)
+                .Map(employee => new EmployeeUpdateCommand(
+                    request.Email,
+                    request.EmploymentStartedOn,
+                    request.FirstName,
+                    request.LastName,
+                    request.Phone,
+                    request.Status,
+                    request.Title,
+                    request.Version,
+                    employee
+                ))
+                .Bind(command => commandDispatcher.Dispatch(command).ToTryOption())
                 .Match<Employee, ActionResult<Employee>>(
                     e => e,
                     () => NotFound($"Employee [{request.Id}]"),

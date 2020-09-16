@@ -30,4 +30,9 @@ namespace Microsoft.Azure.Cosmos
                 PartitionKey = new PartitionKey(partitionKey.ToLowerInvariant())
             });
     }
+
+    public static class CosmosResponse
+    {
+        public static T Unwrap<T>(Response<T> response) => response.Resource;
+    }
 }

@@ -43,7 +43,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
                         employee
                     );
 
-                    return commandDispatcher.Dispatch(command);
+                    return commandDispatcher.Dispatch(command).ToTryOption();
                 })
                 .Match<EmployeePayroll, ActionResult<EmployeePayroll>>(
                     e => e,

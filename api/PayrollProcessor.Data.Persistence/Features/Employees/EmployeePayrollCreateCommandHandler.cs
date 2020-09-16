@@ -8,6 +8,7 @@ using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
 using PayrollProcessor.Data.Persistence.Features.Employees.QueueMessages;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
+using static LanguageExt.Prelude;
 
 namespace PayrollProcessor.Data.Persistence.Features.Employees
 {
@@ -25,24 +26,25 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees
             queueClient = clientFactory.Create(AppResources.Queue.EmployeePayrollUpdates);
         }
 
-        public TryOptionAsync<EmployeePayroll> Execute(EmployeePayrollCreateCommand command, CancellationToken token)
+        public TryAsync<EmployeePayroll> Execute(EmployeePayrollCreateCommand command, CancellationToken token)
         {
             var (employee, newPayrollId, newEmployeePayroll) = command;
 
-            var entity = EmployeePayrollRecord.Map.From(employee, newPayrollId, newEmployeePayroll);
-
-            return async () =>
-            {
-                var response = await client.GetEmployeesContainer().CreateItemAsync(entity, cancellationToken: token);
-
-                await QueueMessageBuilder.ToQueueMessage(queueClient, new EmployeePayrollCreation
-                {
-                    EmployeeId = employee.Id,
-                    EmployeePayrollId = newPayrollId,
-                });
-
-                return EmployeePayrollRecord.Map.ToEmployeePayroll(response);
-            };
+            return EmployeePayrollRecord
+                .Map
+                .From(employee, newPayrollId, newEmployeePayroll)
+                .Apply(record => client.GetEmployeesContainer().CreateItemAsync(record, cancellationToken: token))
+                .Apply(TryAsync)
+                .Map(CosmosResponse.Unwrap)
+                .SelectMany(_ => QueueMessageBuilder
+                    .ToQueueMessage(queueClient, new EmployeePayrollCreation
+                    {
+                        EmployeeId = employee.Id,
+                        EmployeePayrollId = newPayrollId,
+                    })
+                    .Apply(TryAsync),
+                    (record, _) => record)
+                .Map(EmployeePayrollRecord.Map.ToEmployeePayroll);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
 
                     var command = new EmployeePayrollCreateCommand(employee, newPayrollId, newPayroll);
 
-                    return commandDispatcher.Dispatch(command);
+                    return commandDispatcher.Dispatch(command).ToTryOption();
                 })
                 .Match<EmployeePayroll, ActionResult<EmployeePayroll>>(
                     employeePayroll => employeePayroll,
