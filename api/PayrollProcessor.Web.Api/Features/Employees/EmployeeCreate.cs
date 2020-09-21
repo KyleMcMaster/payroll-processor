@@ -52,7 +52,6 @@ namespace PayrollProcessor.Web.Api.Features.Employees
                 .Dispatch(command)
                 .Match<Employee, ActionResult<Employee>>(
                     employee => employee,
-                    () => UnprocessableEntity($"Could not create employee [{request.Email}]"),
                     ex => new APIErrorResult(ex.Message));
         }
     }

@@ -12,6 +12,7 @@ using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
 using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace PayrollProcessor.Functions.Api.Features.Departments
 {
@@ -77,7 +78,10 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
                     .Bind(
                         employee => commandDispatcher.Dispatch(new DepartmentEmployeeCreateCommand(employee, idGenerator.Generate()))
                             .DoIfFail(ex => log.LogError(ex, "Could not create Department Employee for {@employee}", employee))
-                            .Do(de => log.LogInformation("{@departmentEmployee} created for {employeeId}", de, message.EmployeeId))))
+                            .Do(de => log.LogInformation("{@departmentEmployee} created for {employeeId}", de, message.EmployeeId))
+                            .ToTryOption()
+                    )
+                )
                 .Bind(departmentEmployee =>
                     apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee)
                         .DoIfFail(ex => log.LogError(ex, "Could not send API notification for {@departmentEmployee} creation", departmentEmployee))
@@ -106,7 +110,8 @@ namespace PayrollProcessor.Functions.Api.Features.Departments
                         (employee, departmentEmployee) => new { employee, departmentEmployee }))
                 .Bind(aggregate => commandDispatcher.Dispatch(new DepartmentEmployeeUpdateCommand(aggregate.employee, aggregate.departmentEmployee))
                     .DoIfFail(ex => log.LogError(ex, "Could not update Department Employee {departmentEmployeeId} from Employee {employeeId}", aggregate.departmentEmployee.Id, aggregate.employee.Id))
-                    .Do(de => log.LogInformation("{@departmentEmployee} updated", de)))
+                    .Do(de => log.LogInformation("{@departmentEmployee} updated", de))
+                    .ToTryOption())
                 .Bind(departmentEmployee => apiClient.SendNotification(nameof(EmployeeUpdatesQueue), departmentEmployee)
                     .DoIfFail(ex => log.LogError(ex, "Could not send API Notification"))
                     .Do(_ => log.LogInformation($"API notification sent")))

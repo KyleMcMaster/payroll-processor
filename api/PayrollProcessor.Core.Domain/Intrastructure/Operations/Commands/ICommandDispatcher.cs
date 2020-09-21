@@ -5,8 +5,8 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands
 {
     public interface ICommandDispatcher
     {
-        TryOptionAsync<Unit> Dispatch(ICommand command, CancellationToken token = default);
+        TryAsync<Unit> Dispatch(ICommand command, CancellationToken token = default);
 
-        TryOptionAsync<TResponse> Dispatch<TResponse>(ICommand<TResponse> command, CancellationToken token = default);
+        TryAsync<TResponse> Dispatch<TResponse>(ICommand<TResponse> command, CancellationToken token = default);
     }
 }

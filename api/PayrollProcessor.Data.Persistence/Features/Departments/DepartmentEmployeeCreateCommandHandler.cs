@@ -4,6 +4,7 @@ using LanguageExt;
 using Microsoft.Azure.Cosmos;
 using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
+using static LanguageExt.Prelude;
 
 namespace PayrollProcessor.Data.Persistence.Features.Departments
 {
@@ -18,18 +19,15 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments
             this.client = client;
         }
 
-        public TryOptionAsync<DepartmentEmployee> Execute(DepartmentEmployeeCreateCommand command, CancellationToken token)
-        {
-            var record = DepartmentEmployeeRecord.Map.CreateNewFrom(command.Employee, command.RecordId);
-
-            return async () =>
-            {
-                var response = await client
+        public TryAsync<DepartmentEmployee> Execute(DepartmentEmployeeCreateCommand command, CancellationToken token) =>
+            DepartmentEmployeeRecord
+                .Map
+                .CreateNewFrom(command.Employee, command.RecordId)
+                .Apply(record => client
                     .GetDepartmentsContainer()
-                    .CreateItemAsync(record, cancellationToken: token);
-
-                return DepartmentEmployeeRecord.Map.ToDepartmentEmployee(response);
-            };
-        }
+                    .CreateItemAsync(record, cancellationToken: token))
+                .Apply(TryAsync)
+                .Map(CosmosResponse.Unwrap)
+                .Map(DepartmentEmployeeRecord.Map.ToDepartmentEmployee);
     }
 }
