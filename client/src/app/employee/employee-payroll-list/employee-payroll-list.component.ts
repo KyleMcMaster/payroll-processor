@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 import { EmployeePayroll } from '@employee/employee-detail/state/employee-detail.model';
 
 @Component({

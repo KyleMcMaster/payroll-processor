@@ -43,8 +43,6 @@ Areas of interest:
 
 - [x] Create
 - [x] Read
-- [ ] Update
-- [ ] Delete
 
 ### Future Enhancements
 

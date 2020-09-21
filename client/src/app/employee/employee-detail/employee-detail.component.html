@@ -81,7 +81,7 @@
       [payrolls]="employee.payrolls"
     ></app-employee-payroll-list>
   </div>
-  <div class="col-3 pt-3">
+  <div class="col-3 pt-3" *ngIf="employee.status === 'Enabled'">
     <app-employee-payroll-create
       [employee]="employee"
     ></app-employee-payroll-create>
