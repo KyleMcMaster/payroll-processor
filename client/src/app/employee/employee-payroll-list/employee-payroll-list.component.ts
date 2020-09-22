@@ -8,7 +8,7 @@ import { EmployeePayroll } from '@employee/employee-detail/state/employee-detail
     <ul class="list-group">
       <li
         *ngFor="let payroll of payrolls | slice: 0:8"
-        class="list-group-item d-flex justify-content-between background-dark"
+        class="list-group-item d-flex justify-content-between border-light"
       >
         <span> {{ payroll.payrollPeriod }} </span>
         <span> {{ payroll.checkDate | date }} </span>
@@ -17,6 +17,7 @@ import { EmployeePayroll } from '@employee/employee-detail/state/employee-detail
         </span>
       </li>
     </ul>`,
+  styles: ['li { background-color: var(--base-color);}'],
 })
 export class EmployeePayrollListComponent {
   @Input()
