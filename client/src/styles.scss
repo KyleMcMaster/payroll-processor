@@ -29,7 +29,9 @@
 // toastr bs4
 @import '~ngx-toastr/toastr-bs4-alert';
 
-$base-color: #000;
+:root {
+  --base-color: #000;
+}
 
 html,
 body {
@@ -38,7 +40,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: $base-color;
+  background-color: var(--base-color);
 }
 
 .full-height {
@@ -47,7 +49,7 @@ body {
 
 .app-background {
   background-color: #000;
-  background-color: var($base-color);
+  background-color: var(--base-color);
   color: var(--light);
 }
 

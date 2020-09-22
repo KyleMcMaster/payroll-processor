@@ -1,11 +1,11 @@
 <div class="ml-3 mr-3">
   <div class="row full-height">
-    <div class="col-2 background-dark border-light">
+    <div class="col-2 app-background border-light">
       <div class="row">
-        <div class="list-group-item list-group-item-action col-12">
-          <span>
-            Departments
-          </span>
+        <div
+          class="list-group-item list-group-item-action col-12 app-background"
+        >
+          <span> Departments </span>
         </div>
       </div>
       <div
@@ -14,7 +14,7 @@
         (click)="onSelectDepartment(department)"
       >
         <div
-          class="list-group-item list-group-item-action col-12"
+          class="list-group-item list-group-item-action col-12 app-background"
           [ngClass]="{
             'background-secondary': selectedDepartment === department
           }"
