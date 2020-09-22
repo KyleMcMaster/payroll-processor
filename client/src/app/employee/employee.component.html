@@ -1,13 +1,11 @@
 <div class="ml-3 mr-3">
   <div class="row full-height">
-    <div class="col-2 background-dark border-light">
+    <div class="col-2 border-light">
       <div class="row" (click)="onCreate()">
-        <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action background-dark">
           <div class="row">
             <div class="col-10">
-              <span>
-                Create Employee
-              </span>
+              <span> Create Employee </span>
             </div>
             <div class="col-2"><fa-icon [icon]="faPlus"> </fa-icon></div>
           </div>
@@ -18,7 +16,7 @@
         [employees]="this.employees | async"
       ></app-employee-list>
     </div>
-    <div class="col-10 border-info">
+    <div class="col-10 border-info background-dark">
       <app-employee-create *ngIf="uiState === 'create'"></app-employee-create>
       <app-employee-detail
         *ngIf="uiState === 'detail'"

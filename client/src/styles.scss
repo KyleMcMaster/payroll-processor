@@ -1,9 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 // Required for bs4
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/_functions';
+@import '~bootstrap/scss/_variables';
+@import '~bootstrap/scss/_mixins';
+@import '~bootstrap/scss/_root';
+@import '~bootstrap/scss/_reboot';
+@import '~bootstrap/scss/_type';
+@import '~bootstrap/scss/_images';
+@import '~bootstrap/scss/_grid';
+@import '~bootstrap/scss/_tables';
+@import '~bootstrap/scss/_forms';
+@import '~bootstrap/scss/_buttons';
+@import '~bootstrap/scss/_transitions';
+@import '~bootstrap/scss/_dropdown';
+@import '~bootstrap/scss/_button-group';
+@import '~bootstrap/scss/_input-group';
+@import '~bootstrap/scss/_custom-forms';
+@import '~bootstrap/scss/_nav';
+@import '~bootstrap/scss/_navbar';
+@import '~bootstrap/scss/_card';
+@import '~bootstrap/scss/_pagination';
+@import '~bootstrap/scss/_badge';
+@import '~bootstrap/scss/_list-group';
+@import '~bootstrap/scss/_close';
+@import '~bootstrap/scss/_modal';
+@import '~bootstrap/scss/_carousel';
+@import '~bootstrap/scss/utilities';
+// toastr bs4
 @import '~ngx-toastr/toastr-bs4-alert';
+
+$base-color: #000;
 
 html,
 body {
@@ -12,47 +38,41 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: --app-background;
+  background-color: $base-color;
+}
+
+.full-height {
+  height: calc(100vh - 60px);
+}
+
+.background-dark {
+  background-color: #000;
+  background-color: var($base-color);
+  color: var(--light);
 }
 
 .border-light {
-  border-color: --light !important;
+  border-color: var(--light) !important;
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-success {
-  border-color: --success !important;
+  border-color: var(--success) !important;
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-info {
-  border-color: --info !important;
+  border-color: var(--info) !important;
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-warning {
-  border-color: --warning !important;
+  border-color: var(--warning) !important;
   border: 1px solid;
   border-radius: 0.25rem;
-}
-
-.full-height {
-  height: calc(100vh - 75px);
-}
-
-.background-dark {
-  background-color: #303030;
-}
-
-.background-secondary {
-  background-color: #444;
-}
-
-.background-info {
-  background-color: #3498db;
 }
 
 .text-center {

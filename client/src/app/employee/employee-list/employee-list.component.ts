@@ -9,7 +9,7 @@ import { EmployeeListItem } from '@employee/employee-list/state/employee-list.mo
   template: `
     <div class="row" *ngFor="let employee of employees">
       <div
-        class="list-group-item list-group-item-action"
+        class="list-group-item list-group-item-action background-dark"
         (click)="selected.emit(employee)"
       >
         <div class="row">
