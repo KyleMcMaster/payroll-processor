@@ -1,15 +1,16 @@
 tbody {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--light);
 }
 
 thead {
-  color: white;
+  color: var(--light);
 }
 
 tbody :hover {
-  color: white;
+  background-color: var(--light);
+  color: var(--base-color);
 }
 
 table {
-  background-color: #000000;
+  background-color: var(--base-color);
 }
