@@ -1,3 +1,5 @@
+@import '../shared/styles/mixins';
+
 fa-icon {
-  color: var(--light);
+  @include var(color, light);
 }

@@ -4,8 +4,11 @@
 // toastr bs4
 @import '~ngx-toastr/toastr-bs4-alert';
 
+@import './app/shared/styles/mixins';
 :root {
-  --base-color: #000;
+  @each $key, $value in $variables {
+    --#{$key}: #{$value};
+  }
 }
 
 html,
@@ -15,7 +18,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: var(--base-color);
+  @include var(background-color, app-background);
 }
 
 .full-height {
@@ -23,31 +26,30 @@ body {
 }
 
 .app-background {
-  background-color: #000;
-  background-color: var(--base-color);
-  color: var(--light);
+  @include var(background-color, app-background);
+  @include var(color, light);
 }
 
 .border-light {
-  border-color: var(--light) !important;
+  @include var(border-color, light);
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-success {
-  border-color: var(--success) !important;
+  @include var(border-color, success);
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-info {
-  border-color: var(--info) !important;
+  @include var(border-color, info);
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-warning {
-  border-color: var(--warning) !important;
+  @include var(border-color, warning);
   border: 1px solid;
   border-radius: 0.25rem;
 }
