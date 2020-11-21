@@ -7,8 +7,8 @@ import { EmployeePayroll } from '@employee/employee-detail/state/employee-detail
   template: ` <h5>Recent Payrolls</h5>
     <ul class="list-group">
       <li
-        *ngFor="let payroll of payrolls | slice: 0:9"
-        class="list-group-item d-flex justify-content-between payroll-list-item"
+        *ngFor="let payroll of payrolls | slice: 0:8"
+        class="list-group-item d-flex justify-content-between border-light"
       >
         <span> {{ payroll.payrollPeriod }} </span>
         <span> {{ payroll.checkDate | date }} </span>
@@ -17,13 +17,7 @@ import { EmployeePayroll } from '@employee/employee-detail/state/employee-detail
         </span>
       </li>
     </ul>`,
-  styles: [
-    `
-      .payroll-list-item {
-        background-color: #000;
-      }
-    `,
-  ],
+  styles: ['li { background-color: var(--base-color);}'],
 })
 export class EmployeePayrollListComponent {
   @Input()

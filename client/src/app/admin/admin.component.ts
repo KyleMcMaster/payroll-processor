@@ -9,6 +9,7 @@ import { ResourcesService } from './state/resources.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminComponent {

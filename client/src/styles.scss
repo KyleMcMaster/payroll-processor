@@ -1,9 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 // Required for bs4
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/bootstrap';
+// toastr bs4
 @import '~ngx-toastr/toastr-bs4-alert';
+
+@import './app/shared/styles/mixins';
+:root {
+  @each $key, $value in $variables {
+    --#{$key}: #{$value};
+  }
+}
 
 html,
 body {
@@ -12,47 +18,40 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: --app-background;
+  @include var(background-color, app-background);
+}
+
+.full-height {
+  height: calc(100vh - 60px);
+}
+
+.app-background {
+  @include var(background-color, app-background);
+  @include var(color, light);
 }
 
 .border-light {
-  border-color: --light !important;
+  @include var(border-color, light);
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-success {
-  border-color: --success !important;
+  @include var(border-color, success);
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-info {
-  border-color: --info !important;
+  @include var(border-color, info);
   border: 1px solid;
   border-radius: 0.25rem;
 }
 
 .border-warning {
-  border-color: --warning !important;
+  @include var(border-color, warning);
   border: 1px solid;
   border-radius: 0.25rem;
-}
-
-.full-height {
-  height: calc(100vh - 75px);
-}
-
-.background-dark {
-  background-color: #303030;
-}
-
-.background-secondary {
-  background-color: #444;
-}
-
-.background-info {
-  background-color: #3498db;
 }
 
 .text-center {

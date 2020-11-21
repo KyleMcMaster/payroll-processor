@@ -9,9 +9,9 @@
   </thead>
   <tbody>
     <tr *ngFor="let payroll of payrolls">
-      <th scope="row">
+      <td scope="row">
         {{ payroll.employeeFirstName }} {{ payroll.employeeLastName }}
-      </th>
+      </td>
       <td>{{ payroll.payrollPeriod }}</td>
       <td>{{ payroll.checkDate | date }}</td>
       <td>{{ payroll.grossPayroll | currency }}</td>

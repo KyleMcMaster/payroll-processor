@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+
 import { departments } from '@department/department.model';
 import { EmployeeCreate } from '@employee/employee-list/state/employee-list.model';
 import { EmployeeListService } from '@employee/employee-list/state/employee-list.service';
@@ -13,7 +14,7 @@ export class EmployeeCreateComponent {
   readonly departments = departments;
 
   filterForm = new FormGroup({
-    department: new FormControl(''),
+    department: new FormControl('Choose a department'),
     email: new FormControl(''),
     employmentStartedOn: new FormControl(''),
     firstName: new FormControl(''),

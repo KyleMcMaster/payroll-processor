@@ -1,0 +1,7 @@
+@import './variables';
+// CSS Var mixin to provide fallbacks automatically
+// https://vgpena.github.io/winning-with-css-variables/
+@mixin var($property, $varName) {
+  #{$property}: map-get($variables, $varName);
+  #{$property}: var(--#{$varName}, map-get($variables, $varName));
+}

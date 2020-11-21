@@ -1,15 +1,18 @@
+@import '../../shared/styles/mixins';
+
 tbody {
-  color: rgba(255, 255, 255, 0.5);
+  @include var(color, light);
 }
 
 thead {
-  color: white;
+  @include var(color, light);
 }
 
 tbody :hover {
-  color: white;
+  @include var(background-color, light);
+  @include var(color, app-background);
 }
 
 table {
-  background-color: #000000;
+  @include var(background-color, app-background);
 }
