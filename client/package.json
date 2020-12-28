@@ -24,6 +24,7 @@
     "@datorama/akita": "5.2.3",
     "@fortawesome/angular-fontawesome": "0.7.0",
     "@fortawesome/fontawesome-svg-core": "1.2.30",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "5.14.0",
     "@microsoft/signalr": "3.1.8",
     "@ng-bootstrap/ng-bootstrap": "7.0.0",
