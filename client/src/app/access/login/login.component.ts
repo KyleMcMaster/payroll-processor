@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { MsalService } from '@azure/msal-angular';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-
-import { EnvService } from '@shared/env.service';
+import { faMicrosoft } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -14,15 +12,20 @@ import { EnvService } from '@shared/env.service';
 export class LoginComponent implements OnInit {
   readonly authenticationUrl: string;
 
-  readonly faGithub = faGithub as IconProp;
+  readonly faMicrosoft = faMicrosoft as IconProp;
 
-  constructor(private envService: EnvService, private router: Router) {
-    this.authenticationUrl = this.envService.authenticationUrl;
+  constructor(private authService: MsalService, private router: Router) {}
+
+  ngOnInit(): void {
+    const loggedIn = !!this.authService.getAccount();
+
+    if (loggedIn) {
+      // console.debug('user is logged in');
+      this.router.navigate(['/']);
+    }
   }
 
-  ngOnInit(): void {}
-
   login() {
-    this.envService.authenticationUrl;
+    this.authService.loginPopup();
   }
 }

@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 
+import { MsalModule } from '@azure/msal-angular';
 import { SharedModule } from '@shared/shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +24,28 @@ const THIRD_PARTY_MODULES = [
     positionClass: 'toast-bottom-right',
     preventDuplicates: false,
   }),
+  MsalModule.forRoot(
+    {
+      auth: {
+        clientId: 'CLIENT_ID',
+        authority:
+          'AUTHORITY_URL/TENANT_ID',
+        redirectUri: 'https://localhost:4201/',
+      },
+      cache: {
+        cacheLocation: 'localStorage',
+        storeAuthStateInCookie: false,
+      },
+    },
+    {
+      popUp: true,
+      consentScopes: ['user.read', 'openid', 'profile'],
+      protectedResourceMap: [
+        ['Enter_the_Graph_Endpoint_Herev1.0/me', ['user.read']],
+      ],
+      extraQueryParameters: {},
+    },
+  ),
 ];
 
 const APP_MODULES = [AppRoutingModule, CoreModule, SharedModule];
