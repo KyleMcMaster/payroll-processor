@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EnvService } from '@shared/env.service';
+import { Router } from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
+
+import { EnvService } from '@shared/env.service';
+
 import { User, UserCreate } from './user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -11,6 +15,7 @@ export class UserService {
   constructor(
     envService: EnvService,
     private http: HttpClient,
+    private router: Router,
     private toastr: ToastrService,
   ) {
     this.apiRootUrl = envService.apiRootUrl;
@@ -21,6 +26,7 @@ export class UserService {
       error: () => this.toastr.error(`Could not create user`),
       next: (detail) => {
         this.toastr.show(`Hello ${detail.firstName} ${detail.lastName}!`);
+        this.router.navigate(['/employees']);
       },
     });
   }

@@ -28,9 +28,8 @@ const THIRD_PARTY_MODULES = [
     {
       auth: {
         clientId: 'CLIENT_ID',
-        authority:
-          'AUTHORITY_URL/TENANT_ID',
-        redirectUri: 'https://localhost:4201/',
+        authority: 'AUTHORITY_URL/TENANT_ID',
+        redirectUri: 'http://localhost:4201/',
       },
       cache: {
         cacheLocation: 'localStorage',

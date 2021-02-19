@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MsalService } from '@azure/msal-angular';
+
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faMicrosoft } from '@fortawesome/free-brands-svg-icons';
+
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-login',
@@ -10,8 +12,6 @@ import { faMicrosoft } from '@fortawesome/free-brands-svg-icons';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  readonly authenticationUrl: string;
-
   readonly faMicrosoft = faMicrosoft as IconProp;
 
   constructor(private authService: MsalService, private router: Router) {}
@@ -20,12 +20,12 @@ export class LoginComponent implements OnInit {
     const loggedIn = !!this.authService.getAccount();
 
     if (loggedIn) {
-      // console.debug('user is logged in');
-      this.router.navigate(['/']);
+      this.router.navigate(['/employees']);
     }
   }
 
   login() {
-    this.authService.loginPopup();
+    this.authService.loginRedirect();
+    this.router.navigate(['/employees']);
   }
 }

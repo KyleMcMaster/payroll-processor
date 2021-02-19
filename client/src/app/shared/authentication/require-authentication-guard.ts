@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanLoad,
-  Route,
-  Router,
-  RouterStateSnapshot,
-  UrlSegment,
-  UrlTree,
+  ActivatedRouteSnapshot, CanActivate, CanLoad, Route,
+  Router, RouterStateSnapshot, UrlSegment, UrlTree,
 } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { MsalService } from '@azure/msal-angular';
 import { UserSessionQuery } from '@shared/user-session/state/user-session.query';
 import { UserSessionService } from '@shared/user-session/state/user-session.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

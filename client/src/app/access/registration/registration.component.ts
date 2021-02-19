@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+
 import { MsalService } from '@azure/msal-angular';
+
 import { UserCreate } from './state/user.model';
 import { UserService } from './state/user.service';
 
@@ -21,8 +22,10 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private authService: MsalService,
     private userService: UserService,
-    private router: Router,
-  ) {}
+  ) {
+    const email = this.authService.getAccount().userName;
+    this.filterForm.patchValue({ email: email });
+  }
 
   create() {
     const user: UserCreate = {
@@ -35,8 +38,6 @@ export class RegistrationComponent implements OnInit {
     };
 
     this.userService.createEmployee(user);
-
-    this.router.navigate(['/']);
   }
 
   ngOnInit(): void {}
