@@ -23,6 +23,7 @@ namespace PayrollProcessor.Data.Persistence.Infrastructure.Clients
                     {
                         public const string Employees = "Employees";
                         public const string Departments = "Departments";
+                        public const string Users = "Users";
                     }
                 }
             }

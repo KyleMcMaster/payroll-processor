@@ -199,3 +199,9 @@ This can be useful if you are changing schemas and don't want to write migration
 
 - Make a DELETE request to `http://localhost:7071/api/resources`
 - Optional: Use `Delete Resources` request in `/docs/PayrollProcessor.postman_collection.json` [Postman](https://www.postman.com/) collection
+
+### Auth Setup
+
+#### User access flow
+
+![user access flow](/docs/user-access-flow.png)

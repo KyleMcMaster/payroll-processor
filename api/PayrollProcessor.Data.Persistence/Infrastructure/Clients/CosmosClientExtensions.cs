@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Cosmos
             {
                 PartitionKey = new PartitionKey(partitionKey.ToLowerInvariant())
             });
+
+        public static Container GetUsersContainer(this CosmosClient client) =>
+            client.GetContainer(Databases.PayrollProcessor.Name, Databases.PayrollProcessor.Containers.Users);
     }
 
     public static class CosmosResponse
