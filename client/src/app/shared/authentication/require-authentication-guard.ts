@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot, CanActivate, CanLoad, Route,
-  Router, RouterStateSnapshot, UrlSegment, UrlTree,
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanLoad,
+  Route,
+  Router,
+  RouterStateSnapshot,
+  UrlSegment,
+  UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -53,11 +59,11 @@ export class RequireAuthenticatedGuard implements CanActivate, CanLoad {
               return true;
             }
 
-            this.router.navigate(['/access/registration']);
+            this.router.navigate(['/registration']);
             return false;
           }
 
-          this.router.navigate(['/access/login']);
+          this.router.navigate(['/login']);
           return false;
         }),
       );
@@ -95,11 +101,11 @@ export class RequireAuthenticatedGuard implements CanActivate, CanLoad {
               return true;
             }
 
-            this.router.navigate(['/access/registration']);
+            this.router.navigate(['/registration']);
             return false;
           }
 
-          this.router.navigate(['/access/login']);
+          this.router.navigate(['/login']);
           return false;
         }),
       );

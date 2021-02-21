@@ -9,9 +9,12 @@
           </li>
         </ul>
       </div>
-      <!-- <div class="float-right mr-2">
+      <div class="float-right mr-2" *ngIf="!isMsalAuthenticated">
+        <app-login></app-login>
+      </div>
+      <div class="float-right mr-2" *ngIf="isMsalAuthenticated">
         <app-logout></app-logout>
-      </div> -->
+      </div>
     </nav>
     <router-outlet></router-outlet>
   </section>
