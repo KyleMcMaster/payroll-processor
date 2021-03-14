@@ -7,8 +7,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 
+import { AuthModule } from '@auth0/auth0-angular';
 import { SharedModule } from '@shared/shared.module';
 
+import { LoginComponent } from './access/login/login.component';
+import { LogoutComponent } from './access/logout/logout.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -16,6 +19,10 @@ import { CoreModule } from './core/core.module';
 const NG_MODULES = [BrowserAnimationsModule, BrowserModule, HttpClientModule];
 
 const THIRD_PARTY_MODULES = [
+  AuthModule.forRoot({
+    domain: 'DOMAIN',
+    clientId: 'CLIENT_ID',
+  }),
   FontAwesomeModule,
   NgbModule,
   ToastrModule.forRoot({
@@ -28,7 +35,7 @@ const THIRD_PARTY_MODULES = [
 const APP_MODULES = [AppRoutingModule, CoreModule, SharedModule];
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent, LogoutComponent],
   imports: [NG_MODULES, THIRD_PARTY_MODULES, APP_MODULES],
   bootstrap: [AppComponent],
 })

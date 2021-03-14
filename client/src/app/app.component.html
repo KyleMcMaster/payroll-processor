@@ -9,6 +9,12 @@
           </li>
         </ul>
       </div>
+      <div class="float-right mr-2" *ngIf="!(isAuthenticated | async)">
+        <app-login></app-login>
+      </div>
+      <div class="float-right mr-2" *ngIf="isAuthenticated | async">
+        <app-logout></app-logout>
+      </div>
     </nav>
     <router-outlet></router-outlet>
   </section>

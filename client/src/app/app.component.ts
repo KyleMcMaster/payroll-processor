@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { AuthService } from '@auth0/auth0-angular';
 import { NotificationService } from '@shared/notification.service';
 
 @Component({
@@ -9,6 +13,7 @@ import { NotificationService } from '@shared/notification.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  readonly isAuthenticated = this.authService.isAuthenticated$;
   readonly title = 'payroll-processor';
 
   readonly fragment = this.route.fragment;
@@ -20,6 +25,7 @@ export class AppComponent implements OnInit {
   ];
 
   constructor(
+    private readonly authService: AuthService,
     private readonly notificationService: NotificationService,
     private readonly route: ActivatedRoute,
   ) {}

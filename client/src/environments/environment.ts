@@ -5,4 +5,7 @@ export const environment: Environment = {
   // This should come from the launch.json for the API
   functionsDomain: '<TODO>',
   apiDomain: '<TODO>',
+  authenticationDomain: '',
+  clientId: '',
+  clientSecret: '',
 };
