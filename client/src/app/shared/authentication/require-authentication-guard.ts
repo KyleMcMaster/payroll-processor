@@ -7,13 +7,11 @@ import {
   Router,
   RouterStateSnapshot,
   UrlSegment,
-  UrlTree,
+  UrlTree
 } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 import { Observable } from 'rxjs';
 
-import { AuthService } from '@auth0/auth0-angular';
-import { UserSessionQuery } from '@shared/user-session/state/user-session.query';
-import { UserSessionService } from '@shared/user-session/state/user-session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +20,6 @@ export class RequireAuthenticatedGuard implements CanActivate, CanLoad {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private query: UserSessionQuery,
-    private userSessionService: UserSessionService,
   ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
