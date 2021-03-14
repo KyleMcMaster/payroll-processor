@@ -48,8 +48,6 @@ namespace PayrollProcessor.Functions.Api.Features.Resources
                 new ContainerProperties(Databases.PayrollProcessor.Containers.Employees, partitionKeyPath: "/partitionKey"));
             await dbResponse.Database.CreateContainerIfNotExistsAsync(
                 new ContainerProperties(Databases.PayrollProcessor.Containers.Departments, partitionKeyPath: "/partitionKey"));
-            await dbResponse.Database.CreateContainerIfNotExistsAsync(
-                new ContainerProperties(Databases.PayrollProcessor.Containers.Users, partitionKeyPath: "/partitionKey"));
 
             return new OkResult();
         }
