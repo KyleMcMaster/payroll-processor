@@ -1,6 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
-import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSkull,
+  faSmileBeam,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { EmployeeListItem } from '@employee/employee-list/state/employee-list.model';
 

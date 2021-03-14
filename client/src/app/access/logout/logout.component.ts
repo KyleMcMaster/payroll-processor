@@ -1,25 +1,24 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import {
+  Component,
+  Inject,
+} from '@angular/core';
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faMicrosoft } from '@fortawesome/free-brands-svg-icons';
-
-import { MsalService } from '@azure/msal-angular';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-logout',
-  templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.css'],
+  template: `
+  <ng-container>
+    <button class="btn-dark" (click)="authService.logout({ returnTo: document.location.origin })">
+      Log out
+    </button>
+  </ng-container>
+  `,
 })
 export class LogoutComponent {
-  readonly faMicrosoft = faMicrosoft as IconProp;
-  readonly isLoggedIn: boolean = false;
-  constructor(private authService: MsalService, private router: Router) {
-    this.isLoggedIn = !!this.authService.getAccount();
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/']);
-  }
+  constructor(
+    @Inject(DOCUMENT) public document: Document,
+    public authService: AuthService,
+  ) {}
 }

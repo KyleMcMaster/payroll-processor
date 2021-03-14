@@ -9,14 +9,15 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { MsalService } from '@azure/msal-angular';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RequireUnauthenticatedGuard implements CanActivate, CanLoad {
-  constructor(private authService: MsalService) {}
+  constructor(private authService: AuthService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
@@ -25,10 +26,9 @@ export class RequireUnauthenticatedGuard implements CanActivate, CanLoad {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    const msalAccount = this.authService.getAccount();
-    const isMsalAuthenticated = !!msalAccount;
-
-    return !isMsalAuthenticated;
+    return this.authService.isAuthenticated$.pipe(
+      map((b) => !b),
+    );
   }
 
   canLoad(
@@ -39,9 +39,8 @@ export class RequireUnauthenticatedGuard implements CanActivate, CanLoad {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    const msalAccount = this.authService.getAccount();
-    const isMsalAuthenticated = !!msalAccount;
-
-    return !isMsalAuthenticated;
+    return this.authService.isAuthenticated$.pipe(
+      map((b) => !b),
+    );
   }
 }

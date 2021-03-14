@@ -1,31 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faMicrosoft } from '@fortawesome/free-brands-svg-icons';
-
-import { MsalService } from '@azure/msal-angular';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  template: `
+    <button (click)=loginWithRedirect() class="btn-dark">Log in</button>
+  `,
 })
-export class LoginComponent implements OnInit {
-  readonly faMicrosoft = faMicrosoft as IconProp;
+export class LoginComponent {
+  constructor(private authService: AuthService) {}
 
-  constructor(private authService: MsalService, private router: Router) {}
-
-  ngOnInit(): void {
-    const loggedIn = !!this.authService.getAccount();
-
-    if (loggedIn) {
-      this.router.navigate(['/employees']);
-    }
-  }
-
-  login() {
-    this.authService.loginRedirect();
-    this.router.navigate(['/employees']);
+  loginWithRedirect() {
+    this.authService.loginWithRedirect();
   }
 }

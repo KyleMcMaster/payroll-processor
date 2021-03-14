@@ -1,9 +1,5 @@
-<div
-  class="d-flex justify-content-center align-items-center border-light"
-  *ngIf="isLoggedIn"
->
-  <a class="btn btn-block btn-social text-light" (click)="logout()">
-    Logout
-    <fa-icon [icon]="faMicrosoft"></fa-icon>
-  </a>
-</div>
+<ng-container>
+  <button class="btn-dark" (click)="authService.logout({ returnTo: document.location.origin })">
+    Log out
+  </button>
+</ng-container>
