@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="30.0.4" />
+    <PackageReference Include="Bogus" Version="33.0.2" />
   </ItemGroup>
 
   <ItemGroup>
