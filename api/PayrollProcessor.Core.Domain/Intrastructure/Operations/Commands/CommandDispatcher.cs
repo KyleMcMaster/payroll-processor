@@ -31,9 +31,11 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands
             var handler = (CommandHandlerWrapper)commandHandlers
                 .GetOrAdd(
                     commandType,
+#pragma warning disable CS8603 // Possible null reference return.
                     t => Activator
                         .CreateInstance(typeof(CommandHandlerWrapperImpl<>)
                         .MakeGenericType(commandType)));
+#pragma warning restore CS8603 // Possible null reference return.
 
             return handler.Dispatch(command, serviceProvider, token);
         }
@@ -47,9 +49,11 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands
             var handler = (CommandHandlerWrapper<TResponse>)commandHandlers
                 .GetOrAdd(
                     commandType,
+#pragma warning disable CS8603 // Possible null reference return.
                     t => Activator
                         .CreateInstance(typeof(CreateCommandHandlerWrapperImpl<,>)
                         .MakeGenericType(commandType, typeof(TResponse))));
+#pragma warning restore CS8603 // Possible null reference return.
 
             return handler.Dispatch(command, serviceProvider, token);
         }

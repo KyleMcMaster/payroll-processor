@@ -31,9 +31,11 @@ namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries
             var handler = (QueryHandlerWrapper<TResponse>)queryHandlers
                 .GetOrAdd(
                     queryType,
+#pragma warning disable CS8603 // Possible null reference return.
                     t => Activator
                         .CreateInstance(typeof(QueryHandlerWrapperImpl<,>)
                         .MakeGenericType(queryType, typeof(TResponse))));
+#pragma warning restore CS8603 // Possible null reference return.
 
             return handler.Dispatch(query, serviceProvider, token);
         }
