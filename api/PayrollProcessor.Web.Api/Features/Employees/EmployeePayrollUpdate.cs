@@ -11,7 +11,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Web.Api.Features.Employees
 {
-    public class EmployeePayrollUpdate : BaseAsyncEndpoint<EmployeePayrollUpdateRequest, EmployeePayroll>
+    public class EmployeePayrollUpdate : BaseAsyncEndpoint
+        .WithRequest<EmployeePayrollUpdateRequest>
+        .WithResponse<EmployeePayroll>
     {
         private readonly ICommandDispatcher commandDispatcher;
         private readonly IQueryDispatcher queryDispatcher;
