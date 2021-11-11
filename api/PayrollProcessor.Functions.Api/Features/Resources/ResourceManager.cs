@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
 using PayrollProcessor.Functions.Api.Infrastructure;
 
 namespace PayrollProcessor.Functions.Api.Features.Resources

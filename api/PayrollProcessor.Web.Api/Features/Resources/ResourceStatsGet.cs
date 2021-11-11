@@ -9,7 +9,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Web.Api.Features.Resources
 {
-    public class ResourceStatsGet : BaseAsyncEndpoint<ResourceStatsResponse>
+    public class ResourceStatsGet : BaseAsyncEndpoint
+        .WithoutRequest
+        .WithResponse<ResourceStatsResponse>
     {
         private readonly IQueryDispatcher dispatcher;
 

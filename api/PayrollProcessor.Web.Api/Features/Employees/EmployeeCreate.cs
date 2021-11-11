@@ -11,7 +11,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Web.Api.Features.Employees
 {
-    public class EmployeeCreate : BaseAsyncEndpoint<EmployeeCreateRequest, Employee>
+    public class EmployeeCreate : BaseAsyncEndpoint
+        .WithRequest<EmployeeCreateRequest>
+        .WithResponse<Employee>
     {
         private readonly ICommandDispatcher dispatcher;
         private readonly IEntityIdGenerator generator;

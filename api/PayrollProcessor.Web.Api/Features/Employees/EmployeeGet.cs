@@ -10,8 +10,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Web.Api.Features.Employees
 {
-
-    public class EmployeeGet : BaseAsyncEndpoint<Guid, EmployeeDetail>
+    public class EmployeeGet : BaseAsyncEndpoint
+        .WithRequest<Guid>
+        .WithResponse<EmployeeDetail>
     {
         private readonly IQueryDispatcher dispatcher;
 
@@ -29,7 +30,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees
             OperationId = "Employee.Get",
             Tags = new[] { "Employees" })
         ]
-        public override Task<ActionResult<EmployeeDetail>> HandleAsync([FromRoute] Guid employeeId, CancellationToken token) =>
+        public override Task<ActionResult<EmployeeDetail>> HandleAsync(Guid employeeId, CancellationToken token) =>
             dispatcher
                 .Dispatch(new EmployeeDetailQuery(employeeId), token)
                 .Match<EmployeeDetail, ActionResult<EmployeeDetail>>(

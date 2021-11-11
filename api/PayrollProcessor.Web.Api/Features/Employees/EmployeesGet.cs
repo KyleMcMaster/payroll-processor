@@ -11,7 +11,9 @@ using System.Threading;
 
 namespace PayrollProcessor.Web.Api.Features.Employees
 {
-    public class EmployeesGet : BaseAsyncEndpoint<EmployeesGetRequest, EmployeesResponse>
+    public class EmployeesGet : BaseAsyncEndpoint
+        .WithRequest<EmployeesGetRequest>
+        .WithResponse<EmployeesResponse>
     {
         private readonly IQueryDispatcher dispatcher;
 

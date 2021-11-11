@@ -12,7 +12,9 @@ using System.Threading;
 
 namespace PayrollProcessor.Web.Api.Features.Departments
 {
-    public class DepartmentPayrollsGet : BaseAsyncEndpoint<DepartmentPayrollsRequest, DepartmentPayrollsResponse>
+    public class DepartmentPayrollsGet : BaseAsyncEndpoint
+        .WithRequest<DepartmentPayrollsRequest>
+        .WithResponse<DepartmentPayrollsResponse>
     {
         private readonly IQueryDispatcher dispatcher;
 
