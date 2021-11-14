@@ -1,62 +1,61 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Mvc;
-using PayrollProcessor.Web.Api.Infrastructure.Responses;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
+using PayrollProcessor.Web.Api.Infrastructure.Responses;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Threading;
 
-namespace PayrollProcessor.Web.Api.Features.Employees
+namespace PayrollProcessor.Web.Api.Features.Employees;
+
+public class EmployeesGet : BaseAsyncEndpoint
+    .WithRequest<EmployeesGetRequest>
+    .WithResponse<EmployeesResponse>
 {
-    public class EmployeesGet : BaseAsyncEndpoint
-        .WithRequest<EmployeesGetRequest>
-        .WithResponse<EmployeesResponse>
+    private readonly IQueryDispatcher dispatcher;
+
+    public EmployeesGet(IQueryDispatcher dispatcher)
     {
-        private readonly IQueryDispatcher dispatcher;
+        Guard.Against.Null(dispatcher, nameof(dispatcher));
 
-        public EmployeesGet(IQueryDispatcher dispatcher)
-        {
-            Guard.Against.Null(dispatcher, nameof(dispatcher));
-
-            this.dispatcher = dispatcher;
-        }
-
-        [HttpGet("employees"), MapToApiVersion("1")]
-        [SwaggerOperation(
-            Summary = "Gets employees",
-            Description = "Gets all employees matching request parameters",
-            OperationId = "Employees.GetAll",
-            Tags = new[] { "Employees" })
-        ]
-        public override Task<ActionResult<EmployeesResponse>> HandleAsync([FromQuery] EmployeesGetRequest request, CancellationToken token) =>
-             dispatcher
-                .Dispatch(new EmployeesQuery(request.Count, request.Email, request.FirstName, request.LastName), token)
-                .Match<IEnumerable<Employee>, ActionResult<EmployeesResponse>>(
-                    e => new EmployeesResponse(e),
-                    () => NotFound("Employees"),
-                    ex => BadRequest(ex.Message));
+        this.dispatcher = dispatcher;
     }
 
-    public class EmployeesGetRequest
+    [HttpGet("employees"), MapToApiVersion("1")]
+    [SwaggerOperation(
+        Summary = "Gets employees",
+        Description = "Gets all employees matching request parameters",
+        OperationId = "Employees.GetAll",
+        Tags = new[] { "Employees" })
+    ]
+    public override Task<ActionResult<EmployeesResponse>> HandleAsync([FromQuery] EmployeesGetRequest request, CancellationToken token) =>
+         dispatcher
+            .Dispatch(new EmployeesQuery(request.Count, request.Email, request.FirstName, request.LastName), token)
+            .Match<IEnumerable<Employee>, ActionResult<EmployeesResponse>>(
+                e => new EmployeesResponse(e),
+                () => NotFound("Employees"),
+                ex => BadRequest(ex.Message));
+}
+
+public class EmployeesGetRequest
+{
+    public int Count { get; set; }
+    public string Email { get; set; } = "";
+    public string FirstName { get; set; } = "";
+    public string LastName { get; set; } = "";
+}
+
+public class EmployeesResponse : IListResponse<Employee>
+{
+    public IEnumerable<Employee> Data { get; }
+
+    public EmployeesResponse(IEnumerable<Employee> data)
     {
-        public int Count { get; set; }
-        public string Email { get; set; } = "";
-        public string FirstName { get; set; } = "";
-        public string LastName { get; set; } = "";
-    }
+        Guard.Against.Null(data, nameof(data));
 
-    public class EmployeesResponse : IListResponse<Employee>
-    {
-        public IEnumerable<Employee> Data { get; }
-
-        public EmployeesResponse(IEnumerable<Employee> data)
-        {
-            Guard.Against.Null(data, nameof(data));
-
-            Data = data;
-        }
+        Data = data;
     }
 }

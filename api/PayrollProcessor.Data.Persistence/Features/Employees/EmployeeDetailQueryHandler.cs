@@ -9,76 +9,75 @@ using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 
 using static LanguageExt.Prelude;
 
-namespace PayrollProcessor.Data.Persistence.Features.Employees
+namespace PayrollProcessor.Data.Persistence.Features.Employees;
+
+public class EmployeeDetailQueryHandler : IQueryHandler<EmployeeDetailQuery, EmployeeDetail>
 {
-    public class EmployeeDetailQueryHandler : IQueryHandler<EmployeeDetailQuery, EmployeeDetail>
+    private readonly CosmosClient client;
+
+    public EmployeeDetailQueryHandler(CosmosClient client)
     {
-        private readonly CosmosClient client;
+        Guard.Against.Null(client, nameof(client));
 
-        public EmployeeDetailQueryHandler(CosmosClient client)
-        {
-            Guard.Against.Null(client, nameof(client));
+        this.client = client;
+    }
 
-            this.client = client;
-        }
-
-        public TryOptionAsync<EmployeeDetail> Execute(EmployeeDetailQuery query, CancellationToken token = default)
-        {
-            var iterator = client
-                .GetEmployeesContainer()
-                .GetItemQueryIterator<JObject>(requestOptions: new QueryRequestOptions
-                {
-                    PartitionKey = new PartitionKey(query.EmployeeId.ToString())
-                });
-
-            return async () =>
+    public TryOptionAsync<EmployeeDetail> Execute(EmployeeDetailQuery query, CancellationToken token = default)
+    {
+        var iterator = client
+            .GetEmployeesContainer()
+            .GetItemQueryIterator<JObject>(requestOptions: new QueryRequestOptions
             {
-                EmployeeRecord? employeeEntity = null;
-                var payrollEntities = new List<EmployeePayrollRecord>();
+                PartitionKey = new PartitionKey(query.EmployeeId.ToString())
+            });
 
-                while (iterator.HasMoreResults)
+        return async () =>
+        {
+            EmployeeRecord? employeeEntity = null;
+            var payrollEntities = new List<EmployeePayrollRecord>();
+
+            while (iterator.HasMoreResults)
+            {
+                var response = await iterator.ReadNextAsync(token);
+
+                foreach (var item in response)
                 {
-                    var response = await iterator.ReadNextAsync(token);
+                    string type = item.Value<string>("type") ?? "";
 
-                    foreach (var item in response)
+                    switch (type)
                     {
-                        string type = item.Value<string>("type") ?? "";
+                        case nameof(EmployeeRecord):
+                            var entity = item.ToObject<EmployeeRecord>();
 
-                        switch (type)
-                        {
-                            case nameof(EmployeeRecord):
-                                var entity = item.ToObject<EmployeeRecord>();
+                            if (entity is EmployeeRecord)
+                            {
+                                employeeEntity = entity;
+                            }
 
-                                if (entity is EmployeeRecord)
-                                {
-                                    employeeEntity = entity;
-                                }
+                            continue;
 
-                                continue;
+                        case nameof(EmployeePayrollRecord):
+                            var payroll = item.ToObject<EmployeePayrollRecord>();
 
-                            case nameof(EmployeePayrollRecord):
-                                var payroll = item.ToObject<EmployeePayrollRecord>();
+                            if (payroll is EmployeePayrollRecord)
+                            {
+                                payrollEntities.Add(payroll);
+                            }
 
-                                if (payroll is EmployeePayrollRecord)
-                                {
-                                    payrollEntities.Add(payroll);
-                                }
+                            continue;
 
-                                continue;
-
-                            default:
-                                continue;
-                        }
+                        default:
+                            continue;
                     }
                 }
+            }
 
-                if (employeeEntity is null)
-                {
-                    return None;
-                }
+            if (employeeEntity is null)
+            {
+                return None;
+            }
 
-                return EmployeeRecord.Map.ToEmployeeDetails(employeeEntity, payrollEntities);
-            };
-        }
+            return EmployeeRecord.Map.ToEmployeeDetails(employeeEntity, payrollEntities);
+        };
     }
 }

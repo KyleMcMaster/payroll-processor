@@ -10,48 +10,47 @@ using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 
 using static LanguageExt.Prelude;
 
-namespace PayrollProcessor.Data.Persistence.Features.Departments
+namespace PayrollProcessor.Data.Persistence.Features.Departments;
+
+public class DepartmentEmployeesQueryHandler : IQueryHandler<DepartmentEmployeesQuery, IEnumerable<DepartmentEmployee>>
 {
-    public class DepartmentEmployeesQueryHandler : IQueryHandler<DepartmentEmployeesQuery, IEnumerable<DepartmentEmployee>>
+    private readonly CosmosClient client;
+
+    public DepartmentEmployeesQueryHandler(CosmosClient client)
     {
-        private readonly CosmosClient client;
+        Guard.Against.Null(client, nameof(client));
 
-        public DepartmentEmployeesQueryHandler(CosmosClient client)
+        this.client = client;
+    }
+
+    public TryOptionAsync<IEnumerable<DepartmentEmployee>> Execute(DepartmentEmployeesQuery query, CancellationToken token = default)
+    {
+        var (count, department) = query;
+
+        var dataQuery = client
+            .DepartmentQueryable<DepartmentEmployeeRecord>(department)
+            .Where(e => e.Type == nameof(DepartmentEmployeeRecord));
+
+        if (count > 0)
         {
-            Guard.Against.Null(client, nameof(client));
-
-            this.client = client;
+            dataQuery = dataQuery.Take(count);
         }
 
-        public TryOptionAsync<IEnumerable<DepartmentEmployee>> Execute(DepartmentEmployeesQuery query, CancellationToken token = default)
+        return async () =>
         {
-            var (count, department) = query;
+            var iterator = dataQuery.ToFeedIterator();
 
-            var dataQuery = client
-                .DepartmentQueryable<DepartmentEmployeeRecord>(department)
-                .Where(e => e.Type == nameof(DepartmentEmployeeRecord));
+            var employees = new List<DepartmentEmployee>();
 
-            if (count > 0)
+            while (iterator.HasMoreResults)
             {
-                dataQuery = dataQuery.Take(count);
+                foreach (var result in await iterator.ReadNextAsync(token))
+                {
+                    employees.Add(DepartmentEmployeeRecord.Map.ToDepartmentEmployee(result));
+                }
             }
 
-            return async () =>
-            {
-                var iterator = dataQuery.ToFeedIterator();
-
-                var employees = new List<DepartmentEmployee>();
-
-                while (iterator.HasMoreResults)
-                {
-                    foreach (var result in await iterator.ReadNextAsync(token))
-                    {
-                        employees.Add(DepartmentEmployeeRecord.Map.ToDepartmentEmployee(result));
-                    }
-                }
-
-                return Some(employees.AsEnumerable());
-            };
-        }
+            return Some(employees.AsEnumerable());
+        };
     }
 }

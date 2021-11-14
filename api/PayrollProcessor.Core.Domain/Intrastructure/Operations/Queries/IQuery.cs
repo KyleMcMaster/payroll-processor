@@ -1,6 +1,5 @@
-namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries
+namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
+
+public interface IQuery<TResponse>
 {
-    public interface IQuery<TResponse>
-    {
-    }
 }

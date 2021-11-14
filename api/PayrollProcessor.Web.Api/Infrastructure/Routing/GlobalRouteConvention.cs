@@ -7,58 +7,57 @@ using Microsoft.AspNetCore.Mvc.Routing;
 /// <summary>
 /// https://stackoverflow.com/a/58406404/939634
 /// </summary>
-namespace PayrollProcessor.Web.Api.Infrastructure.Routing
+namespace PayrollProcessor.Web.Api.Infrastructure.Routing;
+
+public class GlobalRouteConvention : IApplicationModelConvention
 {
-    public class GlobalRouteConvention : IApplicationModelConvention
+    private readonly AttributeRouteModel routePrefix;
+
+    public GlobalRouteConvention(IRouteTemplateProvider route)
     {
-        private readonly AttributeRouteModel routePrefix;
-
-        public GlobalRouteConvention(IRouteTemplateProvider route)
+        if (route is null)
         {
-            if (route is null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
-
-            routePrefix = new AttributeRouteModel(route);
+            throw new ArgumentNullException(nameof(route));
         }
 
-        public void Apply(ApplicationModel application)
+        routePrefix = new AttributeRouteModel(route);
+    }
+
+    public void Apply(ApplicationModel application)
+    {
+        foreach (var selector in application.Controllers.SelectMany(c => c.Selectors))
         {
-            foreach (var selector in application.Controllers.SelectMany(c => c.Selectors))
+            if (selector.AttributeRouteModel != null)
             {
-                if (selector.AttributeRouteModel != null)
-                {
-                    selector.AttributeRouteModel = AttributeRouteModel.CombineAttributeRouteModel(routePrefix, selector.AttributeRouteModel);
-                }
-                else
-                {
-                    selector.AttributeRouteModel = routePrefix;
-                }
+                selector.AttributeRouteModel = AttributeRouteModel.CombineAttributeRouteModel(routePrefix, selector.AttributeRouteModel);
+            }
+            else
+            {
+                selector.AttributeRouteModel = routePrefix;
             }
         }
     }
+}
 
-    public static class MvcOptionsRouteExtensions
+public static class MvcOptionsRouteExtensions
+{
+    public static void UseGlobalRoutePrefix(this MvcOptions opts, IRouteTemplateProvider routeAttribute)
     {
-        public static void UseGlobalRoutePrefix(this MvcOptions opts, IRouteTemplateProvider routeAttribute)
+        if (routeAttribute is null)
         {
-            if (routeAttribute is null)
-            {
-                throw new ArgumentNullException(nameof(routeAttribute));
-            }
-
-            opts.Conventions.Add(new GlobalRouteConvention(routeAttribute));
+            throw new ArgumentNullException(nameof(routeAttribute));
         }
 
-        public static void UseGlobalRoutePrefix(this MvcOptions opts, string prefix)
-        {
-            if (string.IsNullOrWhiteSpace(prefix))
-            {
-                throw new ArgumentException($"{nameof(prefix)} cannot be empty", nameof(prefix));
-            }
+        opts.Conventions.Add(new GlobalRouteConvention(routeAttribute));
+    }
 
-            opts.UseGlobalRoutePrefix(new RouteAttribute(prefix));
+    public static void UseGlobalRoutePrefix(this MvcOptions opts, string prefix)
+    {
+        if (string.IsNullOrWhiteSpace(prefix))
+        {
+            throw new ArgumentException($"{nameof(prefix)} cannot be empty", nameof(prefix));
         }
+
+        opts.UseGlobalRoutePrefix(new RouteAttribute(prefix));
     }
 }

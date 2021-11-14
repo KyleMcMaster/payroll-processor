@@ -10,46 +10,45 @@ using PayrollProcessor.Data.Persistence.Features.Employees;
 
 using static LanguageExt.Prelude;
 
-namespace PayrollProcessor.Data.Persistence.Features.Resources
+namespace PayrollProcessor.Data.Persistence.Features.Resources;
+
+public class ResourceCountQueryHandler : IQueryHandler<ResourceCountQuery, ResourceCountQueryResponse>
 {
-    public class ResourceCountQueryHandler : IQueryHandler<ResourceCountQuery, ResourceCountQueryResponse>
+    private readonly CosmosClient client;
+
+    public ResourceCountQueryHandler(CosmosClient client)
     {
-        private readonly CosmosClient client;
+        Guard.Against.Null(client, nameof(client));
 
-        public ResourceCountQueryHandler(CosmosClient client)
+        this.client = client;
+    }
+
+    public TryOptionAsync<ResourceCountQueryResponse> Execute(ResourceCountQuery query, CancellationToken token)
+    {
+        var employeesCountResult = TryOptionAsync(
+            GetResourceCount(new QueryDefinition($"SELECT VALUE COUNT(1) FROM c where c.type = '{nameof(EmployeeRecord)}'"),
+            token));
+
+        var payrollsCountResult = TryOptionAsync(
+            GetResourceCount(new QueryDefinition($"SELECT VALUE COUNT(1) FROM c where c.type = '{nameof(EmployeePayrollRecord)}'"),
+            token));
+
+        return employeesCountResult.SelectMany(
+            _ => payrollsCountResult,
+            (employeesCount, payrollsCount) => new ResourceCountQueryResponse(employeesCount, payrollsCount));
+    }
+
+    public async Task<int> GetResourceCount(QueryDefinition query, CancellationToken token)
+    {
+        using var iterator = client.GetEmployeesContainer().GetItemQueryIterator<int>(query);
+
+        if (!iterator.HasMoreResults)
         {
-            Guard.Against.Null(client, nameof(client));
-
-            this.client = client;
+            return 0;
         }
 
-        public TryOptionAsync<ResourceCountQueryResponse> Execute(ResourceCountQuery query, CancellationToken token)
-        {
-            var employeesCountResult = TryOptionAsync(
-                GetResourceCount(new QueryDefinition($"SELECT VALUE COUNT(1) FROM c where c.type = '{nameof(EmployeeRecord)}'"),
-                token));
+        var response = await iterator.ReadNextAsync();
 
-            var payrollsCountResult = TryOptionAsync(
-                GetResourceCount(new QueryDefinition($"SELECT VALUE COUNT(1) FROM c where c.type = '{nameof(EmployeePayrollRecord)}'"),
-                token));
-
-            return employeesCountResult.SelectMany(
-                _ => payrollsCountResult,
-                (employeesCount, payrollsCount) => new ResourceCountQueryResponse(employeesCount, payrollsCount));
-        }
-
-        public async Task<int> GetResourceCount(QueryDefinition query, CancellationToken token)
-        {
-            using var iterator = client.GetEmployeesContainer().GetItemQueryIterator<int>(query);
-
-            if (!iterator.HasMoreResults)
-            {
-                return 0;
-            }
-
-            var response = await iterator.ReadNextAsync();
-
-            return response.Resource.First();
-        }
+        return response.Resource.First();
     }
 }

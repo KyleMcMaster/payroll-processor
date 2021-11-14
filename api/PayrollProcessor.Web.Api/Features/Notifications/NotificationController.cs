@@ -3,30 +3,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace PayrollProcessor.Web.Api.Features.Notifications
+namespace PayrollProcessor.Web.Api.Features.Notifications;
+
+[Route("notification")]
+[ApiController]
+public class NotificationController : ControllerBase
 {
-    [Route("notification")]
-    [ApiController]
-    public class NotificationController : ControllerBase
+    private readonly IHubContext<NotificationHub> hub;
+
+    public NotificationController(IHubContext<NotificationHub> hub)
     {
-        private readonly IHubContext<NotificationHub> hub;
-
-        public NotificationController(IHubContext<NotificationHub> hub)
+        if (hub is null)
         {
-            if (hub is null)
-            {
-                throw new ArgumentNullException(nameof(hub));
-            }
-
-            this.hub = hub;
+            throw new ArgumentNullException(nameof(hub));
         }
 
-        [HttpPost]
-        public async Task<ActionResult> PostMessage([FromBody] Notification notification)
-        {
-            await hub.Clients.All.SendAsync("received", notification);
+        this.hub = hub;
+    }
 
-            return Ok();
-        }
+    [HttpPost]
+    public async Task<ActionResult> PostMessage([FromBody] Notification notification)
+    {
+        await hub.Clients.All.SendAsync("received", notification);
+
+        return Ok();
     }
 }
