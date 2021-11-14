@@ -3,49 +3,48 @@ using System.Net.Http;
 using LanguageExt;
 using Newtonsoft.Json;
 
-namespace PayrollProcessor.Functions.Api.Infrastructure
+namespace PayrollProcessor.Functions.Api.Infrastructure;
+
+public interface IApiClient
 {
-    public interface IApiClient
+    TryOptionAsync<Unit> SendNotification<T>(string source, T data);
+}
+
+public class ApiClient : IApiClient
+{
+    private readonly HttpClient client;
+
+    public ApiClient(HttpClient client)
     {
-        TryOptionAsync<Unit> SendNotification<T>(string source, T data);
+        string apiDomain = EnvironmentSettings.Get("API_Domain")
+            .IfNone(() => "http://localhost:5000");
+
+        client.BaseAddress = new Uri(apiDomain);
+
+        this.client = client;
     }
 
-    public class ApiClient : IApiClient
+    public TryOptionAsync<Unit> SendNotification<T>(string source, T data)
     {
-        private readonly HttpClient client;
-
-        public ApiClient(HttpClient client)
+        var notification = new Notification
         {
-            string apiDomain = EnvironmentSettings.Get("API_Domain")
-                .IfNone(() => "http://localhost:5000");
+            Source = source,
+            Message = JsonConvert.SerializeObject(data)
+        };
 
-            client.BaseAddress = new Uri(apiDomain);
-
-            this.client = client;
-        }
-
-        public TryOptionAsync<Unit> SendNotification<T>(string source, T data)
+        return async () =>
         {
-            var notification = new Notification
-            {
-                Source = source,
-                Message = JsonConvert.SerializeObject(data)
-            };
+            var response = await client.PostAsJsonAsync("/api/v1/notification", notification);
 
-            return async () =>
-            {
-                var response = await client.PostAsJsonAsync("/api/v1/notification", notification);
+            response.EnsureSuccessStatusCode();
 
-                response.EnsureSuccessStatusCode();
-
-                return Unit.Default;
-            };
-        }
+            return Unit.Default;
+        };
     }
+}
 
-    public class Notification
-    {
-        public string Source { get; set; } = "";
-        public string Message { get; set; } = "";
-    }
+public class Notification
+{
+    public string Source { get; set; } = "";
+    public string Message { get; set; } = "";
 }

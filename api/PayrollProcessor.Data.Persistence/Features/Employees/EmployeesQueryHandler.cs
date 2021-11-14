@@ -10,63 +10,62 @@ using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 
 using static LanguageExt.Prelude;
 
-namespace PayrollProcessor.Data.Persistence.Features.Employees
+namespace PayrollProcessor.Data.Persistence.Features.Employees;
+
+public class EmployeesQueryHandler : IQueryHandler<EmployeesQuery, IEnumerable<Employee>>
 {
-    public class EmployeesQueryHandler : IQueryHandler<EmployeesQuery, IEnumerable<Employee>>
+    private readonly CosmosClient client;
+
+    public EmployeesQueryHandler(CosmosClient client)
     {
-        private readonly CosmosClient client;
+        Guard.Against.Null(client, nameof(client));
 
-        public EmployeesQueryHandler(CosmosClient client)
+        this.client = client;
+    }
+
+    public TryOptionAsync<IEnumerable<Employee>> Execute(EmployeesQuery query, CancellationToken token = default)
+    {
+        var (count, email, firstName, lastName) = query;
+
+        var dataQuery = client
+            .EmployeesQueryable<EmployeeRecord>()
+            .Where(e => e.Type == nameof(EmployeeRecord));
+
+        if (!string.IsNullOrWhiteSpace(firstName))
         {
-            Guard.Against.Null(client, nameof(client));
-
-            this.client = client;
+            dataQuery = dataQuery.Where(e => e.FirstNameLower.Contains(firstName.ToLowerInvariant()));
         }
 
-        public TryOptionAsync<IEnumerable<Employee>> Execute(EmployeesQuery query, CancellationToken token = default)
+        if (!string.IsNullOrWhiteSpace(lastName))
         {
-            var (count, email, firstName, lastName) = query;
+            dataQuery = dataQuery.Where(e => e.LastNameLower.Contains(lastName.ToLowerInvariant()));
+        }
 
-            var dataQuery = client
-                .EmployeesQueryable<EmployeeRecord>()
-                .Where(e => e.Type == nameof(EmployeeRecord));
+        if (!string.IsNullOrWhiteSpace(email))
+        {
+            dataQuery = dataQuery.Where(e => e.EmailLower.Contains(email.ToLowerInvariant()));
+        }
 
-            if (!string.IsNullOrWhiteSpace(firstName))
+        if (count > 0)
+        {
+            dataQuery = dataQuery.Take(count);
+        }
+
+        return async () =>
+        {
+            var iterator = dataQuery.ToFeedIterator();
+
+            var employees = new List<Employee>();
+
+            while (iterator.HasMoreResults)
             {
-                dataQuery = dataQuery.Where(e => e.FirstNameLower.Contains(firstName.ToLowerInvariant()));
-            }
-
-            if (!string.IsNullOrWhiteSpace(lastName))
-            {
-                dataQuery = dataQuery.Where(e => e.LastNameLower.Contains(lastName.ToLowerInvariant()));
-            }
-
-            if (!string.IsNullOrWhiteSpace(email))
-            {
-                dataQuery = dataQuery.Where(e => e.EmailLower.Contains(email.ToLowerInvariant()));
-            }
-
-            if (count > 0)
-            {
-                dataQuery = dataQuery.Take(count);
-            }
-
-            return async () =>
-            {
-                var iterator = dataQuery.ToFeedIterator();
-
-                var employees = new List<Employee>();
-
-                while (iterator.HasMoreResults)
+                foreach (var result in await iterator.ReadNextAsync(token))
                 {
-                    foreach (var result in await iterator.ReadNextAsync(token))
-                    {
-                        employees.Add(EmployeeRecord.Map.ToEmployee(result));
-                    }
+                    employees.Add(EmployeeRecord.Map.ToEmployee(result));
                 }
+            }
 
-                return Some(employees.AsEnumerable());
-            };
-        }
+            return Some(employees.AsEnumerable());
+        };
     }
 }

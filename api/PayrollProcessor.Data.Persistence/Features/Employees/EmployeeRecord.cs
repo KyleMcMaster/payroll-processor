@@ -4,112 +4,111 @@ using System.Linq;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Data.Persistence.Infrastructure.Records;
 
-namespace PayrollProcessor.Data.Persistence.Features.Employees
+namespace PayrollProcessor.Data.Persistence.Features.Employees;
+
+public class EmployeeRecord : CosmosDBRecord
 {
-    public class EmployeeRecord : CosmosDBRecord
+    public string Department { get; set; } = "";
+    public DateTimeOffset EmploymentStartedOn { get; set; }
+    public string Email { get; set; } = "";
+    public string EmailLower { get; set; } = "";
+    public string FirstName { get; set; } = "";
+    public string FirstNameLower { get; set; } = "";
+    public string LastName { get; set; } = "";
+    public string LastNameLower { get; set; } = "";
+    public string Phone { get; set; } = "";
+    public string Status { get; set; } = "";
+    public string Title { get; set; } = "";
+
+    public EmployeeRecord() => Type = nameof(EmployeeRecord);
+
+    public static class Map
     {
-        public string Department { get; set; } = "";
-        public DateTimeOffset EmploymentStartedOn { get; set; }
-        public string Email { get; set; } = "";
-        public string EmailLower { get; set; } = "";
-        public string FirstName { get; set; } = "";
-        public string FirstNameLower { get; set; } = "";
-        public string LastName { get; set; } = "";
-        public string LastNameLower { get; set; } = "";
-        public string Phone { get; set; } = "";
-        public string Status { get; set; } = "";
-        public string Title { get; set; } = "";
+        public static Employee ToEmployee(EmployeeRecord entity) =>
+            new Employee(entity.Id)
+            {
+                Department = entity.Department,
+                EmploymentStartedOn = entity.EmploymentStartedOn,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                Phone = entity.Phone,
+                Email = entity.Email,
+                Status = entity.Status,
+                Title = entity.Title,
+                Version = entity.ETag
+            };
 
-        public EmployeeRecord() => Type = nameof(EmployeeRecord);
+        public static EmployeeDetail ToEmployeeDetails(EmployeeRecord entity, IEnumerable<EmployeePayrollRecord> payrolls) =>
+            new EmployeeDetail(entity.Id)
+            {
+                Department = entity.Department,
+                EmploymentStartedOn = entity.EmploymentStartedOn,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                Phone = entity.Phone,
+                Email = entity.Email,
+                Status = entity.Status,
+                Title = entity.Title,
+                Version = entity.ETag,
+                Payrolls = payrolls.Select(EmployeePayrollRecord.Map.ToEmployeePayroll)
+            };
 
-        public static class Map
+        public static EmployeeRecord From(Employee employee)
         {
-            public static Employee ToEmployee(EmployeeRecord entity) =>
-                new Employee(entity.Id)
-                {
-                    Department = entity.Department,
-                    EmploymentStartedOn = entity.EmploymentStartedOn,
-                    FirstName = entity.FirstName,
-                    LastName = entity.LastName,
-                    Phone = entity.Phone,
-                    Email = entity.Email,
-                    Status = entity.Status,
-                    Title = entity.Title,
-                    Version = entity.ETag
-                };
+            var partitionId = employee.Id;
 
-            public static EmployeeDetail ToEmployeeDetails(EmployeeRecord entity, IEnumerable<EmployeePayrollRecord> payrolls) =>
-                new EmployeeDetail(entity.Id)
-                {
-                    Department = entity.Department,
-                    EmploymentStartedOn = entity.EmploymentStartedOn,
-                    FirstName = entity.FirstName,
-                    LastName = entity.LastName,
-                    Phone = entity.Phone,
-                    Email = entity.Email,
-                    Status = entity.Status,
-                    Title = entity.Title,
-                    Version = entity.ETag,
-                    Payrolls = payrolls.Select(EmployeePayrollRecord.Map.ToEmployeePayroll)
-                };
-
-            public static EmployeeRecord From(Employee employee)
+            return new EmployeeRecord
             {
-                var partitionId = employee.Id;
+                Id = partitionId,
+                PartitionKey = partitionId.ToString(),
+                Department = employee.Department,
+                EmploymentStartedOn = employee.EmploymentStartedOn,
+                FirstName = employee.FirstName,
+                FirstNameLower = employee.FirstName.ToLowerInvariant(),
+                LastName = employee.LastName,
+                LastNameLower = employee.LastName.ToLowerInvariant(),
+                Email = employee.Email,
+                EmailLower = employee.Email.ToLowerInvariant(),
+                Phone = employee.Phone,
+                Status = employee.Status,
+                Title = employee.Title,
+            };
+        }
 
-                return new EmployeeRecord
-                {
-                    Id = partitionId,
-                    PartitionKey = partitionId.ToString(),
-                    Department = employee.Department,
-                    EmploymentStartedOn = employee.EmploymentStartedOn,
-                    FirstName = employee.FirstName,
-                    FirstNameLower = employee.FirstName.ToLowerInvariant(),
-                    LastName = employee.LastName,
-                    LastNameLower = employee.LastName.ToLowerInvariant(),
-                    Email = employee.Email,
-                    EmailLower = employee.Email.ToLowerInvariant(),
-                    Phone = employee.Phone,
-                    Status = employee.Status,
-                    Title = employee.Title,
-                };
-            }
-
-            public static EmployeeRecord From(Guid newId, EmployeeNew employee) =>
-                new EmployeeRecord
-                {
-                    Id = newId,
-                    PartitionKey = newId.ToString(),
-                    Department = employee.Department,
-                    EmploymentStartedOn = employee.EmploymentStartedOn,
-                    FirstName = employee.FirstName,
-                    FirstNameLower = employee.FirstName.ToLowerInvariant(),
-                    LastName = employee.LastName,
-                    LastNameLower = employee.LastName.ToLowerInvariant(),
-                    Email = employee.Email,
-                    EmailLower = employee.Email.ToLowerInvariant(),
-                    Phone = employee.Phone,
-                    Status = employee.Status,
-                    Title = employee.Title
-                };
-
-            public static EmployeeRecord Merge(EmployeeUpdateCommand command)
+        public static EmployeeRecord From(Guid newId, EmployeeNew employee) =>
+            new EmployeeRecord
             {
-                var recordToUpdate = From(command.EntityToUpdate);
+                Id = newId,
+                PartitionKey = newId.ToString(),
+                Department = employee.Department,
+                EmploymentStartedOn = employee.EmploymentStartedOn,
+                FirstName = employee.FirstName,
+                FirstNameLower = employee.FirstName.ToLowerInvariant(),
+                LastName = employee.LastName,
+                LastNameLower = employee.LastName.ToLowerInvariant(),
+                Email = employee.Email,
+                EmailLower = employee.Email.ToLowerInvariant(),
+                Phone = employee.Phone,
+                Status = employee.Status,
+                Title = employee.Title
+            };
 
-                recordToUpdate.Email = command.Email;
-                recordToUpdate.EmailLower = command.Email.ToLowerInvariant();
-                recordToUpdate.EmploymentStartedOn = command.EmploymentStartedOn;
-                recordToUpdate.FirstName = command.FirstName;
-                recordToUpdate.FirstNameLower = command.FirstName.ToLowerInvariant();
-                recordToUpdate.LastName = command.LastName;
-                recordToUpdate.LastNameLower = command.LastName.ToLowerInvariant();
-                recordToUpdate.Phone = command.Phone;
-                recordToUpdate.Status = command.Status;
-                recordToUpdate.Title = command.Title;
+        public static EmployeeRecord Merge(EmployeeUpdateCommand command)
+        {
+            var recordToUpdate = From(command.EntityToUpdate);
 
-                return recordToUpdate;
-            }
+            recordToUpdate.Email = command.Email;
+            recordToUpdate.EmailLower = command.Email.ToLowerInvariant();
+            recordToUpdate.EmploymentStartedOn = command.EmploymentStartedOn;
+            recordToUpdate.FirstName = command.FirstName;
+            recordToUpdate.FirstNameLower = command.FirstName.ToLowerInvariant();
+            recordToUpdate.LastName = command.LastName;
+            recordToUpdate.LastNameLower = command.LastName.ToLowerInvariant();
+            recordToUpdate.Phone = command.Phone;
+            recordToUpdate.Status = command.Status;
+            recordToUpdate.Title = command.Title;
+
+            return recordToUpdate;
         }
     }
 }

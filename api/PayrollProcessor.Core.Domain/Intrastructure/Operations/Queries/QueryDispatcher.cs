@@ -8,48 +8,47 @@ using PayrollProcessor.Core.Domain.Intrastructure.Operations.Factories;
 /// <summary>
 /// From https://github.com/jbogard/MediatR
 /// </summary>
-namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries
+namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
+
+public class QueryDispatcher : IQueryDispatcher
 {
-    public class QueryDispatcher : IQueryDispatcher
+    private readonly ServiceProviderDelegate serviceProvider;
+    private static readonly ConcurrentDictionary<Type, object> queryHandlers = new ConcurrentDictionary<Type, object>();
+
+    public QueryDispatcher(ServiceProviderDelegate serviceProvider)
     {
-        private readonly ServiceProviderDelegate serviceProvider;
-        private static readonly ConcurrentDictionary<Type, object> queryHandlers = new ConcurrentDictionary<Type, object>();
+        Guard.Against.Null(serviceProvider, nameof(serviceProvider));
 
-        public QueryDispatcher(ServiceProviderDelegate serviceProvider)
-        {
-            Guard.Against.Null(serviceProvider, nameof(serviceProvider));
+        this.serviceProvider = serviceProvider;
+    }
 
-            this.serviceProvider = serviceProvider;
-        }
+    public TryOptionAsync<TResponse> Dispatch<TResponse>(IQuery<TResponse> query, CancellationToken token = default)
+    {
+        Guard.Against.Null(query, nameof(query));
 
-        public TryOptionAsync<TResponse> Dispatch<TResponse>(IQuery<TResponse> query, CancellationToken token = default)
-        {
-            Guard.Against.Null(query, nameof(query));
+        var queryType = query.GetType();
 
-            var queryType = query.GetType();
-
-            var handler = (QueryHandlerWrapper<TResponse>)queryHandlers
-                .GetOrAdd(
-                    queryType,
+        var handler = (QueryHandlerWrapper<TResponse>)queryHandlers
+            .GetOrAdd(
+                queryType,
 #pragma warning disable CS8603 // Possible null reference return.
                     t => Activator
                         .CreateInstance(typeof(QueryHandlerWrapperImpl<,>)
                         .MakeGenericType(queryType, typeof(TResponse))));
 #pragma warning restore CS8603 // Possible null reference return.
 
-            return handler.Dispatch(query, serviceProvider, token);
-        }
+        return handler.Dispatch(query, serviceProvider, token);
     }
+}
 
-    internal abstract class QueryHandlerWrapper<TResponse> : HandlerBase
-    {
-        public abstract TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceProvider, CancellationToken token);
-    }
+internal abstract class QueryHandlerWrapper<TResponse> : HandlerBase
+{
+    public abstract TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceProvider, CancellationToken token);
+}
 
-    internal class QueryHandlerWrapperImpl<TQuery, TResponse> : QueryHandlerWrapper<TResponse>
-        where TQuery : IQuery<TResponse>
-    {
-        public override TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
-            GetHandler<IQueryHandler<TQuery, TResponse>>(serviceProvider).Execute((TQuery)query, token);
-    }
+internal class QueryHandlerWrapperImpl<TQuery, TResponse> : QueryHandlerWrapper<TResponse>
+    where TQuery : IQuery<TResponse>
+{
+    public override TryOptionAsync<TResponse> Dispatch(IQuery<TResponse> query, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
+        GetHandler<IQueryHandler<TQuery, TResponse>>(serviceProvider).Execute((TQuery)query, token);
 }

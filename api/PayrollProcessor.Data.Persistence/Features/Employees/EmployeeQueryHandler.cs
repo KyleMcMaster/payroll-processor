@@ -9,38 +9,37 @@ using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 
 using static LanguageExt.Prelude;
 
-namespace PayrollProcessor.Data.Persistence.Features.Employees
+namespace PayrollProcessor.Data.Persistence.Features.Employees;
+
+public class EmployeeQueryHandler : IQueryHandler<EmployeeQuery, Employee>
 {
-    public class EmployeeQueryHandler : IQueryHandler<EmployeeQuery, Employee>
+    private readonly CosmosClient client;
+
+    public EmployeeQueryHandler(CosmosClient client)
     {
-        private readonly CosmosClient client;
+        Guard.Against.Null(client, nameof(client));
 
-        public EmployeeQueryHandler(CosmosClient client)
+        this.client = client;
+    }
+
+    public TryOptionAsync<Employee> Execute(EmployeeQuery query, CancellationToken token = default)
+    {
+        string identifier = query.EmployeeId.ToString();
+
+        return async () =>
         {
-            Guard.Against.Null(client, nameof(client));
-
-            this.client = client;
-        }
-
-        public TryOptionAsync<Employee> Execute(EmployeeQuery query, CancellationToken token = default)
-        {
-            string identifier = query.EmployeeId.ToString();
-
-            return async () =>
+            try
             {
-                try
-                {
-                    var record = await client
-                       .GetEmployeesContainer()
-                       .ReadItemAsync<EmployeeRecord>(identifier, new PartitionKey(identifier), cancellationToken: token);
+                var record = await client
+                   .GetEmployeesContainer()
+                   .ReadItemAsync<EmployeeRecord>(identifier, new PartitionKey(identifier), cancellationToken: token);
 
-                    return EmployeeRecord.Map.ToEmployee(record);
-                }
-                catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
-                {
-                    return None;
-                }
-            };
-        }
+                return EmployeeRecord.Map.ToEmployee(record);
+            }
+            catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return None;
+            }
+        };
     }
 }

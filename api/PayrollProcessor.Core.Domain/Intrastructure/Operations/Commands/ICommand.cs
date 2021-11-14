@@ -1,6 +1,5 @@
-namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands
-{
-    public interface ICommand { }
+namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
 
-    public interface ICommand<TResponse> { }
-}
+public interface ICommand { }
+
+public interface ICommand<TResponse> { }

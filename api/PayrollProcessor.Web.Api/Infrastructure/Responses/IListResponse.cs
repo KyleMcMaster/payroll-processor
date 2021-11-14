@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 
-namespace PayrollProcessor.Web.Api.Infrastructure.Responses
+namespace PayrollProcessor.Web.Api.Infrastructure.Responses;
+
+public interface IListResponse<TItem>
 {
-    public interface IListResponse<TItem>
-    {
-        IEnumerable<TItem> Data { get; }
-    }
+    IEnumerable<TItem> Data { get; }
 }
