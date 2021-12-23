@@ -54,4 +54,4 @@ jobs:
           app-name: 'q-nitro-payrollprocessor-client-eus2'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1815DEAC68AC4EE1801AB0AA15DAF698 }}
-          package: .
+          package: ./dist/payroll-processor-client
