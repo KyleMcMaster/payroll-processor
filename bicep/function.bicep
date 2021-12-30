@@ -16,7 +16,7 @@ var env = 'q'
 
 var functionAppName = '${env}-${team}-${appName}-func-${location}'
 var appServiceName = '${env}-${team}-${appName}-appservice-${location}'
-var storageAccountName = format('{0}storage', appName)
+var storageAccountName = format('{0}sta', appName)
 
 // Storage Account
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
