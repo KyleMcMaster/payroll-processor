@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "ls"
-      - run: ls
+        run: ls
 
       # Checkout code
       - uses: actions/checkout@main
