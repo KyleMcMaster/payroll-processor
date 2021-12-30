@@ -23,5 +23,5 @@ jobs:
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: ../arm/function.bicep
+          template: ../../arm/function.bicep
           failOnStdErr: false
