@@ -9,8 +9,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: c
-
       # Checkout code
       - uses: actions/checkout@main
 
@@ -25,5 +23,5 @@ jobs:
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: arm/function.bicep
+          template: ./bicep/function.bicep
           failOnStdErr: false
