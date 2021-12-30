@@ -9,6 +9,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: "ls"
+      - run: ls
+
       # Checkout code
       - uses: actions/checkout@main
 
