@@ -2,13 +2,15 @@
 #
 # For more information on GitHub Actions for Azure, refer to https://github.com/Azure/Actions
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
+name: client - build & test
+
 on:
   pull_request:
     branches:
       - master
 
 env:
-  NODE_VERSION: "12.x" # set this to the node version to use
+  NODE_VERSION: "14.x" # set this to the node version to use
 
 jobs:
   build-and-deploy:
