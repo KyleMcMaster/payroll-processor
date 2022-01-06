@@ -25,7 +25,7 @@ resource appService 'Microsoft.Web/sites@2021-02-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      alwaysOn: true
+      alwaysOn: false
       ftpsState: 'Disabled'
       netFrameworkVersion: 'v6.0'
       // appSettings: [
@@ -35,7 +35,7 @@ resource appService 'Microsoft.Web/sites@2021-02-01' = {
       //   }
       // ]
     }
-    httpsOnly: true
+    httpsOnly: false
   }
   tags: null
 }
