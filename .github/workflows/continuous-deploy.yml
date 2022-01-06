@@ -26,7 +26,17 @@ jobs:
           template: ./bicep/main.bicep
           failOnStdErr: false
 
-    # Deploy .Net Core API
+  # Deploy .Net Core API
   api-deploy:
     needs: arm-deploy
     uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@feat/azure-bicep-poc" #todo update branch
+
+    # Deploy .Net Core API
+  client-deploy:
+    needs: arm-deploy
+    uses: "KyleMcMaster/payroll-processor/.github/workflows/client-deploy.yml@feat/azure-bicep-poc"
+
+  # Deploy Azure Functions
+  # api-deploy:
+  #   needs: arm-deploy
+  #   uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@feat/azure-bicep-poc"
