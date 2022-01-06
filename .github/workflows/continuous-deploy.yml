@@ -28,4 +28,4 @@ jobs:
 
     # Deploy .Net Core API
   api-deploy:
-    uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@master"
+    uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@feat/azure-bicep-poc" #todo update branch
