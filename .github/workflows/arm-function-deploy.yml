@@ -1,13 +1,13 @@
-# on:
-#   # Trigger the workflow on push or pull request,
-#   # but only for the main branch
-#   push:
-#     branches:
-#       - feat/azure-bicep-poc
 on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
   push:
     branches:
-      - master
+      - feat/azure-bicep-poc
+# on:
+#   push:
+#     branches:
+#       - master
 name: Azure Function ARM
 jobs:
   build-and-deploy:
