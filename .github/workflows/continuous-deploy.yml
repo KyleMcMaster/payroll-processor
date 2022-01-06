@@ -28,4 +28,4 @@ jobs:
 
         # Deploy .Net Core API
       - name: API Deploy
-        uses: "./api-deploy.yml"
+        uses: "./.github/api-deploy.yml"
