@@ -6,7 +6,7 @@ on:
       - feat/azure-bicep-poc
 name: Continuous Deploy
 jobs:
-  build-and-deploy:
+  arm-deploy:
     runs-on: ubuntu-latest
     steps:
       # Checkout code
@@ -26,6 +26,6 @@ jobs:
           template: ./bicep/main.bicep
           failOnStdErr: false
 
-        # Deploy .Net Core API
-      - name: API Deploy
-        uses: "./.github/workflows/api-deploy.yml"
+    # Deploy .Net Core API
+  api-deploy:
+    uses: "./.github/workflows/api-deploy.yml"
