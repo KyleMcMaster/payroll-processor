@@ -28,4 +28,4 @@ jobs:
 
     # Deploy .Net Core API
   api-deploy:
-    uses: "./.github/workflows/api-deploy.yml@main"
+    uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@main"
