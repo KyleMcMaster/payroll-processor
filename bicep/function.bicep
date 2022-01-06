@@ -1,20 +1,11 @@
-/*
-based on tutorial here
-https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/deploy-github-actions?tabs=CLI
-source:
-https://github.com/Azure/bicep/blob/main/docs/examples/101/function-app-create/main.bicep
-*/
-
-// resources using the format environment-team-appName-appType-region, excluding storage account
-
-param location string = resourceGroup().location
+param appName string
+param env string
 param functionRuntime string = 'dotnet'
-param appName string = 'payrollprocessor'
-param team string = 'nitrodevs'
-param env string = 'q'
+param location string
+param team string
 
 var functionAppName = '${env}-${team}-${appName}-func-${location}'
-var appServicePlanName = '${env}-${team}-${appName}-func-appservice-${location}'
+// var appServicePlanName = '${env}-${team}-${appName}-func-appservice-${location}'
 var storageAccountName = format('{0}sta', appName)
 
 // Storage Account

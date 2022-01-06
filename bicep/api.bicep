@@ -1,29 +1,16 @@
-// resources using the format environment-team-appName-appType-region,
-// excluding storage account
+param appName string
+param appServicePlanId string
+param env string
+param location string
+param team string
 
-param location string = resourceGroup().location
-param appName string = 'payrollprocessor'
-param team string = 'nitrodevs'
-param env string = 'q'
-
-var appServicePlanName = '${env}-${team}-${appName}-api-appservice-${location}'
 var appServiceName = '${env}-${team}-${appName}-api-${location}'
 
-// App Service Plan
-resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
-  name: appServicePlanName
-  location: resourceGroup().location
-  sku: {
-    name: 'F1'
-  }
-  kind: ('windows')
-  tags: null
-}
 resource appService 'Microsoft.Web/sites@2021-02-01' = {
   name: appServiceName
   location: location
   properties: {
-    serverFarmId: appServicePlan.id
+    serverFarmId: appServicePlanId
     siteConfig: {
       alwaysOn: false
       ftpsState: 'Disabled'

@@ -4,11 +4,7 @@ on:
   push:
     branches:
       - feat/azure-bicep-poc
-# on:
-#   push:
-#     branches:
-#       - master
-name: Web API ARM
+name: Continuous Deploy
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -21,11 +17,15 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-        # Deploy Bicep file
-      - name: deploy
+        # Deploy ARM Bicep file
+      - name: ARM Deploy
         uses: azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: ./bicep/api.bicep
+          template: ./bicep/main.bicep
           failOnStdErr: false
+
+        # Deploy .Net Core API
+      - name: API Deploy
+        uses: "./api-deploy.yml"
