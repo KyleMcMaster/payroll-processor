@@ -4,10 +4,7 @@
 name: Build and deploy ASP.Net Core app to Azure Web App
 
 on:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:
