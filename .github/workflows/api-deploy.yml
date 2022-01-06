@@ -51,7 +51,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "q-nitro-payrollprocessor-api-eus2"
+          app-name: ${{ secrets.APIAPPNAME }}
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0F6661018B1141E5B1D9096705F9A959 }}
           package: .

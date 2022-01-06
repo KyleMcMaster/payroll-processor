@@ -9,13 +9,12 @@ https://github.com/Azure/bicep/blob/main/docs/examples/101/function-app-create/m
 
 param location string = resourceGroup().location
 param functionRuntime string = 'dotnet'
-
-var appName = 'payrollprocessor'
-var team = 'nitrodevs'
-var env = 'q'
+param appName string = 'payrollprocessor'
+param team string = 'nitrodevs'
+param env string = 'q'
 
 var functionAppName = '${env}-${team}-${appName}-func-${location}'
-var appServiceName = '${env}-${team}-${appName}-appservice-${location}'
+var appServicePlanName = '${env}-${team}-${appName}-func-appservice-${location}'
 var storageAccountName = format('{0}sta', appName)
 
 // Storage Account
@@ -61,9 +60,9 @@ resource blobServices 'Microsoft.Storage/storageAccounts/blobServices@2019-06-01
   }
 }
 
-// App Service
+// App Service Plan
 resource appService 'Microsoft.Web/serverFarms@2020-06-01' = {
-  name: appServiceName
+  name: appServicePlanName
   location: location
   kind: 'functionapp'
   sku: {
@@ -124,7 +123,7 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'
-          value: '~3'
+          value: '~4'
         }
       ]
     }
