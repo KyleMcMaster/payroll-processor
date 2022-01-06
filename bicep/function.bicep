@@ -61,28 +61,28 @@ resource blobServices 'Microsoft.Storage/storageAccounts/blobServices@2019-06-01
 }
 
 // App Service Plan
-resource appService 'Microsoft.Web/serverFarms@2020-06-01' = {
-  name: appServicePlanName
-  location: location
-  kind: 'functionapp'
-  sku: {
-    name: 'Y1'
-    tier: 'Dynamic'
-    size: 'Y1'
-    family: 'Y'
-    capacity: 0
-  }
-  properties: {
-    perSiteScaling: false
-    maximumElasticWorkerCount: 1
-    isSpot: false
-    reserved: false
-    isXenon: false
-    hyperV: false
-    targetWorkerCount: 0
-    targetWorkerSizeId: 0
-  }
-}
+// resource appService 'Microsoft.Web/serverFarms@2020-06-01' = {
+//   name: appServicePlanName
+//   location: location
+//   kind: 'functionapp'
+//   sku: {
+//     name: 'Y1'
+//     tier: 'Dynamic'
+//     size: 'Y1'
+//     family: 'Y'
+//     capacity: 0
+//   }
+//   properties: {
+//     perSiteScaling: false
+//     maximumElasticWorkerCount: 1
+//     isSpot: false
+//     reserved: false
+//     isXenon: false
+//     hyperV: false
+//     targetWorkerCount: 0
+//     targetWorkerSizeId: 0
+//   }
+// }
 
 // Function App
 resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
@@ -103,7 +103,7 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
         hostType: 'Standard'
       }
     ]
-    serverFarmId: appService.id
+    //serverFarmId: appService.id
     reserved: false
     isXenon: false
     hyperV: false
