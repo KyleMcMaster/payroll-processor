@@ -31,7 +31,7 @@ jobs:
     needs: arm-deploy
     uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@feat/azure-bicep-poc" #todo update branch
 
-    # Deploy .Net Core API
+  # Deploy Angular Client
   client-deploy:
     needs: arm-deploy
     uses: "KyleMcMaster/payroll-processor/.github/workflows/client-deploy.yml@feat/azure-bicep-poc"
