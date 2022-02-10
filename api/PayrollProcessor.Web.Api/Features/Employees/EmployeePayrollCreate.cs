@@ -12,9 +12,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Web.Api.Features.Employees;
 
-public class EmployeePayrollCreate : BaseAsyncEndpoint
+public class EmployeePayrollCreate : EndpointBaseAsync
     .WithRequest<EmployeePayrollCreateRequest>
-    .WithResponse<EmployeePayroll>
+    .WithActionResult<EmployeePayroll>
 {
     private readonly IQueryDispatcher queryDispatcher;
     private readonly ICommandDispatcher commandDispatcher;
