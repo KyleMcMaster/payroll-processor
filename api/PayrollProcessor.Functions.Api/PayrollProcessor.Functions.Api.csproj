@@ -13,8 +13,8 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="5.0.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />
     <PackageReference Include="NewtonSoft.Json" Version="13.0.1" />
-    <PackageReference Include="Ardalis.GuardClauses" Version="3.3.0" />
-    <PackageReference Include="Scrutor" Version="3.3.0" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.0" />
+    <PackageReference Include="Scrutor" Version="4.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
