@@ -3,7 +3,7 @@ on:
   # but only for the main branch
   push:
     branches:
-      - feat/azure-bicep-poc
+      - master
 name: Continuous Deploy
 jobs:
   arm-deploy:
@@ -18,25 +18,25 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
         # Deploy ARM Bicep file
-      - name: ARM Deploy
-        uses: azure/arm-deploy@v1
-        with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: ./bicep/main.bicep
-          failOnStdErr: false
+     # - name: ARM Deploy
+      #  uses: azure/arm-deploy@v1
+       # with:
+        #  subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+         # resourceGroupName: ${{ secrets.AZURE_RG }}
+         # template: ./bicep/main.bicep
+         # failOnStdErr: false
 
   # Deploy .Net Core API
-  api-deploy:
-    needs: arm-deploy
-    uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@feat/azure-bicep-poc" #todo update branch
+  #api-deploy:
+  #  needs: arm-deploy
+  #  uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@master" #todo update branch
 
   # Deploy Angular Client
-  client-deploy:
-    needs: arm-deploy
-    uses: "KyleMcMaster/payroll-processor/.github/workflows/client-deploy.yml@feat/azure-bicep-poc"
+  #client-deploy:
+  # needs: arm-deploy
+  #  uses: "KyleMcMaster/payroll-processor/.github/workflows/client-deploy.yml@master"
 
   # Deploy Azure Functions
   # api-deploy:
   #   needs: arm-deploy
-  #   uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@feat/azure-bicep-poc"
+  #   uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@master"
