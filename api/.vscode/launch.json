@@ -6,9 +6,9 @@
       "type": "coreclr",
       "preLaunchTask": "API: Build (Debug)",
       "request": "launch",
-      "program": "${workspaceFolder}/PayrollProcessor.Web.Api/bin/Debug/netcoreapp3.1/PayrollProcessor.Web.Api.dll",
+      "program": "${workspaceFolder}/PayrollProcessor.Web.Api/bin/Debug/net6.0/PayrollProcessor.Web.Api.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/PayrollProcessor.Web.Api/bin/Debug/netcoreapp3.1",
+      "cwd": "${workspaceFolder}/PayrollProcessor.Web.Api/bin/Debug/net6.0",
       "stopAtEntry": false,
       "internalConsoleOptions": "openOnSessionStart",
       "env": {

@@ -1,0 +1,42 @@
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - master
+name: Continuous Deploy
+jobs:
+  arm-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code
+      - uses: actions/checkout@main
+
+        # Log into Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        # Deploy ARM Bicep file
+     # - name: ARM Deploy
+      #  uses: azure/arm-deploy@v1
+       # with:
+        #  subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+         # resourceGroupName: ${{ secrets.AZURE_RG }}
+         # template: ./bicep/main.bicep
+         # failOnStdErr: false
+
+  # Deploy .Net Core API
+  #api-deploy:
+  #  needs: arm-deploy
+  #  uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@master" #todo update branch
+
+  # Deploy Angular Client
+  #client-deploy:
+  # needs: arm-deploy
+  #  uses: "KyleMcMaster/payroll-processor/.github/workflows/client-deploy.yml@master"
+
+  # Deploy Azure Functions
+  # api-deploy:
+  #   needs: arm-deploy
+  #   uses: "KyleMcMaster/payroll-processor/.github/workflows/api-deploy.yml@master"
