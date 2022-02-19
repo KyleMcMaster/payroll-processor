@@ -45,7 +45,7 @@ public class DepartmentPayrollsGet : EndpointBaseAsync
 public class DepartmentPayrollsRequest
 {
     public int Count { get; set; }
-    public string Department { get; set; } = "";
+    public string Department { get; set; } = string.Empty;
     public DateTime? CheckDateFrom { get; set; }
     public DateTime? CheckDateTo { get; set; }
 }

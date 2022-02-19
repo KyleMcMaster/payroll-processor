@@ -6,7 +6,7 @@ namespace Microsoft.AspNetCore.Mvc;
 [DefaultStatusCode(500)]
 public class APIErrorResult : JsonResult
 {
-    public APIErrorResult(string errorMessage = "") : base("")
+    public APIErrorResult(string errorMessage = "") : base(string.Empty)
     {
         string message = string.IsNullOrWhiteSpace(errorMessage)
             ? "Internal Server Error"

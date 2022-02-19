@@ -46,7 +46,7 @@ public class DepartmentEmployeesGet : EndpointBaseAsync
 public class DepartmentEmployeesGetRequest
 {
     public int Count { get; set; }
-    public string Department { get; set; } = "";
+    public string Department { get; set; } = string.Empty;
 }
 
 public class DepartmentEmployeesResponse : IListResponse<DepartmentEmployee>

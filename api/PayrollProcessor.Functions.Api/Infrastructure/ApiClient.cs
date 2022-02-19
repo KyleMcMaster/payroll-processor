@@ -45,6 +45,6 @@ public class ApiClient : IApiClient
 
 public class Notification
 {
-    public string Source { get; set; } = "";
-    public string Message { get; set; } = "";
+    public string Source { get; set; } = string.Empty;
+    public string Message { get; set; } = string.Empty;
 }

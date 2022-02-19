@@ -16,7 +16,7 @@ public interface IMessage
 
 public class DefaultMessage
 {
-    public string EventName { get; set; } = "";
+    public string EventName { get; set; } = string.Empty;
 }
 
 public static class QueueMessageBuilder

@@ -6,14 +6,14 @@ namespace PayrollProcessor.Core.Domain.Features.Employees;
 
 public class EmployeeUpdateCommand : ICommand<Employee>
 {
-    public string Email { get; } = "";
+    public string Email { get; } = string.Empty;
     public DateTimeOffset EmploymentStartedOn { get; }
-    public string FirstName { get; } = "";
-    public string LastName { get; } = "";
-    public string Phone { get; } = "";
-    public string Status { get; } = "";
-    public string Title { get; } = "";
-    public string Version { get; } = "";
+    public string FirstName { get; } = string.Empty;
+    public string LastName { get; } = string.Empty;
+    public string Phone { get; } = string.Empty;
+    public string Status { get; } = string.Empty;
+    public string Title { get; } = string.Empty;
+    public string Version { get; } = string.Empty;
     public Employee EntityToUpdate { get; }
 
     public EmployeeUpdateCommand(

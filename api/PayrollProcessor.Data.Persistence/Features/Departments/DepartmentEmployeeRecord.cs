@@ -8,10 +8,10 @@ namespace PayrollProcessor.Data.Persistence.Features.Departments;
 public class DepartmentEmployeeRecord : CosmosDBRecord
 {
     public Guid EmployeeId { get; set; }
-    public string Department { get; set; } = "";
-    public string FirstName { get; set; } = "";
-    public string LastName { get; set; } = "";
-    public string Email { get; set; } = "";
+    public string Department { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
 
     public DepartmentEmployeeRecord() => Type = nameof(DepartmentEmployeeRecord);
 

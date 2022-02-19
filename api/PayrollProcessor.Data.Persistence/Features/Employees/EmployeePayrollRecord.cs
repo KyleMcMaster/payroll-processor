@@ -11,7 +11,7 @@ public class EmployeePayrollRecord : CosmosDBRecord
 {
     public DateTimeOffset CheckDate { get; set; }
     public decimal GrossPayroll { get; set; }
-    public string PayrollPeriod { get; set; } = "";
+    public string PayrollPeriod { get; set; } = string.Empty;
 
     public EmployeePayrollRecord() => Type = nameof(EmployeePayrollRecord);
 

@@ -12,5 +12,5 @@ public class QueueMessageHandler
 #pragma warning restore CS8603 // Possible null reference return.
 
     public static string GetEventName(CloudQueueMessage queueMessage) =>
-        JsonConvert.DeserializeObject<DefaultMessage>(queueMessage.AsString)?.EventName ?? "";
+        JsonConvert.DeserializeObject<DefaultMessage>(queueMessage.AsString)?.EventName ?? string.Empty;
 }

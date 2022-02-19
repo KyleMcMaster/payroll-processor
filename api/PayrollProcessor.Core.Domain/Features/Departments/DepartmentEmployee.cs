@@ -8,9 +8,9 @@ public class DepartmentEmployee
 
     public Guid Id { get; }
     public Guid EmployeeId { get; set; }
-    public string Department { get; set; } = "";
-    public string FirstName { get; set; } = "";
-    public string LastName { get; set; } = "";
-    public string Email { get; set; } = "";
-    public string Version { get; set; } = "";
+    public string Department { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Version { get; set; } = string.Empty;
 }

@@ -11,10 +11,10 @@ public class DepartmentPayrollRecord : CosmosDBRecord
     public Guid EmployeeId { get; set; }
     public Guid EmployeePayrollId { get; set; }
     public decimal GrossPayroll { get; set; }
-    public string PayrollPeriod { get; set; } = "";
-    public string EmployeeDepartment { get; set; } = "";
-    public string EmployeeFirstName { get; set; } = "";
-    public string EmployeeLastName { get; set; } = "";
+    public string PayrollPeriod { get; set; } = string.Empty;
+    public string EmployeeDepartment { get; set; } = string.Empty;
+    public string EmployeeFirstName { get; set; } = string.Empty;
+    public string EmployeeLastName { get; set; } = string.Empty;
 
     public DepartmentPayrollRecord() => Type = nameof(DepartmentPayrollRecord);
 

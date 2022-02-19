@@ -60,5 +60,5 @@ public class EmployeePayrollUpdateRequest
     public Guid EmployeeId { get; set; }
     public DateTimeOffset CheckDate { get; set; }
     public decimal GrossPayroll { get; set; }
-    public string PayrollPeriod { get; set; } = "";
+    public string PayrollPeriod { get; set; } = string.Empty;
 }

@@ -8,17 +8,17 @@ namespace PayrollProcessor.Data.Persistence.Features.Employees;
 
 public class EmployeeRecord : CosmosDBRecord
 {
-    public string Department { get; set; } = "";
+    public string Department { get; set; } = string.Empty;
     public DateTimeOffset EmploymentStartedOn { get; set; }
-    public string Email { get; set; } = "";
-    public string EmailLower { get; set; } = "";
-    public string FirstName { get; set; } = "";
-    public string FirstNameLower { get; set; } = "";
-    public string LastName { get; set; } = "";
-    public string LastNameLower { get; set; } = "";
-    public string Phone { get; set; } = "";
-    public string Status { get; set; } = "";
-    public string Title { get; set; } = "";
+    public string Email { get; set; } = string.Empty;
+    public string EmailLower { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string FirstNameLower { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string LastNameLower { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
 
     public EmployeeRecord() => Type = nameof(EmployeeRecord);
 

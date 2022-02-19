@@ -7,8 +7,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["PayrollProcessor.Web.Api.csproj", ""]
-COPY ["PayrollProcessor.Data.Persistence.csproj", ""]
+COPY ["PayrollProcessor.Web.Api.csproj", string.Empty]
+COPY ["PayrollProcessor.Data.Persistence.csproj", string.Empty]
 RUN dotnet restore "./PayrollProcessor.Web.Api.csproj"
 COPY . .
 WORKDIR "/src/."

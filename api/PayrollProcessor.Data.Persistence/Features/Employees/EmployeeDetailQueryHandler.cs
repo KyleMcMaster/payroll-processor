@@ -42,7 +42,7 @@ public class EmployeeDetailQueryHandler : IQueryHandler<EmployeeDetailQuery, Emp
 
                 foreach (var item in response)
                 {
-                    string type = item.Value<string>("type") ?? "";
+                    string type = item.Value<string>("type") ?? string.Empty;
 
                     switch (type)
                     {

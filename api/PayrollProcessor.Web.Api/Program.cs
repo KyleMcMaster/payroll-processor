@@ -75,7 +75,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 
-    endpoints.MapHealthChecks("");
+    endpoints.MapHealthChecks(string.Empty);
 
     endpoints.MapHub<NotificationHub>("/hub/notifications");
 });

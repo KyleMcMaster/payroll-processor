@@ -18,7 +18,7 @@ public abstract class CosmosDBRecord
     /// The partition key of the record in its collection
     /// </summary>
     /// <value></value>
-    public string PartitionKey { get; set; } = "";
+    public string PartitionKey { get; set; } = string.Empty;
 
     /// <summary>
     /// The 'Version' of the record auto-managed by Cosmos and used
@@ -26,7 +26,7 @@ public abstract class CosmosDBRecord
     /// </summary>
     /// <value></value>
     [JsonProperty(PropertyName = "_etag")]
-    public string ETag { internal get; set; } = "";
+    public string ETag { internal get; set; } = string.Empty;
 
     /// <summary>
     /// The type discrimniator of the record, used when multiple
@@ -34,5 +34,5 @@ public abstract class CosmosDBRecord
     /// This is the name of the Record class.
     /// </summary>
     /// <value></value>
-    public string Type { get; set; } = "";
+    public string Type { get; set; } = string.Empty;
 }
