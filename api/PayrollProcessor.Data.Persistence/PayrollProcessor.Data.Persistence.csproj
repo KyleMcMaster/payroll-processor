@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Queues" Version="12.8.0" />
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.24.0" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.25.0" />
   </ItemGroup>
 
   <ItemGroup>
