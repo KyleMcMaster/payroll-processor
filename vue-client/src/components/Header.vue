@@ -6,23 +6,30 @@
       class="mt-1"
     />
     <span class="font-brand text-2xl flex items-center mx-1">
-      <a href="/">Payroll Processor</a>
+      <RouterLink to="/">Payroll Processor</RouterLink>
+    </span>
+    <!-- <span class="inline-flex px-2">
+      <RouterLink to="/Employees">Employees</RouterLink>
     </span>
     <span class="inline-flex px-2">
-      <a href="/blogs">Employess</a>
-    </span>
-    <span class="inline-flex px-2">
-      <a href="/blogs">Departments</a>
-    </span>
-    <span class="inline-flex px-2">
-      <a href="/blogs">Admin</a>
+      <RouterLink to="/Departments">Departments</RouterLink>
+    </span>-->
+    <span class="inline-flex text-xl items-center mx-1">
+      <RouterLink to="/Admin">Admin</RouterLink>
     </span>
     <div class="flex-grow"></div>
     <ThemeToggle />
   </header>
+  <RouterView />
 </template>
 
 <script lang="ts" setup>
+
+</script>
+
+<script setup lang="ts">
+import Header from "@/components/Header.vue";
+import { RouterView } from "vue-router";
 import ThemeToggle from "./ThemeToggle.vue";
 </script>
 

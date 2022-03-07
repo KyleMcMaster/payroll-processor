@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import Header from "@/components/Header.vue";
-import { RouterView } from "vue-router";
+// import { RouterView } from "vue-router";
 </script>
 
 <template>
   <Header />
   <main class="container">
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <nav>
+      <!-- <HelloWorld msg="You did it!" /> -->
+      <!-- <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-      </nav>
+      </nav>-->
     </div>
-    <RouterView />
+    <!-- <RouterView /> -->
   </main>
 </template>
 
