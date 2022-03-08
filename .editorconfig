@@ -18,6 +18,9 @@ indent_size = 4
 indent_style = space
 tab_width = 4
 
+# IDE0005: Remove unnecessary imports
+dotnet_diagnostic.IDE0005.severity = warning
+
 #### .NET Coding Conventions ####
 
 # Organize usings
