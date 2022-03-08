@@ -10,7 +10,7 @@ namespace PayrollProcessor.Core.Domain.Tests.Features.Employees;
 public class EmployeePayrollCreateCommandTests
 {
     [Fact]
-    public void Constructor_Guards_Against_Invalid_Parameters()
+    public void ConstructorGuardsAgainstInvalidParameters()
     {
         var assertion = new GuardClauseAssertion(new DomainFixture());
 
