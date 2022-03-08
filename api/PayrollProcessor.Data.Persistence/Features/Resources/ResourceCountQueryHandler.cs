@@ -42,12 +42,12 @@ public class ResourceCountQueryHandler : IQueryHandler<ResourceCountQuery, Resou
     {
         using var iterator = client.GetEmployeesContainer().GetItemQueryIterator<int>(query);
 
-        if (!iterator.HasMoreResults)
+        if (!iterator.HasMoreResults) 
         {
             return 0;
         }
 
-        var response = await iterator.ReadNextAsync();
+        var response = await iterator.ReadNextAsync(token);
 
         return response.Resource.First();
     }

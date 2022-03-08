@@ -1,0 +1,64 @@
+<mxfile host="65bd71144e">
+    <diagram id="bn1hqqxNea5ftq7TOGmM" name="Page-1">
+        <mxGraphModel dx="1758" dy="754" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="GitHub Actions" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;horizontal=0;horizontalStack=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="140" width="640" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Continuous Integration" style="swimlane;startSize=20;" parent="2" vertex="1">
+                    <mxGeometry x="20" width="180" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="UI&lt;br&gt;Build &amp;amp; Test" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" parent="3" vertex="1">
+                    <mxGeometry x="40" y="60" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Backend&lt;br&gt;Build &amp;amp; Test" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" parent="3" vertex="1">
+                    <mxGeometry x="40" y="140" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Continuous Deployment" style="swimlane;startSize=20;" parent="2" vertex="1">
+                    <mxGeometry x="200" width="440" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;rounded=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashed=1;" parent="4" source="9" target="12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashed=1;" parent="4" source="9" target="16" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashed=1;" parent="4" source="9" target="20" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Resource Group Arm Deploy" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;dashed=1;" parent="4" vertex="1">
+                    <mxGeometry x="40" y="60" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="" style="edgeStyle=none;rounded=1;html=1;startArrow=none;startFill=0;" parent="4" source="12" target="22" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="UI &lt;br&gt;ARM Deploy" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;dashed=1;" parent="4" vertex="1">
+                    <mxGeometry x="160" y="140" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="" style="edgeStyle=none;rounded=1;html=1;startArrow=none;startFill=0;" parent="4" source="16" target="24" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="API &lt;br&gt;ARM Deploy" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;dashed=1;" parent="4" vertex="1">
+                    <mxGeometry x="160" y="220" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="" style="edgeStyle=none;rounded=1;html=1;startArrow=none;startFill=0;" parent="4" source="20" target="26" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="Function&lt;br&gt;ARM Deploy" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;dashed=1;" parent="4" vertex="1">
+                    <mxGeometry x="160" y="300" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="UI &lt;br&gt;Code Deploy" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" parent="4" vertex="1">
+                    <mxGeometry x="300" y="140" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="API &lt;br&gt;Code Deploy" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" parent="4" vertex="1">
+                    <mxGeometry x="300" y="220" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="Function&lt;br&gt;Code Deploy" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" parent="4" vertex="1">
+                    <mxGeometry x="300" y="300" width="100" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

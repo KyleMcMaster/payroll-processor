@@ -154,10 +154,7 @@ The application will listen for requests on [http://localhost:7071](http://local
 
 ## Data Storage
 
-The project currently stores data in Azure Table Storage, which can be simulated locally using the [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator).
-
-> Linux and Mac users will need to use the [Azurite](https://github.com/azure/azurite) Npm package (specifically V2) instead of the Emulator,
-> which is Windows only.
+The project currently stores data in Azure Table Storage, which can be simulated locally using the [Azurite](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio).
 
 The locally stored data can be viewed using the [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/).
 
