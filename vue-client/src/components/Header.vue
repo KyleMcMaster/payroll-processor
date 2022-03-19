@@ -1,7 +1,7 @@
 <template>
   <header class="w-full p-2 px-5 shadow-xl text-primary flex">
     <img
-      src="https://raw.githubusercontent.com/KyleMcMaster/kmcmaster.dev/feat/v3/public/github-logo.png"
+      src="https://raw.githubusercontent.com/KyleMcMaster/kmcmaster.dev/main/public/github-logo.png"
       alt="logo"
       class="mt-1"
     />

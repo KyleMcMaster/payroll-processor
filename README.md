@@ -32,17 +32,8 @@ Areas of interest:
 
 ### MVP
 
-#### Employees
-
-- [x] Create
-- [x] Read
-- [x] Update
-- [x] Delete (disable)
-
-#### Payrolls
-
-- [x] Create
-- [x] Read
+- [x] Employee and Payroll CRUD functionality representing a simple workflow for the domain
+- [x] Administration screen for seeding data
 
 ### Future Enhancements
 
@@ -73,6 +64,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## Project Structure
+
+api/ - .NET API and Azure Functions backend
+
+client/ - Main view of the application built with Angular and Boostrap
+
+vue-client/ - Alternate view of the Admin page
 
 ## References
 
