@@ -6,23 +6,23 @@
       "command": "npm",
       "args": ["install"],
       "problemMatcher": [],
-      "label": "Client: Install",
-      "detail": "Instal npm project packages for Angular client"
+      "label": "Angular: Install Packages",
+      "detail": "Install npm project packages for Angular client"
     },
     {
       "type": "npm",
       "script": "start",
-      "dependsOn": ["Client: Install"],
+      "dependsOn": ["Angular: Install Packages"],
       "problemMatcher": [],
-      "label": "Client: Serve",
+      "label": "Angular: Serve",
       "detail": "Serves the Angular client on http://localhost:4201"
     },
     {
       "type": "npm",
       "script": "build",
-      "dependsOn": ["Client: Install"],
+      "dependsOn": ["Angular: Install Packages"],
       "problemMatcher": [],
-      "label": "Client: Build",
+      "label": "Angular: Build",
       "detail": "Builds the Angular client for production"
     }
   ]
