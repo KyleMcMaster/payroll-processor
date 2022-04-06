@@ -16,6 +16,9 @@ Sample HRIS application where a list of employees and their payroll information 
   <img src="https://img.shields.io/github/license/KyleMcMaster/payroll-processor" /></a>
 </p>
 
+![Twitter Follow](https://img.shields.io/twitter/follow/kylemcmaster?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/seangwright?style=social)
+
 ## Build status
 
 ### Api and Functions
