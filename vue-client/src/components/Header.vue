@@ -35,8 +35,8 @@ import ThemeToggle from "./ThemeToggle.vue";
 
 <style scoped>
 img {
-  width: 3%;
-  height: 3%;
+  width: 1%;
+  height: 1%;
   overflow: hidden;
   border-radius: 50%;
 }
