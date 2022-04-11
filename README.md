@@ -2,6 +2,23 @@
 
 Sample HRIS application where a list of employees and their payroll information would be available in report format.
 
+<p>
+  <a href="https://github.com/KyleMcMaster/payroll-processor/graphs/contributors" alt="Contributors">
+  <img src="https://img.shields.io/github/contributors/KyleMcMaster/payroll-processor" /></a>
+
+  <a href="https://github.com/KyleMcMaster/payroll-processor/stargazers" alt="Stars">
+  <img src="https://img.shields.io/github/stars/KyleMcMaster/payroll-processor" /></a>
+
+  <a href="https://github.com/KyleMcMaster/payroll-processor/issues" alt="Issues">
+  <img src="https://img.shields.io/github/issues/KyleMcMaster/payroll-processor" /></a>
+
+  <a href="https://github.com/KyleMcMaster/payroll-processor/blob/master/LICENSE" alt="License">
+  <img src="https://img.shields.io/github/license/KyleMcMaster/payroll-processor" /></a>
+</p>
+
+![Twitter Follow](https://img.shields.io/twitter/follow/kylemcmaster?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/seangwright?style=social)
+
 ## Build status
 
 ### Api and Functions
