@@ -15,7 +15,7 @@ env:
 
 jobs:
   build-and-test-angular:
-    name: Angular: Build and Test
+    name: Angular - Build and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
         # npm run test --if-present
 
   build-and-test-vue:
-    name: Vue: Build and Test
+    name: Vue - Build and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
