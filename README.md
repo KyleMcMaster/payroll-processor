@@ -71,7 +71,7 @@ api/ - .NET API and Azure Functions backend
 
 client/ - Main view of the application built with Angular and Boostrap
 
-vue-client/ - Alternate view of the Admin page
+vue-client/ - Alternate view of the Admin page built with Vue3 and Tailwind CSS
 
 ## References
 

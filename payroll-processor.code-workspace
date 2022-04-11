@@ -9,12 +9,12 @@
       "name": "api"
     },
     {
-      "path": "angular",
-      "name": "client"
+      "path": "client",
+      "name": "angular"
     },
     {
-      "path": "vue",
-      "name": "vue-client"
+      "path": "vue-client",
+      "name": "vue"
     },
     {
       "path": ".",
