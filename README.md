@@ -2,6 +2,23 @@
 
 Sample HRIS application where a list of employees and their payroll information would be available in report format.
 
+<p>
+  <a href="https://github.com/KyleMcMaster/payroll-processor/graphs/contributors" alt="Contributors">
+  <img src="https://img.shields.io/github/contributors/KyleMcMaster/payroll-processor" /></a>
+
+  <a href="https://github.com/KyleMcMaster/payroll-processor/stargazers" alt="Stars">
+  <img src="https://img.shields.io/github/stars/KyleMcMaster/payroll-processor" /></a>
+
+  <a href="https://github.com/KyleMcMaster/payroll-processor/issues" alt="Issues">
+  <img src="https://img.shields.io/github/issues/KyleMcMaster/payroll-processor" /></a>
+
+  <a href="https://github.com/KyleMcMaster/payroll-processor/blob/master/LICENSE" alt="License">
+  <img src="https://img.shields.io/github/license/KyleMcMaster/payroll-processor" /></a>
+</p>
+
+![Twitter Follow](https://img.shields.io/twitter/follow/kylemcmaster?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/seangwright?style=social)
+
 ## Build status
 
 ### Api and Functions
@@ -24,7 +41,7 @@ Areas of interest:
 - Functional Programming
 - Automated Tests
 - Basics of Angular, TypeScript, Rxjs, and Bootstrap
-- Synergy that exists between Azure Functions and .Net Core Web Apis
+- Synergy that exists between Azure Functions and .NET Core Web APIs
 - Event Sourcing and CQRS
 - Having fun!
 
@@ -32,17 +49,8 @@ Areas of interest:
 
 ### MVP
 
-#### Employees
-
-- [x] Create
-- [x] Read
-- [x] Update
-- [x] Delete (disable)
-
-#### Payrolls
-
-- [x] Create
-- [x] Read
+- [x] Employee and Payroll CRUD functionality representing a simple workflow for the domain
+- [x] Administration screen for seeding data
 
 ### Future Enhancements
 
@@ -73,6 +81,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## Project Structure
+
+api/ - .NET API and Azure Functions backend
+
+client/ - Main view of the application built with Angular and Boostrap
+
+vue-client/ - Alternate view of the Admin page built with Vue3 and Tailwind CSS
 
 ## References
 
@@ -140,7 +156,7 @@ The application will start and listen for requests on [http://localhost:5000](ht
 
 The application will listen for requests on [http://localhost:7071](http://localhost:7071).
 
-### Client
+### Angular Client
 
 - Copy
 

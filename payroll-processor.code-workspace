@@ -10,7 +10,11 @@
     },
     {
       "path": "client",
-      "name": "client"
+      "name": "angular"
+    },
+    {
+      "path": "vue-client",
+      "name": "vue"
     },
     {
       "path": ".",
@@ -68,7 +72,9 @@
       "k--kato.docomment",
       "jchannon.csharpextensions",
       "vstirbu.vscode-mermaid-preview",
-      "ms-azuretools.vscode-cosmosdb"
+      "ms-azuretools.vscode-cosmosdb",
+      "johnsoncodehk.volar",
+      "johnsoncodehk.vscode-typescript-vue-plugin"
     ]
   }
 }
