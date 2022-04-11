@@ -9,7 +9,7 @@ const toggleDark = useToggle(isDark);
 </script>
 
 <template>
-  <div class="px-1 py-0.5">
+  <div class="px-1 py-0.5 mt-1">
     <button @click="toggleDark()">
       <svg
         v-if="isDark"

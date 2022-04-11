@@ -16,13 +16,7 @@ export const adminStore = defineStore({
   },
   actions: {
     async getData() {
-      const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      };
-      const res = await fetch(`${settings.apiBaseUrl}/api/v1/resources/stats`, {
-        headers,
-      });
+      const res = await fetch(`${settings.apiBaseUrl}/api/v1/resources/stats`);
       const data = await res.json();
       this.totalEmployees = data.totalEmployees;
       this.totalPayrolls = data.totalPayrolls;

@@ -17,10 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 JsonConvert.DefaultSettings = () => DefaultJsonSerializerSettings.JsonSerializerSettings;
 
+string clientDomains = builder.Configuration["CORS:client:domains"];
 builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy",
         cpb => cpb
-            .WithOrigins(builder.Configuration["CORS:client:domain"])
+            .WithOrigins(clientDomains.Split(';'))
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()));

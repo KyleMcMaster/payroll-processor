@@ -3,9 +3,9 @@
     <img
       src="https://raw.githubusercontent.com/KyleMcMaster/kmcmaster.dev/main/public/github-logo.png"
       alt="logo"
-      class="mt-1"
+      class="mx-2 mt-2"
     />
-    <span class="font-brand text-2xl flex items-center mx-1">
+    <span class="font-brand text-2xl flex items-center mx-1 mb-1">
       <RouterLink to="/">Payroll Processor</RouterLink>
     </span>
     <!-- <span class="inline-flex px-2">
@@ -35,8 +35,8 @@ import ThemeToggle from "./ThemeToggle.vue";
 
 <style scoped>
 img {
-  width: 1%;
-  height: 1%;
+  width: 3%;
+  height: 3%;
   overflow: hidden;
   border-radius: 50%;
 }

@@ -24,7 +24,7 @@ Areas of interest:
 - Functional Programming
 - Automated Tests
 - Basics of Angular, TypeScript, Rxjs, and Bootstrap
-- Synergy that exists between Azure Functions and .Net Core Web Apis
+- Synergy that exists between Azure Functions and .NET Core Web APIs
 - Event Sourcing and CQRS
 - Having fun!
 
@@ -139,7 +139,7 @@ The application will start and listen for requests on [http://localhost:5000](ht
 
 The application will listen for requests on [http://localhost:7071](http://localhost:7071).
 
-### Client
+### Angular Client
 
 - Copy
 
