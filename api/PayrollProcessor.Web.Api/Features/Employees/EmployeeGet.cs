@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
@@ -32,9 +33,14 @@ public class EmployeeGet : EndpointBaseAsync
     ]
     public override Task<ActionResult<EmployeeDetail>> HandleAsync(Guid employeeId, CancellationToken token) =>
         dispatcher
-            .Dispatch(new EmployeeDetailQuery(employeeId), token)
-            .Match<EmployeeDetail, ActionResult<EmployeeDetail>>(
-                e => e,
-                () => NotFound($"Employee [{employeeId}]"),
-                ex => new APIErrorResult(ex.Message));
+            .DispatchQuery(new EmployeeDetailQuery(employeeId), token)
+            //.Match<EmployeeDetail, ActionResult<EmployeeDetail>>(
+            //    e => e,
+            //    () => NotFound($"Employee [{employeeId}]"),
+            //    ex => new APIErrorResult(ex.Message));
+            .OnSuccess(e => e.Match(
+                    Some: m => Ok(m),
+                    None: () => NotFound($"Employee [{employeeId}]")))
+            .OnFailure(e => new APIErrorResult(e));
 }
+
