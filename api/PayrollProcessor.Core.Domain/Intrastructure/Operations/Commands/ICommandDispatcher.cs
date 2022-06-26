@@ -1,11 +1,12 @@
 using System.Threading;
-using LanguageExt;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 
 namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
 
 public interface ICommandDispatcher
 {
-    TryAsync<Unit> Dispatch(ICommand command, CancellationToken token = default);
+    Task<Result> Dispatch(ICommand command, CancellationToken token = default);
 
-    TryAsync<TResponse> Dispatch<TResponse>(ICommand<TResponse> command, CancellationToken token = default);
+    Task<Result<TResponse>> Dispatch<TResponse>(ICommand<TResponse> command, CancellationToken token = default);
 }

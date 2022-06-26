@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
@@ -31,13 +32,13 @@ public class EmployeesGet : EndpointBaseAsync
         OperationId = "Employees.GetAll",
         Tags = new[] { "Employees" })
     ]
-    public override Task<ActionResult<EmployeesResponse>> HandleAsync([FromQuery] EmployeesGetRequest request, CancellationToken token) =>
-         dispatcher
-            .Dispatch(new EmployeesQuery(request.Count, request.Email, request.FirstName, request.LastName), token)
+    public override async Task<ActionResult<EmployeesResponse>> HandleAsync([FromQuery] EmployeesGetRequest request, CancellationToken token) =>
+         (await Result.Try(() => dispatcher
+            .Dispatch(new EmployeesQuery(request.Count, request.Email, request.FirstName, request.LastName), token)))
             .Match<IEnumerable<Employee>, ActionResult<EmployeesResponse>>(
-                e => new EmployeesResponse(e),
+                e => new EmployeesResponse(e.GetValueOrDefault()),
                 () => NotFound("Employees"),
-                ex => BadRequest(ex.Message));
+                ex => BadRequest(ex));
 }
 
 public class EmployeesGetRequest

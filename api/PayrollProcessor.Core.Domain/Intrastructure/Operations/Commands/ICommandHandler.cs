@@ -1,14 +1,15 @@
 using System.Threading;
-using LanguageExt;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 
 namespace PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
 
 public interface ICommandHandler<TCommand> where TCommand : ICommand
 {
-    TryAsync<Unit> Execute(TCommand command, CancellationToken token);
+    Task<Result> Execute(TCommand command, CancellationToken token);
 }
 
 public interface ICommandHandler<TCommand, TResponse> where TCommand : ICommand<TResponse>
 {
-    TryAsync<TResponse> Execute(TCommand command, CancellationToken token);
+    Task<Result<TResponse>> Execute(TCommand command, CancellationToken token);
 }

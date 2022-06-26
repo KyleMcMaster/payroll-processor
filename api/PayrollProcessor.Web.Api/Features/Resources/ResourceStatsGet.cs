@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
@@ -29,14 +30,13 @@ public class ResourceStatsGet : EndpointBaseAsync
         OperationId = "Resource.Stats.Get",
         Tags = new[] { "Resources" })
     ]
-    public override Task<ActionResult<ResourceStatsResponse>> HandleAsync(CancellationToken token) =>
-        dispatcher
-            .Dispatch(new ResourceCountQuery(), token)
-            .Map(resp => new ResourceStatsResponse(resp.TotalEmployees, resp.TotalPayrolls))
+    public override async Task<ActionResult<ResourceStatsResponse>> HandleAsync(CancellationToken token) =>
+        (await Result.Try(() => dispatcher.Dispatch(new ResourceCountQuery(), token)
+            .Map(resp => new ResourceStatsResponse(resp.TotalEmployees, resp.TotalPayrolls))))
             .Match<ResourceStatsResponse, ActionResult<ResourceStatsResponse>>(
-                e => e,
+                e => e.Value,
                 () => NotFound($"Resource stats"),
-                ex => new APIErrorResult(ex.Message));
+                ex => new APIErrorResult(ex));
 }
 
 public class ResourceStatsResponse

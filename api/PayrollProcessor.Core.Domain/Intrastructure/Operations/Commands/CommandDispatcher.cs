@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using System.Threading.Tasks;
 using Ardalis.GuardClauses;
-using LanguageExt;
+using CSharpFunctionalExtensions;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Factories;
 
 /// <summary>
@@ -22,7 +23,7 @@ public class CommandDispatcher : ICommandDispatcher
         this.serviceProvider = serviceProvider;
     }
 
-    public TryAsync<Unit> Dispatch(ICommand command, CancellationToken token = default)
+    public Task<Result> Dispatch(ICommand command, CancellationToken token = default)
     {
         Guard.Against.Null(command, nameof(command));
 
@@ -40,7 +41,7 @@ public class CommandDispatcher : ICommandDispatcher
         return handler.Dispatch(command, serviceProvider, token);
     }
 
-    public TryAsync<TResponse> Dispatch<TResponse>(ICommand<TResponse> command, CancellationToken token = default)
+    public Task<Result<TResponse>> Dispatch<TResponse>(ICommand<TResponse> command, CancellationToken token = default)
     {
         Guard.Against.Null(command, nameof(command));
 
@@ -61,24 +62,24 @@ public class CommandDispatcher : ICommandDispatcher
 
 internal abstract class CommandHandlerWrapper : HandlerBase
 {
-    public abstract TryAsync<Unit> Dispatch(ICommand command, ServiceProviderDelegate serviceProvider, CancellationToken token);
+    public abstract Task<Result> Dispatch(ICommand command, ServiceProviderDelegate serviceProvider, CancellationToken token);
 }
 
 internal class CommandHandlerWrapperImpl<TCommand> : CommandHandlerWrapper
     where TCommand : ICommand
 {
-    public override TryAsync<Unit> Dispatch(ICommand command, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
+    public override Task<Result> Dispatch(ICommand command, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
         GetHandler<ICommandHandler<TCommand>>(serviceProvider).Execute((TCommand)command, token);
 }
 
 internal abstract class CommandHandlerWrapper<TResponse> : HandlerBase
 {
-    public abstract TryAsync<TResponse> Dispatch(ICommand<TResponse> command, ServiceProviderDelegate serviceProvider, CancellationToken token);
+    public abstract Task<Result<TResponse>> Dispatch(ICommand<TResponse> command, ServiceProviderDelegate serviceProvider, CancellationToken token);
 }
 
 internal class CreateCommandHandlerWrapperImpl<TCommand, TResponse> : CommandHandlerWrapper<TResponse>
     where TCommand : ICommand<TResponse>
 {
-    public override TryAsync<TResponse> Dispatch(ICommand<TResponse> command, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
+    public override Task<Result<TResponse>> Dispatch(ICommand<TResponse> command, ServiceProviderDelegate serviceProvider, CancellationToken token) =>
         GetHandler<ICommandHandler<TCommand, TResponse>>(serviceProvider).Execute((TCommand)command, token);
 }

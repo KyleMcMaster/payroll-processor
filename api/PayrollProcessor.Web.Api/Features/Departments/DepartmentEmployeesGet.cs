@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Departments;
-using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
 using PayrollProcessor.Web.Api.Infrastructure.Responses;
 using Swashbuckle.AspNetCore.Annotations;
@@ -34,13 +32,12 @@ public class DepartmentEmployeesGet : EndpointBaseAsync
         OperationId = "DepartmentEmployees.GetAll",
         Tags = new[] { "Employees", "Departments" })
     ]
-    public override Task<ActionResult<DepartmentEmployeesResponse>> HandleAsync([FromQuery] DepartmentEmployeesGetRequest request, CancellationToken token) =>
-         dispatcher
-            .Dispatch(new DepartmentEmployeesQuery(request.Count, request.Department), token)
+    public override async Task<ActionResult<DepartmentEmployeesResponse>> HandleAsync([FromQuery] DepartmentEmployeesGetRequest request, CancellationToken token) =>
+         (await Result.Try(() => dispatcher.Dispatch(new DepartmentEmployeesQuery(request.Count, request.Department), token)))
             .Match<IEnumerable<DepartmentEmployee>, ActionResult<DepartmentEmployeesResponse>>(
-                e => new DepartmentEmployeesResponse(e),
+                e => new DepartmentEmployeesResponse(e.GetValueOrDefault()),
                 () => NotFound(),
-                ex => BadRequest(ex.Message));
+                ex => BadRequest(ex));
 }
 
 public class DepartmentEmployeesGetRequest

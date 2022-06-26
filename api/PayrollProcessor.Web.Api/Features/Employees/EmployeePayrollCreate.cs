@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
@@ -42,8 +43,8 @@ public class EmployeePayrollCreate : EndpointBaseAsync
         Tags = new[] { "Employees", "Payrolls" })
     ]
     public override Task<ActionResult<EmployeePayroll>> HandleAsync([FromBody] EmployeePayrollCreateRequest request, CancellationToken token) =>
-        queryDispatcher
-            .Dispatch(new EmployeeQuery(request.EmployeeId), token)
+        (await Result.Try(() => queryDispatcher
+            .Dispatch(new EmployeeQuery(request.EmployeeId), token)))
             .Bind(employee =>
             {
                 var newPayroll = new EmployeePayrollNew

@@ -31,16 +31,10 @@ public class EmployeeGet : EndpointBaseAsync
         OperationId = "Employee.Get",
         Tags = new[] { "Employees" })
     ]
-    public override Task<ActionResult<EmployeeDetail>> HandleAsync(Guid employeeId, CancellationToken token) =>
-        dispatcher
-            .DispatchQuery(new EmployeeDetailQuery(employeeId), token)
-            //.Match<EmployeeDetail, ActionResult<EmployeeDetail>>(
-            //    e => e,
-            //    () => NotFound($"Employee [{employeeId}]"),
-            //    ex => new APIErrorResult(ex.Message));
-            .OnSuccess(e => e.Match(
-                    Some: m => Ok(m),
-                    None: () => NotFound($"Employee [{employeeId}]")))
-            .OnFailure(e => new APIErrorResult(e));
+    public override async Task<ActionResult<EmployeeDetail>> HandleAsync(Guid employeeId, CancellationToken token) =>
+        (await Result.Try(() => dispatcher.Dispatch(new EmployeeDetailQuery(employeeId), token)))
+        .Match<EmployeeDetail, ActionResult<EmployeeDetail>>(
+            onSome: e => e.Value,
+            onNone: () => NotFound("Employees"),
+            onFailure: ex => new APIErrorResult(ex));
 }
-

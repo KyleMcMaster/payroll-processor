@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Queries;
@@ -32,14 +33,12 @@ public class DepartmentPayrollsGet : EndpointBaseAsync
         OperationId = "DepartmentPayrolls.GetAll",
         Tags = new[] { "Payrolls", "Departments" })
     ]
-    public override Task<ActionResult<DepartmentPayrollsResponse>> HandleAsync([FromQuery] DepartmentPayrollsRequest request, CancellationToken token) =>
-        dispatcher
-            .Dispatch(new DepartmentPayrollsQuery(request.Count, request.Department, request.CheckDateFrom, request.CheckDateTo), token)
+    public override async Task<ActionResult<DepartmentPayrollsResponse>> HandleAsync([FromQuery] DepartmentPayrollsRequest request, CancellationToken token) =>
+       (await Result.Try(() => dispatcher.Dispatch(new DepartmentPayrollsQuery(request.Count, request.Department, request.CheckDateFrom, request.CheckDateTo), token)))
             .Match<IEnumerable<DepartmentPayroll>, ActionResult<DepartmentPayrollsResponse>>(
-                e => new DepartmentPayrollsResponse(e),
+                e => new DepartmentPayrollsResponse(e.Value),
                 () => NotFound(),
-                ex => new APIErrorResult(ex.Message)
-            );
+                ex => new APIErrorResult(ex));
 }
 
 public class DepartmentPayrollsRequest
