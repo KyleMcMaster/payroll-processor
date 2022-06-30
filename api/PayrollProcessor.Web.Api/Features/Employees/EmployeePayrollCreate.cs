@@ -15,7 +15,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees;
 
 public class EmployeePayrollCreate : EndpointBaseAsync
     .WithRequest<EmployeePayrollCreateRequest>
-    .WithActionResult<EmployeePayroll>
+    .WithActionResult
 {
     private readonly IQueryDispatcher queryDispatcher;
     private readonly ICommandDispatcher commandDispatcher;
@@ -42,27 +42,31 @@ public class EmployeePayrollCreate : EndpointBaseAsync
         OperationId = "EmployeePayroll.Create",
         Tags = new[] { "Employees", "Payrolls" })
     ]
-    public override Task<ActionResult<EmployeePayroll>> HandleAsync([FromBody] EmployeePayrollCreateRequest request, CancellationToken token) =>
-        (await Result.Try(() => queryDispatcher
-            .Dispatch(new EmployeeQuery(request.EmployeeId), token)))
-            .Bind(employee =>
+    public override Task<ActionResult> HandleAsync([FromBody] EmployeePayrollCreateRequest request, CancellationToken token)
+    {
+        return queryDispatcher.Dispatch(new EmployeeQuery(request.EmployeeId), token)
+            .ToResult("Not Found")
+            .Bind(CreateEmployeePayroll)
+            .Match(OnSuccess, OnFailure);
+
+        async Task<Result<EmployeePayroll>> CreateEmployeePayroll(Employee employee)
+        {
+            var newPayroll = new EmployeePayrollNew
             {
-                var newPayroll = new EmployeePayrollNew
-                {
-                    CheckDate = request.CheckDate,
-                    GrossPayroll = request.GrossPayroll,
-                };
+                CheckDate = request.CheckDate,
+                GrossPayroll = request.GrossPayroll,
+            };
 
-                var newPayrollId = generator.Generate();
+            var newPayrollId = generator.Generate();
 
-                var command = new EmployeePayrollCreateCommand(employee, newPayrollId, newPayroll);
+            var command = new EmployeePayrollCreateCommand(employee, newPayrollId, newPayroll);
 
-                return commandDispatcher.Dispatch(command).ToTryOption();
-            })
-            .Match<EmployeePayroll, ActionResult<EmployeePayroll>>(
-                employeePayroll => employeePayroll,
-                () => NotFound($"Could not find employee [{request.EmployeeId}]"),
-                ex => new APIErrorResult(ex.Message));
+            return await commandDispatcher.Dispatch(command, token);
+        }
+    }
+
+    private ActionResult OnSuccess(EmployeePayroll employeePayroll) => Ok(employeePayroll);
+    private ActionResult OnFailure(string errorMessage) => new APIErrorResult(errorMessage);
 }
 
 public class EmployeePayrollCreateRequest

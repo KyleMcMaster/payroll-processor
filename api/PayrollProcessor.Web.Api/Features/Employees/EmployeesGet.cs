@@ -38,7 +38,7 @@ public class EmployeesGet : EndpointBaseAsync
             .Match<IEnumerable<Employee>, ActionResult<EmployeesResponse>>(
                 e => new EmployeesResponse(e.GetValueOrDefault()),
                 () => NotFound("Employees"),
-                ex => BadRequest(ex));
+                ex => new APIErrorResult(ex));
 }
 
 public class EmployeesGetRequest
