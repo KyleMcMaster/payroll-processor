@@ -1,10 +1,8 @@
 using System.Threading;
 using Ardalis.GuardClauses;
-using LanguageExt;
 using Microsoft.Azure.Cosmos;
 using PayrollProcessor.Core.Domain.Features.Departments;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
-using static LanguageExt.Prelude;
 
 namespace PayrollProcessor.Data.Persistence.Features.Departments;
 

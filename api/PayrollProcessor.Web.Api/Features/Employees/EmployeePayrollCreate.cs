@@ -44,10 +44,10 @@ public class EmployeePayrollCreate : EndpointBaseAsync
     ]
     public override Task<ActionResult> HandleAsync([FromBody] EmployeePayrollCreateRequest request, CancellationToken token)
     {
-        return queryDispatcher.Dispatch(new EmployeeQuery(request.EmployeeId), token)
+        var x = queryDispatcher.Dispatch(new EmployeeQuery(request.EmployeeId), token)
             .ToResult("Not Found")
-            .Bind(CreateEmployeePayroll)
-            .Match(OnSuccess, OnFailure);
+            .Bind(CreateEmployeePayroll);
+            return x.Match(OnSuccess, OnFailure);
 
         async Task<Result<EmployeePayroll>> CreateEmployeePayroll(Employee employee)
         {

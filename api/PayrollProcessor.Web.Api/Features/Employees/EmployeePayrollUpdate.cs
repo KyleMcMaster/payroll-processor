@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
@@ -13,7 +14,7 @@ namespace PayrollProcessor.Web.Api.Features.Employees;
 
 public class EmployeePayrollUpdate : EndpointBaseAsync
     .WithRequest<EmployeePayrollUpdateRequest>
-    .WithActionResult<EmployeePayroll>
+    .WithActionResult
 {
     private readonly ICommandDispatcher commandDispatcher;
     private readonly IQueryDispatcher queryDispatcher;
@@ -34,24 +35,27 @@ public class EmployeePayrollUpdate : EndpointBaseAsync
         OperationId = "EmployeePayroll.Update",
         Tags = new[] { "Employees", "Payrolls" })
     ]
-    public override Task<ActionResult<EmployeePayroll>> HandleAsync(EmployeePayrollUpdateRequest request, CancellationToken token) =>
-        queryDispatcher.Dispatch(new EmployeePayrollQuery(request.EmployeeId, request.Id), token)
-            .Bind(employee =>
-            {
-                var command = new EmployeePayrollUpdateCommand(
+    public override Task<ActionResult> HandleAsync(EmployeePayrollUpdateRequest request, CancellationToken token)
+    {
+        return queryDispatcher.Dispatch(new EmployeePayrollQuery(request.EmployeeId, request.Id), token)
+            .ToResult("Not Found")
+            .Bind(UpdateEmployeePayroll)
+            .Match(OnSuccess, OnFailure);
+
+        async Task<Result<EmployeePayroll>> UpdateEmployeePayroll(EmployeePayroll employeePayroll)
+        {
+            var command = new EmployeePayrollUpdateCommand(
                     request.CheckDate,
                     request.GrossPayroll,
                     request.PayrollPeriod,
-                    employee
+                    employeePayroll
                 );
 
-                return commandDispatcher.Dispatch(command).ToTryOption();
-            })
-            .Match<EmployeePayroll, ActionResult<EmployeePayroll>>(
-                e => e,
-                () => NotFound($"Employee payroll [{request.Id}] for employee [{request.EmployeeId}]"),
-                ex => new APIErrorResult(ex.Message)
-            );
+            return await commandDispatcher.Dispatch(command);
+        }
+    }
+    private ActionResult OnSuccess(EmployeePayroll employeePayroll) => Ok(employeePayroll);
+    private ActionResult OnFailure(string errorMessage) => new APIErrorResult(errorMessage);
 }
 
 public class EmployeePayrollUpdateRequest

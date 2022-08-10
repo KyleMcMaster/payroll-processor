@@ -1,13 +1,13 @@
 using System.Threading;
+using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 using Azure.Storage.Queues;
-using LanguageExt;
+using CSharpFunctionalExtensions;
 using Microsoft.Azure.Cosmos;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Operations.Commands;
 using PayrollProcessor.Data.Persistence.Features.Employees.QueueMessages;
 using PayrollProcessor.Data.Persistence.Infrastructure.Clients;
-using static LanguageExt.Prelude;
 
 namespace PayrollProcessor.Data.Persistence.Features.Employees;
 
@@ -25,8 +25,9 @@ public class EmployeePayrollUpdateCommandHandler : ICommandHandler<EmployeePayro
         queueClient = clientFactory.Create(AppResources.Queue.EmployeePayrollUpdates);
     }
 
-    public TryAsync<EmployeePayroll> Execute(EmployeePayrollUpdateCommand command, CancellationToken token) =>
-        command.Apply(EmployeePayrollRecord.Map.Merge)
+    public Task<Result<EmployeePayroll>> Execute(EmployeePayrollUpdateCommand command, CancellationToken token)
+    {
+        return Result.Ok(command).Apply(EmployeePayrollRecord.Map.Merge)
             .Apply(record => client
                 .GetEmployeesContainer()
                 .ReplaceItemAsync(
@@ -44,4 +45,5 @@ public class EmployeePayrollUpdateCommandHandler : ICommandHandler<EmployeePayro
                 .Apply(TryAsync),
                 (record, _) => record)
             .Map(EmployeePayrollRecord.Map.ToEmployeePayroll);
+    }
 }
