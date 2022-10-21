@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.0" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.29.1" />
-    <PackageReference Include="NewtonSoft.Json" Version="13.0.1" />
+    <PackageReference Include="Ardalis.GuardClauses" />
+    <PackageReference Include="LanguageExt.Core" />
+    <PackageReference Include="NewtonSoft.Json" />
   </ItemGroup>
 
 </Project>
