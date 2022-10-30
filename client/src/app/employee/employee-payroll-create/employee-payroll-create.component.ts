@@ -25,13 +25,13 @@ export class EmployeePayrollCreateComponent {
     });
   }
 
-  constructor(private detailService: EmployeeDetailService) {}
+  constructor(private detailService: EmployeeDetailService) { }
 
   create(): void {
     const payroll: EmployeePayrollCreate = {
       checkDate: this.filterForm.get('checkDate').value,
       employeeId: this.filterForm.get('employeeId').value,
-      grossPayroll: this.filterForm.get('grossPayroll').value,
+      grossPayroll: Number(this.filterForm.get('grossPayroll').value),
     };
 
     this.detailService.createPayroll(payroll);

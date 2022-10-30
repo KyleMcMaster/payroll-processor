@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { departments } from '@department/department.model';
-import { EmployeeCreate } from '@employee/employee-list/state/employee-list.model';
+import { Department, EmployeeCreate } from '@employee/employee-list/state/employee-list.model';
 import { EmployeeListService } from '@employee/employee-list/state/employee-list.service';
 
 @Component({
@@ -23,11 +23,11 @@ export class EmployeeCreateComponent {
     title: new FormControl(''),
   });
 
-  constructor(private employeeListService: EmployeeListService) {}
+  constructor(private employeeListService: EmployeeListService) { }
 
   create() {
     const employee: EmployeeCreate = {
-      department: this.filterForm.get('department').value,
+      department: <Department>this.filterForm.get('department').value,
       email: this.filterForm.get('email').value,
       employmentStartedOn: this.filterForm.get('employmentStartedOn').value,
       firstName: this.filterForm.get('firstName').value,

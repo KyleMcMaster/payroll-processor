@@ -5,6 +5,7 @@ import { departments } from '@department/department.model';
 import {
   EmployeeDetail,
   EmployeeUpdate,
+  Status
 } from '@employee/employee-detail/state/employee-detail.model';
 import { EmployeeDetailService } from '@employee/employee-detail/state/employee-detail.service';
 
@@ -49,7 +50,7 @@ export class EmployeeDetailComponent {
   constructor(
     private datePipe: DatePipe,
     private service: EmployeeDetailService,
-  ) {}
+  ) { }
 
   update() {
     const employee: EmployeeUpdate = {
@@ -59,7 +60,7 @@ export class EmployeeDetailComponent {
       firstName: this.filterForm.get('firstName').value,
       lastName: this.filterForm.get('lastName').value,
       phone: this.filterForm.get('phone').value,
-      status: this.filterForm.get('status').value,
+      status: <Status>this.filterForm.get('status').value,
       title: this.filterForm.get('title').value,
     };
 
