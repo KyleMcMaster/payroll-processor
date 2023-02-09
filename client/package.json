@@ -23,7 +23,7 @@
     "@angular/router": "13.2.4",
     "@datorama/akita": "7.1.1",
     "@fortawesome/angular-fontawesome": "0.10.1",
-    "@fortawesome/fontawesome-svg-core": "1.2.36",
+    "@fortawesome/fontawesome-svg-core": "6.3.0",
     "@fortawesome/free-solid-svg-icons": "5.15.4",
     "@microsoft/signalr": "6.0.1",
     "@ng-bootstrap/ng-bootstrap": "11.0.0",
