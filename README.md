@@ -19,6 +19,8 @@ Sample HRIS application where a list of employees and their payroll information 
 ![Twitter Follow](https://img.shields.io/twitter/follow/kylemcmaster?style=social)
 ![Twitter Follow](https://img.shields.io/twitter/follow/seangwright?style=social)
 
+<img src="https://shields.io/endpoint?url=https://prod-nimble-metrics-appservice.azurewebsites.net/api/badge/kylemcmaster/payroll-processor"/>
+
 ## Build status
 
 ### Api and Functions
