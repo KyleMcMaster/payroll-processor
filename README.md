@@ -152,7 +152,7 @@ The application will start and listen for requests on [http://localhost:5000](ht
   - Function: Test
   - Function: Build (Debug)
 
-- Optional: Run any of the follow launch configurations (Debug: Select and Start Debugging)
+- Optional: Run any of the following launch configurations (Debug: Select and Start Debugging)
 
   - Function: Run & Attach (Debug)
 

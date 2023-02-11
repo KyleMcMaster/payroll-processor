@@ -1,7 +1,7 @@
 <div>
   <section>
     <nav class="navbar navbar-expand-lg navbar-dark border-light">
-      <a class="navbar-brand" [routerLink]="['/']">{{ title }}</a>
+      <a class="navbar-brand ms-2" [routerLink]="['/']">{{ title }}</a>
       <div class="collapse navbar-collapse">
         <ul ngbNav [activeId]="fragment | async" class="navbar-nav">
           <li [ngbNavItem]="link.path" *ngFor="let link of links">
