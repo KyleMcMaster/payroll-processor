@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { departments } from '@department/department.model';
 import {
   EmployeeDetail,
@@ -17,15 +17,15 @@ import { EmployeeDetailService } from '@employee/employee-detail/state/employee-
 export class EmployeeDetailComponent {
   readonly departments = departments;
 
-  filterForm = new FormGroup({
-    department: new FormControl({ value: '', disabled: true }),
-    email: new FormControl(''),
-    employmentStartedOn: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    phone: new FormControl(''),
-    status: new FormControl(''),
-    title: new FormControl(''),
+  filterForm = new UntypedFormGroup({
+    department: new UntypedFormControl({ value: '', disabled: true }),
+    email: new UntypedFormControl(''),
+    employmentStartedOn: new UntypedFormControl(''),
+    firstName: new UntypedFormControl(''),
+    lastName: new UntypedFormControl(''),
+    phone: new UntypedFormControl(''),
+    status: new UntypedFormControl(''),
+    title: new UntypedFormControl(''),
   });
 
   private _employee: EmployeeDetail;

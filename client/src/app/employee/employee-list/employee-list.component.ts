@@ -1,6 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
-import { faSkull, faSmileBeam } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSkull,
+  faSmileBeam,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { EmployeeListItem } from '@employee/employee-list/state/employee-list.model';
 
@@ -14,7 +22,7 @@ import { EmployeeListItem } from '@employee/employee-list/state/employee-list.mo
       >
         <div class="row">
           <div class="col-10">
-            <span> {{ employee.firstName }} {{ employee.lastName }} </span>
+            <span class="ms-1"> {{ employee.firstName }} {{ employee.lastName }} </span>
           </div>
           <div class="col-2">
             <fa-icon *ngIf="employee.status === 'Enabled'" [icon]="faSmileBeam">

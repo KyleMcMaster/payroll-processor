@@ -8,24 +8,32 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    // TODO - we'll want to enable these incrementally, currently they'll cause compilation errors
-    // "strict": true,
-    // "noImplicitReturns": true,
-    // "noImplicitThis": true,
-    // "noImplicitAny": true,
-    // "noFallthroughCasesInSwitch": true,
     "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2018", "dom"],
+    "target": "ES2022",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
-      "@department/*": ["src/app/department/*"],
-      "@employee/*": ["src/app/employee/*"],
-      "@payroll/*": ["src/app/payroll/*"],
-      "@shared/*": ["src/app/shared/*"]
-    }
+      "@department/*": [
+        "src/app/department/*"
+      ],
+      "@employee/*": [
+        "src/app/employee/*"
+      ],
+      "@payroll/*": [
+        "src/app/payroll/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ]
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "strictTemplates": true,

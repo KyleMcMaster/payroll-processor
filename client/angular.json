@@ -142,9 +142,10 @@
       }
     }
   },
-  "defaultProject": "payroll-processor-client",
   "cli": {
     "analytics": false,
-    "defaultCollection": "@datorama/akita"
+    "schematicCollections": [
+      "@datorama/akita"
+    ]
   }
 }
