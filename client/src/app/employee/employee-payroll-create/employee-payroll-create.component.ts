@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { EmployeeDetail, EmployeePayrollCreate } from '@employee/employee-detail/state/employee-detail.model';
 import { EmployeeDetailService } from '@employee/employee-detail/state/employee-detail.service';
@@ -10,10 +10,10 @@ import { EmployeeDetailService } from '@employee/employee-detail/state/employee-
   styleUrls: ['./employee-payroll-create.component.scss'],
 })
 export class EmployeePayrollCreateComponent {
-  filterForm = new FormGroup({
-    checkDate: new FormControl(''),
-    employeeId: new FormControl(''),
-    grossPayroll: new FormControl(''),
+  filterForm = new UntypedFormGroup({
+    checkDate: new UntypedFormControl(''),
+    employeeId: new UntypedFormControl(''),
+    grossPayroll: new UntypedFormControl(''),
   });
 
   @Input()

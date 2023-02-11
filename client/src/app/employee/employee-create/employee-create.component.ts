@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { departments } from '@department/department.model';
 import { EmployeeCreate } from '@employee/employee-list/state/employee-list.model';
@@ -13,14 +13,14 @@ import { EmployeeListService } from '@employee/employee-list/state/employee-list
 export class EmployeeCreateComponent {
   readonly departments = departments;
 
-  filterForm = new FormGroup({
-    department: new FormControl('Choose a department'),
-    email: new FormControl(''),
-    employmentStartedOn: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    phone: new FormControl(''),
-    title: new FormControl(''),
+  filterForm = new UntypedFormGroup({
+    department: new UntypedFormControl('Choose a department'),
+    email: new UntypedFormControl(''),
+    employmentStartedOn: new UntypedFormControl(''),
+    firstName: new UntypedFormControl(''),
+    lastName: new UntypedFormControl(''),
+    phone: new UntypedFormControl(''),
+    title: new UntypedFormControl(''),
   });
 
   constructor(private employeeListService: EmployeeListService) {}

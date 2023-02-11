@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -17,9 +17,9 @@ export class AdminComponent {
   readonly isLoading = this.query.selectLoading();
   readonly stats = this.query.stats;
 
-  readonly form = new FormGroup({
-    totalEmployees: new FormControl(1, { validators: [Validators.min(1)] }),
-    maxPayrolls: new FormControl(1, { validators: [Validators.min(1)] }),
+  readonly form = new UntypedFormGroup({
+    totalEmployees: new UntypedFormControl(1, { validators: [Validators.min(1)] }),
+    maxPayrolls: new UntypedFormControl(1, { validators: [Validators.min(1)] }),
   });
 
   constructor(
