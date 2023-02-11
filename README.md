@@ -187,7 +187,7 @@ which can be downloaded at [https://aka.ms/cosmosdb-emulator](https://aka.ms/cos
 
 For performing any of the following operations ensure the following:
 
-- The Azure Storage Emulator & Azure Comsos Db Emulator are running
+- The Azure Storage Emulator & Azure Cosmos DB Emulator are running
 - The functions API project (see: `PayrollProcessor.Functions.Api` above) is running
 
 To initialize the data storage structure (a few tables and a queue):

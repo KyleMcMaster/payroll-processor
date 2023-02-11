@@ -1,10 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-// Required for bs4
-@import '~bootstrap/scss/bootstrap';
-// toastr bs4
-// bootstrap style toast
-// or import a bootstrap 4 alert styled design (SASS ONLY)
-// should be after your bootstrap imports, it uses bs4 variables, mixins, functions
+// Option A: Include all of Bootstrap
+
+// Include any default variable overrides here (though functions won't be available)
+@import "../node_modules/bootstrap/scss/bootstrap";
+// boostrap 5
 @import 'ngx-toastr/toastr-bs5-alert';
 
 @import './app/shared/styles/mixins';
