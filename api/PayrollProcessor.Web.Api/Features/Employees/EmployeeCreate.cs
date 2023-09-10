@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
@@ -15,10 +16,10 @@ public class EmployeeCreate : EndpointBaseAsync
     .WithRequest<EmployeeCreateRequest>
     .WithActionResult<Employee>
 {
-    private readonly ICommandDispatcher dispatcher;
+    private readonly IStranglerCommandDispatcher dispatcher;
     private readonly IEntityIdGenerator generator;
 
-    public EmployeeCreate(ICommandDispatcher dispatcher, IEntityIdGenerator generator)
+    public EmployeeCreate(IStranglerCommandDispatcher dispatcher, IEntityIdGenerator generator)
     {
         Guard.Against.Null(dispatcher, nameof(dispatcher));
         Guard.Against.Null(generator, nameof(generator));
@@ -50,11 +51,11 @@ public class EmployeeCreate : EndpointBaseAsync
                 Title = request.Title
             });
 
-        return dispatcher
-            .Dispatch(command)
-            .Match<Employee, ActionResult<Employee>>(
-                employee => employee,
-                ex => new APIErrorResult(ex.Message));
+        return Task.FromResult(dispatcher
+            .Dispatch(command, token)
+            .Match<ActionResult<Employee>, Employee>(
+                onSuccess: employee => Ok(employee),
+                onFailure: ex => new APIErrorResult(ex)));
     }
 }
 
