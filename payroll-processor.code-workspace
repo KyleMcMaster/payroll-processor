@@ -1,6 +1,10 @@
 {
   "folders": [
     {
+      "path": ".",
+      "name": "root"
+    },
+    {
       "path": "docs",
       "name": "docs"
     },
@@ -15,10 +19,6 @@
     {
       "path": "vue-client",
       "name": "vue"
-    },
-    {
-      "path": ".",
-      "name": "root"
     }
   ],
   "settings": {
@@ -32,11 +32,11 @@
       "api": true,
       "client": true,
       "docs": true,
+      "vue-client": true,
       "**/bin": true,
       "**/obj": true,
       "**/dist": true
     },
-
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
