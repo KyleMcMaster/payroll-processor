@@ -12,7 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Web.Api.Features.Employees;
 
-public class EmployeeCreate : EndpointBaseAsync
+public class EmployeeCreate : EndpointBaseSync
     .WithRequest<EmployeeCreateRequest>
     .WithActionResult<Employee>
 {
@@ -35,7 +35,7 @@ public class EmployeeCreate : EndpointBaseAsync
         OperationId = "Employees.Create",
         Tags = new[] { "Employees" })
     ]
-    public override Task<ActionResult<Employee>> HandleAsync([FromBody] EmployeeCreateRequest request, CancellationToken token)
+    public override ActionResult<Employee> Handle([FromBody] EmployeeCreateRequest request)
     {
         var command = new EmployeeCreateCommand(
             generator.Generate(),
@@ -51,11 +51,11 @@ public class EmployeeCreate : EndpointBaseAsync
                 Title = request.Title
             });
 
-        return Task.FromResult(dispatcher
-            .Dispatch(command, token)
+        return dispatcher
+            .Dispatch(command)
             .Match<ActionResult<Employee>, Employee>(
                 onSuccess: employee => Ok(employee),
-                onFailure: ex => new APIErrorResult(ex)));
+                onFailure: ex => new APIErrorResult(ex));
     }
 }
 
