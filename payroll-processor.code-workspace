@@ -52,12 +52,11 @@
       */
       "editor.codeActionsOnSave": {}
     },
-
-    "omnisharp.defaultLaunchSolution": "PayrollProcessor.sln",
     "omnisharp.autoStart": true,
     "omnisharp.enableEditorConfigSupport": true,
     "omnisharp.enableRoslynAnalyzers": true,
-    "omnisharp.useEditorFormattingSettings": true
+    "omnisharp.useEditorFormattingSettings": true,
+    "dotnet.defaultSolution": "PayrollProcessor.sln"
   },
   "extensions": {
     "recommendations": [
