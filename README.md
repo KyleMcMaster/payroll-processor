@@ -84,6 +84,17 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
+## Star History ⭐
+
+<a href="https://star-history.com/#kylemcmaster/payroll-processor&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=kylemcmaster/payroll-processor&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=kylemcmaster/payroll-processor&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=kylemcmaster/payroll-processor&type=Date" />
+  </picture>
+</a>
+
+
 ## Project Structure
 
 api/ - .NET API and Azure Functions backend
