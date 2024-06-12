@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ardalis.ApiEndpoints;
 using Ardalis.GuardClauses;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using PayrollProcessor.Core.Domain.Features.Employees;
 using PayrollProcessor.Core.Domain.Intrastructure.Identifiers;
@@ -11,14 +12,14 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PayrollProcessor.Web.Api.Features.Employees;
 
-public class EmployeeCreate : EndpointBaseAsync
+public class EmployeeCreate : EndpointBaseSync
     .WithRequest<EmployeeCreateRequest>
     .WithActionResult<Employee>
 {
-    private readonly ICommandDispatcher dispatcher;
+    private readonly IStranglerCommandDispatcher dispatcher;
     private readonly IEntityIdGenerator generator;
 
-    public EmployeeCreate(ICommandDispatcher dispatcher, IEntityIdGenerator generator)
+    public EmployeeCreate(IStranglerCommandDispatcher dispatcher, IEntityIdGenerator generator)
     {
         Guard.Against.Null(dispatcher, nameof(dispatcher));
         Guard.Against.Null(generator, nameof(generator));
@@ -34,7 +35,7 @@ public class EmployeeCreate : EndpointBaseAsync
         OperationId = "Employees.Create",
         Tags = new[] { "Employees" })
     ]
-    public override Task<ActionResult<Employee>> HandleAsync([FromBody] EmployeeCreateRequest request, CancellationToken token)
+    public override ActionResult<Employee> Handle([FromBody] EmployeeCreateRequest request)
     {
         var command = new EmployeeCreateCommand(
             generator.Generate(),
@@ -52,9 +53,9 @@ public class EmployeeCreate : EndpointBaseAsync
 
         return dispatcher
             .Dispatch(command)
-            .Match<Employee, ActionResult<Employee>>(
-                employee => employee,
-                ex => new APIErrorResult(ex.Message));
+            .Match<ActionResult<Employee>, Employee>(
+                onSuccess: employee => Ok(employee),
+                onFailure: ex => new APIErrorResult(ex));
     }
 }
 
