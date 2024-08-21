@@ -21,6 +21,10 @@ Sample HRIS application where a list of employees and their payroll information 
 
 <img src="https://shields.io/endpoint?url=https://prod-nimble-metrics-appservice.azurewebsites.net/api/badge/kylemcmaster/payroll-processor"/>
 
+## Status of this Repository
+
+This project was started as an exploration into various technologies and approaches that the contributors had been meaning to try but weren't able to exercise in their employer's production code. The effort and success this project achieved was a labor of love and will forever hold fond memories in my (@KyleMcMaster's) heart as a catalyst for learning and growth that had an impactful experience on my career. Since 2022 or so, development on this project has become stale and the primary contributors have all taken interest in other technologies and problems that aren't represented within the space of this sample application. You can follow my latest development efforts over at [FShopOnWeb](https://github.com/NitroDevs/FShopOnWeb) I hope this code can continue to be a reference for anyone interested in the patterns and principles applied here.
+
 ## Build status
 
 ### Api and Functions
