@@ -4,8 +4,9 @@ name: dotnet core - build & test
 on:
   pull_request:
     branches:
-      - master
       - main
+  push:
+    branches: [ main ]
 
 jobs:
   build:

@@ -8,6 +8,8 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches: [ main ]
 
 env:
   NODE_VERSION: "16.x" # set this to the node version to use
